@@ -1,0 +1,4422 @@
+ARM GAS  C:\Users\zakis\AppData\Local\Temp\cclDrXun.s 			page 1
+
+
+   1              		.syntax unified
+   2              		.cpu cortex-m3
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.thumb
+  14              		.syntax unified
+  15              		.file	"reactionGame.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.section	.text.REACTION_init,"ax",%progbits
+  20              		.align	2
+  21              		.global	REACTION_init
+  22              		.thumb
+  23              		.thumb_func
+  24              		.type	REACTION_init, %function
+  25              	REACTION_init:
+  26              	.LFB110:
+  27              		.file 1 "source\\asw\\reactionGame.c"
+   1:source\asw/reactionGame.c **** /**
+   2:source\asw/reactionGame.c **** * \file arcadian.h
+   3:source\asw/reactionGame.c **** * \author Z. Sadique
+   4:source\asw/reactionGame.c **** * \date 08.12.2023
+   5:source\asw/reactionGame.c **** *
+   6:source\asw/reactionGame.c **** *
+   7:source\asw/reactionGame.c **** * \brief Implements the Reaction Game logic
+   8:source\asw/reactionGame.c **** *
+   9:source\asw/reactionGame.c **** * \copyright Copyright ©2016
+  10:source\asw/reactionGame.c **** * Department of electrical engineering and information technology, Hochschule Darmstadt - Universit
+  11:source\asw/reactionGame.c **** * Permission to use, copy, modify, and distribute this software and its documentation for education
+  12:source\asw/reactionGame.c **** * (unless permitted by h_da) and official h_da projects, is hereby granted for enrolled students of
+  13:source\asw/reactionGame.c **** * this paragraph and the following paragraph appear in all copies, modifications, and distributions
+  14:source\asw/reactionGame.c **** * Contact Prof.Dr.-Ing. Peter Fromm, peter.fromm@h-da.de, Birkenweg 8 64295 Darmstadt - GERMANY for
+  15:source\asw/reactionGame.c **** *
+  16:source\asw/reactionGame.c **** * \warning This software is a PROTOTYPE version and is not designed or intended for use in producti
+  17:source\asw/reactionGame.c **** * The user represents and warrants that it will NOT use or redistribute the Software for such purpo
+  18:source\asw/reactionGame.c **** * This prototype is for research purposes only. This software is provided "AS IS," without a warran
+  19:source\asw/reactionGame.c **** */
+  20:source\asw/reactionGame.c **** 
+  21:source\asw/reactionGame.c **** /*****************************************************************************/
+  22:source\asw/reactionGame.c **** /* Include files                                                             */
+  23:source\asw/reactionGame.c **** /*****************************************************************************/
+  24:source\asw/reactionGame.c **** 
+  25:source\asw/reactionGame.c **** #include <time.h>
+  26:source\asw/reactionGame.c **** #include <stdlib.h>
+  27:source\asw/reactionGame.c **** 
+  28:source\asw/reactionGame.c **** #include "project.h"
+  29:source\asw/reactionGame.c **** #include "reactionGame.h"
+  30:source\asw/reactionGame.c **** #include "seven.h"
+ARM GAS  C:\Users\zakis\AppData\Local\Temp\cclDrXun.s 			page 2
+
+
+  31:source\asw/reactionGame.c **** #include "button.h"
+  32:source\asw/reactionGame.c **** #include "Counter.h"
+  33:source\asw/reactionGame.c **** /*****************************************************************************/
+  34:source\asw/reactionGame.c **** /* Local pre-processor symbols/macros ('#define')                            */
+  35:source\asw/reactionGame.c **** /*****************************************************************************/
+  36:source\asw/reactionGame.c **** 
+  37:source\asw/reactionGame.c **** /*****************************************************************************/
+  38:source\asw/reactionGame.c **** /* Global variable definitions (declared in header file with 'extern')       */
+  39:source\asw/reactionGame.c **** /*****************************************************************************/
+  40:source\asw/reactionGame.c **** 
+  41:source\asw/reactionGame.c **** /*****************************************************************************/
+  42:source\asw/reactionGame.c **** /* Local type definitions ('typedef')                                        */
+  43:source\asw/reactionGame.c **** /*****************************************************************************/
+  44:source\asw/reactionGame.c **** 
+  45:source\asw/reactionGame.c **** /*****************************************************************************/
+  46:source\asw/reactionGame.c **** /* Local variable definitions ('static')                                     */
+  47:source\asw/reactionGame.c **** /*****************************************************************************/
+  48:source\asw/reactionGame.c **** 
+  49:source\asw/reactionGame.c **** /**
+  50:source\asw/reactionGame.c ****  * @brief Variable representing the clock frequency for the reaction game module.
+  51:source\asw/reactionGame.c ****  */
+  52:source\asw/reactionGame.c **** static uint16_t countInOneSec = 12000;
+  53:source\asw/reactionGame.c **** 
+  54:source\asw/reactionGame.c **** /*****************************************************************************/
+  55:source\asw/reactionGame.c **** /* Local function prototypes ('static')                                      */
+  56:source\asw/reactionGame.c **** /*****************************************************************************/
+  57:source\asw/reactionGame.c **** 
+  58:source\asw/reactionGame.c **** 
+  59:source\asw/reactionGame.c **** /*****************************************************************************/
+  60:source\asw/reactionGame.c **** /* Function implementation - global ('extern') and local ('static')          */
+  61:source\asw/reactionGame.c **** /*****************************************************************************/
+  62:source\asw/reactionGame.c **** 
+  63:source\asw/reactionGame.c **** /**
+  64:source\asw/reactionGame.c ****  * @brief Initializes the REACTION module.
+  65:source\asw/reactionGame.c ****  *
+  66:source\asw/reactionGame.c ****  * This function initializes the Reaction Game module by performing the following steps:
+  67:source\asw/reactionGame.c ****  * - Initializing UART communication.
+  68:source\asw/reactionGame.c ****  * - Starting the clock counter for the Reaction Game.
+  69:source\asw/reactionGame.c ****  * - Seeding the random number generator.
+  70:source\asw/reactionGame.c ****  * - Setting initial values for the game state, maximum rounds, and round duration.
+  71:source\asw/reactionGame.c ****  * - Displaying a welcome message on the UART.
+  72:source\asw/reactionGame.c ****  * - Setting the game state to waiting for the start of a new round.
+  73:source\asw/reactionGame.c ****  * - Setting the initial round number to 1.
+  74:source\asw/reactionGame.c ****  *
+  75:source\asw/reactionGame.c ****  * @param game Pointer to the Game_t structure.
+  76:source\asw/reactionGame.c ****  * @return Returns an RC_t (Return Code) indicating the success or failure of the operation.
+  77:source\asw/reactionGame.c ****  */
+  78:source\asw/reactionGame.c **** RC_t REACTION_init(Game_t *game) {
+  28              		.loc 1 78 0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 0
+  31              		@ frame_needed = 0, uses_anonymous_args = 0
+  32              	.LVL0:
+  33 0000 38B5     		push	{r3, r4, r5, lr}
+  34              		.cfi_def_cfa_offset 16
+  35              		.cfi_offset 3, -16
+  36              		.cfi_offset 4, -12
+ARM GAS  C:\Users\zakis\AppData\Local\Temp\cclDrXun.s 			page 3
+
+
+  37              		.cfi_offset 5, -8
+  38              		.cfi_offset 14, -4
+  39 0002 0446     		mov	r4, r0
+  79:source\asw/reactionGame.c ****     /* Initialize UART communication. */
+  80:source\asw/reactionGame.c ****     UART_Logs_Start();
+  40              		.loc 1 80 0
+  41 0004 FFF7FEFF 		bl	UART_Logs_Start
+  42              	.LVL1:
+  81:source\asw/reactionGame.c **** 
+  82:source\asw/reactionGame.c ****     /* Start the clock counter for the Reaction Game. */
+  83:source\asw/reactionGame.c ****     Clock_Counter_RG_Start();
+  43              		.loc 1 83 0
+  44 0008 FFF7FEFF 		bl	Clock_Counter_RG_Start
+  45              	.LVL2:
+  84:source\asw/reactionGame.c **** 
+  85:source\asw/reactionGame.c ****     /* Seed the random number generator. */
+  86:source\asw/reactionGame.c ****     srand(time(NULL));
+  46              		.loc 1 86 0
+  47 000c 0020     		movs	r0, #0
+  48 000e FFF7FEFF 		bl	time
+  49              	.LVL3:
+  50 0012 FFF7FEFF 		bl	srand
+  51              	.LVL4:
+  87:source\asw/reactionGame.c **** 
+  88:source\asw/reactionGame.c ****     /* Set initial values for game state, maximum rounds, and round duration. */
+  89:source\asw/reactionGame.c ****     game->gameState = None;
+  52              		.loc 1 89 0
+  53 0016 0323     		movs	r3, #3
+  54 0018 2370     		strb	r3, [r4]
+  90:source\asw/reactionGame.c ****     game->maxRounds = 10;
+  55              		.loc 1 90 0
+  56 001a 0A23     		movs	r3, #10
+  57 001c 6371     		strb	r3, [r4, #5]
+  91:source\asw/reactionGame.c ****     game->durationOfRoundSec = 1;
+  58              		.loc 1 91 0
+  59 001e 0125     		movs	r5, #1
+  60 0020 A571     		strb	r5, [r4, #6]
+  92:source\asw/reactionGame.c **** 
+  93:source\asw/reactionGame.c ****     /* Display welcome message on UART. */
+  94:source\asw/reactionGame.c ****     UART_Logs_PutString("\nWelcome to the Reaction Game\n");
+  61              		.loc 1 94 0
+  62 0022 0648     		ldr	r0, .L3
+  63 0024 FFF7FEFF 		bl	UART_Logs_PutString
+  64              	.LVL5:
+  95:source\asw/reactionGame.c ****     UART_Logs_PutString("Press any of the right buttons for '1' and left buttons for '2' \n");
+  65              		.loc 1 95 0
+  66 0028 0548     		ldr	r0, .L3+4
+  67 002a FFF7FEFF 		bl	UART_Logs_PutString
+  68              	.LVL6:
+  96:source\asw/reactionGame.c **** 
+  97:source\asw/reactionGame.c ****     UART_Logs_PutString("Press any key to begin\n\n");
+  69              		.loc 1 97 0
+  70 002e 0548     		ldr	r0, .L3+8
+  71 0030 FFF7FEFF 		bl	UART_Logs_PutString
+  72              	.LVL7:
+  98:source\asw/reactionGame.c **** 
+  99:source\asw/reactionGame.c ****     /* Set the game state to waiting for the start of a new round. */
+ARM GAS  C:\Users\zakis\AppData\Local\Temp\cclDrXun.s 			page 4
+
+
+ 100:source\asw/reactionGame.c ****     game->gameState = IsWaitingRoundStart;
+  73              		.loc 1 100 0
+  74 0034 0020     		movs	r0, #0
+  75 0036 2070     		strb	r0, [r4]
+ 101:source\asw/reactionGame.c ****     /* Set the initial round number to 1. */
+ 102:source\asw/reactionGame.c ****     game->roundNumber = 1;
+  76              		.loc 1 102 0
+  77 0038 6570     		strb	r5, [r4, #1]
+ 103:source\asw/reactionGame.c **** 
+ 104:source\asw/reactionGame.c ****     return RC_SUCCESS;
+ 105:source\asw/reactionGame.c **** }
+  78              		.loc 1 105 0
+  79 003a 38BD     		pop	{r3, r4, r5, pc}
+  80              	.LVL8:
+  81              	.L4:
+  82              		.align	2
+  83              	.L3:
+  84 003c 00000000 		.word	.LC0
+  85 0040 20000000 		.word	.LC1
+  86 0044 64000000 		.word	.LC2
+  87              		.cfi_endproc
+  88              	.LFE110:
+  89              		.size	REACTION_init, .-REACTION_init
+  90              		.section	.text.REACTION_resetGame,"ax",%progbits
+  91              		.align	2
+  92              		.global	REACTION_resetGame
+  93              		.thumb
+  94              		.thumb_func
+  95              		.type	REACTION_resetGame, %function
+  96              	REACTION_resetGame:
+  97              	.LFB111:
+ 106:source\asw/reactionGame.c **** 
+ 107:source\asw/reactionGame.c **** /**
+ 108:source\asw/reactionGame.c ****  * @brief Resets the game state for playing again.
+ 109:source\asw/reactionGame.c ****  *
+ 110:source\asw/reactionGame.c ****  * This function resets the game state to prepare for playing again. It displays a
+ 111:source\asw/reactionGame.c ****  * message on UART, resets the round number, total time, correct presses, and sets
+ 112:source\asw/reactionGame.c ****  * the game state to waiting for the start of a new round.
+ 113:source\asw/reactionGame.c ****  *
+ 114:source\asw/reactionGame.c ****  * @param game Pointer to the Game_t structure containing game details.
+ 115:source\asw/reactionGame.c ****  * @return Returns an RC_t (Return Code) indicating the success or failure of the operation.
+ 116:source\asw/reactionGame.c ****  */
+ 117:source\asw/reactionGame.c **** RC_t REACTION_resetGame(Game_t *game) {
+  98              		.loc 1 117 0
+  99              		.cfi_startproc
+ 100              		@ args = 0, pretend = 0, frame = 0
+ 101              		@ frame_needed = 0, uses_anonymous_args = 0
+ 102              	.LVL9:
+ 103 0000 10B5     		push	{r4, lr}
+ 104              		.cfi_def_cfa_offset 8
+ 105              		.cfi_offset 4, -8
+ 106              		.cfi_offset 14, -4
+ 107 0002 0446     		mov	r4, r0
+ 118:source\asw/reactionGame.c ****     /* Display a message on UART. */
+ 119:source\asw/reactionGame.c ****     //UART_Logs_PutString("\nReset controller to play again\n");
+ 120:source\asw/reactionGame.c ****     UART_Logs_PutString("\nPress any key to play again\n\n");
+ 108              		.loc 1 120 0
+ARM GAS  C:\Users\zakis\AppData\Local\Temp\cclDrXun.s 			page 5
+
+
+ 109 0004 0548     		ldr	r0, .L7
+ 110              	.LVL10:
+ 111 0006 FFF7FEFF 		bl	UART_Logs_PutString
+ 112              	.LVL11:
+ 121:source\asw/reactionGame.c **** 
+ 122:source\asw/reactionGame.c ****     /* Reset game parameters. */
+ 123:source\asw/reactionGame.c ****     game->roundNumber = 1;
+ 113              		.loc 1 123 0
+ 114 000a 0123     		movs	r3, #1
+ 115 000c 6370     		strb	r3, [r4, #1]
+ 124:source\asw/reactionGame.c ****     game->maxRounds = 10;
+ 116              		.loc 1 124 0
+ 117 000e 0A23     		movs	r3, #10
+ 118 0010 6371     		strb	r3, [r4, #5]
+ 125:source\asw/reactionGame.c ****     game->totalTime = 0;
+ 119              		.loc 1 125 0
+ 120 0012 0020     		movs	r0, #0
+ 121 0014 6080     		strh	r0, [r4, #2]	@ movhi
+ 126:source\asw/reactionGame.c ****     game->correctPresses = 0;
+ 122              		.loc 1 126 0
+ 123 0016 2071     		strb	r0, [r4, #4]
+ 127:source\asw/reactionGame.c ****     game->gameState = IsWaitingRoundStart;
+ 124              		.loc 1 127 0
+ 125 0018 2070     		strb	r0, [r4]
+ 128:source\asw/reactionGame.c ****     
+ 129:source\asw/reactionGame.c ****     return RC_SUCCESS;
+ 130:source\asw/reactionGame.c **** }
+ 126              		.loc 1 130 0
+ 127 001a 10BD     		pop	{r4, pc}
+ 128              	.LVL12:
+ 129              	.L8:
+ 130              		.align	2
+ 131              	.L7:
+ 132 001c 80000000 		.word	.LC3
+ 133              		.cfi_endproc
+ 134              	.LFE111:
+ 135              		.size	REACTION_resetGame, .-REACTION_resetGame
+ 136              		.section	.text.REACTION_generateRandomNum,"ax",%progbits
+ 137              		.align	2
+ 138              		.global	REACTION_generateRandomNum
+ 139              		.thumb
+ 140              		.thumb_func
+ 141              		.type	REACTION_generateRandomNum, %function
+ 142              	REACTION_generateRandomNum:
+ 143              	.LFB112:
+ 131:source\asw/reactionGame.c **** 
+ 132:source\asw/reactionGame.c **** /**
+ 133:source\asw/reactionGame.c ****  * @brief Generates a random number within a specified limit.
+ 134:source\asw/reactionGame.c ****  *
+ 135:source\asw/reactionGame.c ****  * This function generates a random number within the specified limit and
+ 136:source\asw/reactionGame.c ****  * returns it through the provided pointer.
+ 137:source\asw/reactionGame.c ****  *
+ 138:source\asw/reactionGame.c ****  * @param randomNumber Pointer to the variable where the random number will be stored.
+ 139:source\asw/reactionGame.c ****  * @param limit The upper limit for the random number (exclusive).
+ 140:source\asw/reactionGame.c ****  * @return Returns an RC_t (Return Code) indicating the success or failure of the operation.
+ 141:source\asw/reactionGame.c ****  */
+ 142:source\asw/reactionGame.c **** RC_t REACTION_generateRandomNum(uint16_t *randomNumber, uint8_t limit) {
+ARM GAS  C:\Users\zakis\AppData\Local\Temp\cclDrXun.s 			page 6
+
+
+ 144              		.loc 1 142 0
+ 145              		.cfi_startproc
+ 146              		@ args = 0, pretend = 0, frame = 0
+ 147              		@ frame_needed = 0, uses_anonymous_args = 0
+ 148              	.LVL13:
+ 149 0000 38B5     		push	{r3, r4, r5, lr}
+ 150              		.cfi_def_cfa_offset 16
+ 151              		.cfi_offset 3, -16
+ 152              		.cfi_offset 4, -12
+ 153              		.cfi_offset 5, -8
+ 154              		.cfi_offset 14, -4
+ 155 0002 0546     		mov	r5, r0
+ 156 0004 0C46     		mov	r4, r1
+ 143:source\asw/reactionGame.c ****     /**
+ 144:source\asw/reactionGame.c ****      * Generate a random number using the rand() function.
+ 145:source\asw/reactionGame.c ****      * The generated number is within the range [1, limit].
+ 146:source\asw/reactionGame.c ****      */
+ 147:source\asw/reactionGame.c ****     *randomNumber = rand() % limit + 1;
+ 157              		.loc 1 147 0
+ 158 0006 FFF7FEFF 		bl	rand
+ 159              	.LVL14:
+ 160 000a 90FBF4F3 		sdiv	r3, r0, r4
+ 161 000e 04FB1300 		mls	r0, r4, r3, r0
+ 162 0012 0130     		adds	r0, r0, #1
+ 163 0014 2880     		strh	r0, [r5]	@ movhi
+ 148:source\asw/reactionGame.c **** 
+ 149:source\asw/reactionGame.c ****     return RC_SUCCESS;
+ 150:source\asw/reactionGame.c **** }
+ 164              		.loc 1 150 0
+ 165 0016 0020     		movs	r0, #0
+ 166 0018 38BD     		pop	{r3, r4, r5, pc}
+ 167              		.cfi_endproc
+ 168              	.LFE112:
+ 169              		.size	REACTION_generateRandomNum, .-REACTION_generateRandomNum
+ 170 001a 00BF     		.section	.text.REACTION_startCounterForTime,"ax",%progbits
+ 171              		.align	2
+ 172              		.global	REACTION_startCounterForTime
+ 173              		.thumb
+ 174              		.thumb_func
+ 175              		.type	REACTION_startCounterForTime, %function
+ 176              	REACTION_startCounterForTime:
+ 177              	.LFB113:
+ 151:source\asw/reactionGame.c **** 
+ 152:source\asw/reactionGame.c **** /**
+ 153:source\asw/reactionGame.c ****  * @brief Starts a counter for a specified duration.
+ 154:source\asw/reactionGame.c ****  *
+ 155:source\asw/reactionGame.c ****  * This function starts a counter for a duration specified by the provided random number,
+ 156:source\asw/reactionGame.c ****  * which is multiplied by the global RGClockFrequency. The counter is configured to
+ 157:source\asw/reactionGame.c ****  * stop after reaching the specified count.
+ 158:source\asw/reactionGame.c ****  *
+ 159:source\asw/reactionGame.c ****  * @param randomNumber The random number used to calculate the counter duration.
+ 160:source\asw/reactionGame.c ****  * @return Returns an RC_t (Return Code) indicating the success or failure of the operation.
+ 161:source\asw/reactionGame.c ****  */
+ 162:source\asw/reactionGame.c **** RC_t REACTION_startCounterForTime(uint16_t time) {
+ 178              		.loc 1 162 0
+ 179              		.cfi_startproc
+ 180              		@ args = 0, pretend = 0, frame = 0
+ARM GAS  C:\Users\zakis\AppData\Local\Temp\cclDrXun.s 			page 7
+
+
+ 181              		@ frame_needed = 0, uses_anonymous_args = 0
+ 182              	.LVL15:
+ 183 0000 10B5     		push	{r4, lr}
+ 184              		.cfi_def_cfa_offset 8
+ 185              		.cfi_offset 4, -8
+ 186              		.cfi_offset 14, -4
+ 163:source\asw/reactionGame.c ****     /**
+ 164:source\asw/reactionGame.c ****      * Multiply the required time by the global RGClockFrequency.
+ 165:source\asw/reactionGame.c ****      * This calculation determines the count needed for the specified duration.
+ 166:source\asw/reactionGame.c ****      */
+ 167:source\asw/reactionGame.c ****     time = time * countInOneSec;
+ 187              		.loc 1 167 0
+ 188 0002 00EB8000 		add	r0, r0, r0, lsl #2
+ 189              	.LVL16:
+ 190 0006 00EB8003 		add	r3, r0, r0, lsl #2
+ 191 000a C3EB0313 		rsb	r3, r3, r3, lsl #4
+ 192 000e 5801     		lsls	r0, r3, #5
+ 193 0010 84B2     		uxth	r4, r0
+ 194              	.LVL17:
+ 168:source\asw/reactionGame.c **** 
+ 169:source\asw/reactionGame.c ****     /* Start the counter, stop it, set the counter value, and start it again. */
+ 170:source\asw/reactionGame.c ****     Counter_Start();
+ 195              		.loc 1 170 0
+ 196 0012 FFF7FEFF 		bl	Counter_Start
+ 197              	.LVL18:
+ 171:source\asw/reactionGame.c ****     Counter_Stop();
+ 198              		.loc 1 171 0
+ 199 0016 FFF7FEFF 		bl	Counter_Stop
+ 200              	.LVL19:
+ 172:source\asw/reactionGame.c ****     Counter_WriteCounter(time);
+ 201              		.loc 1 172 0
+ 202 001a 2046     		mov	r0, r4
+ 203 001c FFF7FEFF 		bl	Counter_WriteCounter
+ 204              	.LVL20:
+ 173:source\asw/reactionGame.c ****     Counter_Start();
+ 205              		.loc 1 173 0
+ 206 0020 FFF7FEFF 		bl	Counter_Start
+ 207              	.LVL21:
+ 174:source\asw/reactionGame.c **** 
+ 175:source\asw/reactionGame.c ****     return RC_SUCCESS;
+ 176:source\asw/reactionGame.c **** }
+ 208              		.loc 1 176 0
+ 209 0024 0020     		movs	r0, #0
+ 210 0026 10BD     		pop	{r4, pc}
+ 211              		.cfi_endproc
+ 212              	.LFE113:
+ 213              		.size	REACTION_startCounterForTime, .-REACTION_startCounterForTime
+ 214              		.section	.text.REACTION_setDisplay,"ax",%progbits
+ 215              		.align	2
+ 216              		.global	REACTION_setDisplay
+ 217              		.thumb
+ 218              		.thumb_func
+ 219              		.type	REACTION_setDisplay, %function
+ 220              	REACTION_setDisplay:
+ 221              	.LFB115:
+ 177:source\asw/reactionGame.c **** 
+ 178:source\asw/reactionGame.c **** /**
+ARM GAS  C:\Users\zakis\AppData\Local\Temp\cclDrXun.s 			page 8
+
+
+ 179:source\asw/reactionGame.c ****  * @brief Displays details of the game on UART.
+ 180:source\asw/reactionGame.c ****  *
+ 181:source\asw/reactionGame.c ****  * This function displays details such as correct presses, total time, and average time
+ 182:source\asw/reactionGame.c ****  * of the game on the UART output.
+ 183:source\asw/reactionGame.c ****  *
+ 184:source\asw/reactionGame.c ****  * @param game Pointer to the Game_t structure containing game details.
+ 185:source\asw/reactionGame.c ****  * @return Returns an RC_t (Return Code) indicating the success or failure of the operation.
+ 186:source\asw/reactionGame.c ****  */
+ 187:source\asw/reactionGame.c **** RC_t REACTION_displayDetails(const Game_t *game) {
+ 188:source\asw/reactionGame.c ****     /* Display correct presses on UART. */
+ 189:source\asw/reactionGame.c ****     UART_Logs_PutString("\nCorrect presses : ");
+ 190:source\asw/reactionGame.c ****     char_t buffer[4];
+ 191:source\asw/reactionGame.c ****     REACTION_convertToString(game->correctPresses, buffer);
+ 192:source\asw/reactionGame.c ****     UART_Logs_PutString(buffer);
+ 193:source\asw/reactionGame.c **** 
+ 194:source\asw/reactionGame.c ****     /* Display total time on UART. */
+ 195:source\asw/reactionGame.c ****     UART_Logs_PutString("\nTotal time : ");
+ 196:source\asw/reactionGame.c ****     REACTION_convertToString(game->totalTime, buffer);
+ 197:source\asw/reactionGame.c ****     UART_Logs_PutString(buffer);
+ 198:source\asw/reactionGame.c **** 
+ 199:source\asw/reactionGame.c **** 
+ 200:source\asw/reactionGame.c ****     /* Display average time on UART. */
+ 201:source\asw/reactionGame.c ****     UART_Logs_PutString("\nAverage time : ");
+ 202:source\asw/reactionGame.c ****     REACTION_convertToString(game->totalTime / game->correctPresses, buffer);
+ 203:source\asw/reactionGame.c ****     UART_Logs_PutString(buffer);
+ 204:source\asw/reactionGame.c **** 
+ 205:source\asw/reactionGame.c ****     return RC_SUCCESS;
+ 206:source\asw/reactionGame.c **** }
+ 207:source\asw/reactionGame.c **** 
+ 208:source\asw/reactionGame.c **** 
+ 209:source\asw/reactionGame.c **** 
+ 210:source\asw/reactionGame.c **** 
+ 211:source\asw/reactionGame.c **** 
+ 212:source\asw/reactionGame.c **** /**
+ 213:source\asw/reactionGame.c ****  * @brief Sets the SEVEN segment display with a specified number.
+ 214:source\asw/reactionGame.c ****  *
+ 215:source\asw/reactionGame.c ****  * This function sets the SEVEN segment display with the specified number for both SEVEN_0
+ 216:source\asw/reactionGame.c ****  * and SEVEN_1 segments.
+ 217:source\asw/reactionGame.c ****  *
+ 218:source\asw/reactionGame.c ****  * @param randomNumberDisplay The number to be displayed on the SEVEN segment display.
+ 219:source\asw/reactionGame.c ****  * @return Returns an RC_t (Return Code) indicating the success or failure of the operation.
+ 220:source\asw/reactionGame.c ****  */
+ 221:source\asw/reactionGame.c **** RC_t REACTION_setDisplay(uint16_t randomNumberDisplay) {
+ 222              		.loc 1 221 0
+ 223              		.cfi_startproc
+ 224              		@ args = 0, pretend = 0, frame = 0
+ 225              		@ frame_needed = 0, uses_anonymous_args = 0
+ 226              	.LVL22:
+ 227 0000 10B5     		push	{r4, lr}
+ 228              		.cfi_def_cfa_offset 8
+ 229              		.cfi_offset 4, -8
+ 230              		.cfi_offset 14, -4
+ 222:source\asw/reactionGame.c ****     /* Set the SEVEN segment display for both segments. */
+ 223:source\asw/reactionGame.c ****     SEVEN_Set(SEVEN_0, randomNumberDisplay);
+ 231              		.loc 1 223 0
+ 232 0002 C4B2     		uxtb	r4, r0
+ 233 0004 2146     		mov	r1, r4
+ARM GAS  C:\Users\zakis\AppData\Local\Temp\cclDrXun.s 			page 9
+
+
+ 234 0006 0020     		movs	r0, #0
+ 235              	.LVL23:
+ 236 0008 FFF7FEFF 		bl	SEVEN_Set
+ 237              	.LVL24:
+ 224:source\asw/reactionGame.c ****     SEVEN_Set(SEVEN_1, randomNumberDisplay);
+ 238              		.loc 1 224 0
+ 239 000c 2146     		mov	r1, r4
+ 240 000e 0120     		movs	r0, #1
+ 241 0010 FFF7FEFF 		bl	SEVEN_Set
+ 242              	.LVL25:
+ 225:source\asw/reactionGame.c **** 
+ 226:source\asw/reactionGame.c ****     return RC_SUCCESS;
+ 227:source\asw/reactionGame.c **** }
+ 243              		.loc 1 227 0
+ 244 0014 0020     		movs	r0, #0
+ 245 0016 10BD     		pop	{r4, pc}
+ 246              		.cfi_endproc
+ 247              	.LFE115:
+ 248              		.size	REACTION_setDisplay, .-REACTION_setDisplay
+ 249              		.section	.text.REACTION_getReactionTimeMS,"ax",%progbits
+ 250              		.align	2
+ 251              		.global	REACTION_getReactionTimeMS
+ 252              		.thumb
+ 253              		.thumb_func
+ 254              		.type	REACTION_getReactionTimeMS, %function
+ 255              	REACTION_getReactionTimeMS:
+ 256              	.LFB116:
+ 228:source\asw/reactionGame.c **** 
+ 229:source\asw/reactionGame.c **** 
+ 230:source\asw/reactionGame.c **** /**
+ 231:source\asw/reactionGame.c ****  * @brief Retrieves the reaction time in milliseconds.
+ 232:source\asw/reactionGame.c ****  *
+ 233:source\asw/reactionGame.c ****  * This function stops the counter, calculates the reaction time based on the counter value,
+ 234:source\asw/reactionGame.c ****  * and returns the result through the provided pointer.
+ 235:source\asw/reactionGame.c ****  *
+ 236:source\asw/reactionGame.c ****  * @param reactionTime Pointer to the variable where the reaction time will be stored.
+ 237:source\asw/reactionGame.c ****  * @return Returns an RC_t (Return Code) indicating the success or failure of the operation.
+ 238:source\asw/reactionGame.c ****  */
+ 239:source\asw/reactionGame.c **** RC_t REACTION_getReactionTimeMS(uint16_t *reactionTime, Game_t game) {
+ 257              		.loc 1 239 0
+ 258              		.cfi_startproc
+ 259              		@ args = 0, pretend = 0, frame = 8
+ 260              		@ frame_needed = 0, uses_anonymous_args = 0
+ 261              	.LVL26:
+ 262 0000 70B5     		push	{r4, r5, r6, lr}
+ 263              		.cfi_def_cfa_offset 16
+ 264              		.cfi_offset 4, -16
+ 265              		.cfi_offset 5, -12
+ 266              		.cfi_offset 6, -8
+ 267              		.cfi_offset 14, -4
+ 268 0002 82B0     		sub	sp, sp, #8
+ 269              		.cfi_def_cfa_offset 24
+ 270 0004 0546     		mov	r5, r0
+ 271 0006 02AB     		add	r3, sp, #8
+ 272 0008 03E90600 		stmdb	r3, {r1, r2}
+ 240:source\asw/reactionGame.c ****     /* Stop the counter. */
+ 241:source\asw/reactionGame.c ****     Counter_Stop();
+ARM GAS  C:\Users\zakis\AppData\Local\Temp\cclDrXun.s 			page 10
+
+
+ 273              		.loc 1 241 0
+ 274 000c FFF7FEFF 		bl	Counter_Stop
+ 275              	.LVL27:
+ 242:source\asw/reactionGame.c **** 
+ 243:source\asw/reactionGame.c ****     /** Calculate the reaction time based on the counter value.
+ 244:source\asw/reactionGame.c ****      *  (Difference between clock frequency and current value)/ period * 1000 = reaction time in ms
+ 245:source\asw/reactionGame.c ****      */
+ 246:source\asw/reactionGame.c ****     
+ 247:source\asw/reactionGame.c ****     *reactionTime = (countInOneSec*game.durationOfRoundSec - Counter_ReadCounter()) * 1000 / 
+ 276              		.loc 1 247 0
+ 277 0010 9DF80660 		ldrb	r6, [sp, #6]	@ zero_extendqisi2
+ 278 0014 42F6E064 		movw	r4, #12000
+ 279 0018 04FB06F4 		mul	r4, r4, r6
+ 280 001c FFF7FEFF 		bl	Counter_ReadCounter
+ 281              	.LVL28:
+ 282 0020 201A     		subs	r0, r4, r0
+ 283 0022 4FF47A73 		mov	r3, #1000
+ 284 0026 03FB00F0 		mul	r0, r3, r0
+ 285 002a 064B     		ldr	r3, .L17
+ 286 002c 83FB0023 		smull	r2, r3, r3, r0
+ 287 0030 C017     		asrs	r0, r0, #31
+ 288 0032 C0EB2320 		rsb	r0, r0, r3, asr #8
+ 289 0036 00FB06F0 		mul	r0, r0, r6
+ 290 003a 2880     		strh	r0, [r5]	@ movhi
+ 248:source\asw/reactionGame.c ****         countInOneSec*game.durationOfRoundSec;
+ 249:source\asw/reactionGame.c **** 
+ 250:source\asw/reactionGame.c ****     return RC_SUCCESS;
+ 251:source\asw/reactionGame.c **** }
+ 291              		.loc 1 251 0
+ 292 003c 0020     		movs	r0, #0
+ 293 003e 02B0     		add	sp, sp, #8
+ 294              		.cfi_def_cfa_offset 16
+ 295              		@ sp needed
+ 296 0040 70BD     		pop	{r4, r5, r6, pc}
+ 297              	.LVL29:
+ 298              	.L18:
+ 299 0042 00BF     		.align	2
+ 300              	.L17:
+ 301 0044 F1197605 		.word	91625969
+ 302              		.cfi_endproc
+ 303              	.LFE116:
+ 304              		.size	REACTION_getReactionTimeMS, .-REACTION_getReactionTimeMS
+ 305              		.section	.text.REACTION_displayFailureMessage,"ax",%progbits
+ 306              		.align	2
+ 307              		.global	REACTION_displayFailureMessage
+ 308              		.thumb
+ 309              		.thumb_func
+ 310              		.type	REACTION_displayFailureMessage, %function
+ 311              	REACTION_displayFailureMessage:
+ 312              	.LFB118:
+ 252:source\asw/reactionGame.c **** 
+ 253:source\asw/reactionGame.c **** 
+ 254:source\asw/reactionGame.c **** /**
+ 255:source\asw/reactionGame.c ****  * @brief Displays a success message on UART with reaction time information.
+ 256:source\asw/reactionGame.c ****  *
+ 257:source\asw/reactionGame.c ****  * This function displays a success message on UART indicating that the correct button
+ 258:source\asw/reactionGame.c ****  * was pressed. It also displays the reaction time in milliseconds.
+ARM GAS  C:\Users\zakis\AppData\Local\Temp\cclDrXun.s 			page 11
+
+
+ 259:source\asw/reactionGame.c ****  *
+ 260:source\asw/reactionGame.c ****  * @param reactionTime The reaction time in milliseconds.
+ 261:source\asw/reactionGame.c ****  * @return Returns an RC_t (Return Code) indicating the success or failure of the operation.
+ 262:source\asw/reactionGame.c ****  */
+ 263:source\asw/reactionGame.c **** RC_t REACTION_displaySuccessMessage(uint16_t reactionTime) {
+ 264:source\asw/reactionGame.c ****     /* Display a success message on UART. */
+ 265:source\asw/reactionGame.c ****     UART_Logs_PutString("Great! Correct Button Pressed\n");
+ 266:source\asw/reactionGame.c ****     UART_Logs_PutString("Reaction Time in ms: ");
+ 267:source\asw/reactionGame.c **** 
+ 268:source\asw/reactionGame.c ****     /* Convert reaction time to string and display it on UART. */
+ 269:source\asw/reactionGame.c ****     char_t myBuffer[3];
+ 270:source\asw/reactionGame.c ****     REACTION_convertToString(reactionTime, myBuffer);
+ 271:source\asw/reactionGame.c ****     UART_Logs_PutString(myBuffer);
+ 272:source\asw/reactionGame.c **** 
+ 273:source\asw/reactionGame.c ****     /* Display a message prompting to continue. */
+ 274:source\asw/reactionGame.c ****     UART_Logs_PutString("\nPress any button to continue\n\n");
+ 275:source\asw/reactionGame.c **** 
+ 276:source\asw/reactionGame.c ****     return RC_SUCCESS;
+ 277:source\asw/reactionGame.c **** }
+ 278:source\asw/reactionGame.c **** 
+ 279:source\asw/reactionGame.c **** 
+ 280:source\asw/reactionGame.c **** /**
+ 281:source\asw/reactionGame.c ****  * @brief Displays a failure message on UART.
+ 282:source\asw/reactionGame.c ****  *
+ 283:source\asw/reactionGame.c ****  * This function displays a failure message on UART indicating that an incorrect button
+ 284:source\asw/reactionGame.c ****  * was pressed. It prompts the user to press any button to continue.
+ 285:source\asw/reactionGame.c ****  *
+ 286:source\asw/reactionGame.c ****  * @return Returns an RC_t (Return Code) indicating the success or failure of the operation.
+ 287:source\asw/reactionGame.c ****  */
+ 288:source\asw/reactionGame.c **** RC_t REACTION_displayFailureMessage() {
+ 313              		.loc 1 288 0
+ 314              		.cfi_startproc
+ 315              		@ args = 0, pretend = 0, frame = 0
+ 316              		@ frame_needed = 0, uses_anonymous_args = 0
+ 317 0000 08B5     		push	{r3, lr}
+ 318              		.cfi_def_cfa_offset 8
+ 319              		.cfi_offset 3, -8
+ 320              		.cfi_offset 14, -4
+ 289:source\asw/reactionGame.c ****     /* Display a failure message on UART. */
+ 290:source\asw/reactionGame.c ****     UART_Logs_PutString("Incorrect Button Pressed\n");
+ 321              		.loc 1 290 0
+ 322 0002 0448     		ldr	r0, .L21
+ 323 0004 FFF7FEFF 		bl	UART_Logs_PutString
+ 324              	.LVL30:
+ 291:source\asw/reactionGame.c ****     /* Display a message prompting to continue. */
+ 292:source\asw/reactionGame.c ****     UART_Logs_PutString("Press any button to continue\n\n");
+ 325              		.loc 1 292 0
+ 326 0008 0348     		ldr	r0, .L21+4
+ 327 000a FFF7FEFF 		bl	UART_Logs_PutString
+ 328              	.LVL31:
+ 293:source\asw/reactionGame.c **** 
+ 294:source\asw/reactionGame.c ****     return RC_SUCCESS;
+ 295:source\asw/reactionGame.c **** }
+ 329              		.loc 1 295 0
+ 330 000e 0020     		movs	r0, #0
+ 331 0010 08BD     		pop	{r3, pc}
+ 332              	.L22:
+ARM GAS  C:\Users\zakis\AppData\Local\Temp\cclDrXun.s 			page 12
+
+
+ 333 0012 00BF     		.align	2
+ 334              	.L21:
+ 335 0014 A0000000 		.word	.LC4
+ 336 0018 BC000000 		.word	.LC5
+ 337              		.cfi_endproc
+ 338              	.LFE118:
+ 339              		.size	REACTION_displayFailureMessage, .-REACTION_displayFailureMessage
+ 340              		.section	.text.REACTION_displayTimeoutMessage,"ax",%progbits
+ 341              		.align	2
+ 342              		.global	REACTION_displayTimeoutMessage
+ 343              		.thumb
+ 344              		.thumb_func
+ 345              		.type	REACTION_displayTimeoutMessage, %function
+ 346              	REACTION_displayTimeoutMessage:
+ 347              	.LFB119:
+ 296:source\asw/reactionGame.c **** 
+ 297:source\asw/reactionGame.c **** 
+ 298:source\asw/reactionGame.c **** /**
+ 299:source\asw/reactionGame.c ****  * @brief Displays a timeout message on UART.
+ 300:source\asw/reactionGame.c ****  *
+ 301:source\asw/reactionGame.c ****  * This function displays a message on UART indicating that the time ran out.
+ 302:source\asw/reactionGame.c ****  * It prompts the user to press any button to continue.
+ 303:source\asw/reactionGame.c ****  *
+ 304:source\asw/reactionGame.c ****  * @return Returns an RC_t (Return Code) indicating the success or failure of the operation.
+ 305:source\asw/reactionGame.c ****  */
+ 306:source\asw/reactionGame.c **** RC_t REACTION_displayTimeoutMessage() {
+ 348              		.loc 1 306 0
+ 349              		.cfi_startproc
+ 350              		@ args = 0, pretend = 0, frame = 0
+ 351              		@ frame_needed = 0, uses_anonymous_args = 0
+ 352 0000 08B5     		push	{r3, lr}
+ 353              		.cfi_def_cfa_offset 8
+ 354              		.cfi_offset 3, -8
+ 355              		.cfi_offset 14, -4
+ 307:source\asw/reactionGame.c ****     /* Display a timeout message on UART. */
+ 308:source\asw/reactionGame.c ****     UART_Logs_PutString("Time ran out\n");
+ 356              		.loc 1 308 0
+ 357 0002 0448     		ldr	r0, .L25
+ 358 0004 FFF7FEFF 		bl	UART_Logs_PutString
+ 359              	.LVL32:
+ 309:source\asw/reactionGame.c ****     /* Display a message prompting to continue. */
+ 310:source\asw/reactionGame.c ****     UART_Logs_PutString("Press any button to continue\n\n");
+ 360              		.loc 1 310 0
+ 361 0008 0348     		ldr	r0, .L25+4
+ 362 000a FFF7FEFF 		bl	UART_Logs_PutString
+ 363              	.LVL33:
+ 311:source\asw/reactionGame.c **** 
+ 312:source\asw/reactionGame.c ****     return RC_SUCCESS;
+ 313:source\asw/reactionGame.c **** }
+ 364              		.loc 1 313 0
+ 365 000e 0020     		movs	r0, #0
+ 366 0010 08BD     		pop	{r3, pc}
+ 367              	.L26:
+ 368 0012 00BF     		.align	2
+ 369              	.L25:
+ 370 0014 DC000000 		.word	.LC6
+ 371 0018 BC000000 		.word	.LC5
+ARM GAS  C:\Users\zakis\AppData\Local\Temp\cclDrXun.s 			page 13
+
+
+ 372              		.cfi_endproc
+ 373              	.LFE119:
+ 374              		.size	REACTION_displayTimeoutMessage, .-REACTION_displayTimeoutMessage
+ 375              		.section	.text.REACTION_reverseString,"ax",%progbits
+ 376              		.align	2
+ 377              		.global	REACTION_reverseString
+ 378              		.thumb
+ 379              		.thumb_func
+ 380              		.type	REACTION_reverseString, %function
+ 381              	REACTION_reverseString:
+ 382              	.LFB121:
+ 314:source\asw/reactionGame.c **** 
+ 315:source\asw/reactionGame.c **** /**
+ 316:source\asw/reactionGame.c ****  * @brief Converts a number to a string.
+ 317:source\asw/reactionGame.c ****  *
+ 318:source\asw/reactionGame.c ****  * This function converts the given number to a string and stores it in the provided buffer.
+ 319:source\asw/reactionGame.c ****  *
+ 320:source\asw/reactionGame.c ****  * @param number The number to be converted to a string.
+ 321:source\asw/reactionGame.c ****  * @param buffer Pointer to the buffer where the string representation will be stored.
+ 322:source\asw/reactionGame.c ****  * @return Returns an RC_t (Return Code) indicating the success or failure of the operation.
+ 323:source\asw/reactionGame.c ****  */
+ 324:source\asw/reactionGame.c **** RC_t REACTION_convertToString(uint16_t number, char_t *buffer) {
+ 325:source\asw/reactionGame.c ****     if (number == 0){
+ 326:source\asw/reactionGame.c ****         buffer[0] = '0';
+ 327:source\asw/reactionGame.c ****         buffer[1] = '\0';
+ 328:source\asw/reactionGame.c ****         return RC_SUCCESS;
+ 329:source\asw/reactionGame.c ****     }
+ 330:source\asw/reactionGame.c ****     
+ 331:source\asw/reactionGame.c ****     int i = 0;
+ 332:source\asw/reactionGame.c **** 
+ 333:source\asw/reactionGame.c ****     /* Convert the number to a string in reverse order. */
+ 334:source\asw/reactionGame.c ****     while (number != 0) {
+ 335:source\asw/reactionGame.c ****         int digit = number % 10;
+ 336:source\asw/reactionGame.c ****         buffer[i++] = digit + '0';
+ 337:source\asw/reactionGame.c ****         number = number / 10;
+ 338:source\asw/reactionGame.c ****     }
+ 339:source\asw/reactionGame.c **** 
+ 340:source\asw/reactionGame.c ****     /* Add null terminator to the end of the string. */
+ 341:source\asw/reactionGame.c ****     buffer[i] = '\0';
+ 342:source\asw/reactionGame.c **** 
+ 343:source\asw/reactionGame.c ****     /* Reverse the string to get the correct order. */
+ 344:source\asw/reactionGame.c ****     REACTION_reverseString(buffer, i);
+ 345:source\asw/reactionGame.c **** 
+ 346:source\asw/reactionGame.c ****     return RC_SUCCESS;
+ 347:source\asw/reactionGame.c **** }
+ 348:source\asw/reactionGame.c **** 
+ 349:source\asw/reactionGame.c **** /**
+ 350:source\asw/reactionGame.c ****  * @brief Reverses a string in-place.
+ 351:source\asw/reactionGame.c ****  *
+ 352:source\asw/reactionGame.c ****  * This function reverses the order of characters in the given string in-place.
+ 353:source\asw/reactionGame.c ****  *
+ 354:source\asw/reactionGame.c ****  * @param str Pointer to the string to be reversed.
+ 355:source\asw/reactionGame.c ****  * @param length The length of the string.
+ 356:source\asw/reactionGame.c ****  * @return Returns an RC_t (Return Code) indicating the success or failure of the operation.
+ 357:source\asw/reactionGame.c ****  */
+ 358:source\asw/reactionGame.c **** RC_t REACTION_reverseString(char_t *str, uint8_t length) {
+ 383              		.loc 1 358 0
+ARM GAS  C:\Users\zakis\AppData\Local\Temp\cclDrXun.s 			page 14
+
+
+ 384              		.cfi_startproc
+ 385              		@ args = 0, pretend = 0, frame = 0
+ 386              		@ frame_needed = 0, uses_anonymous_args = 0
+ 387              		@ link register save eliminated.
+ 388              	.LVL34:
+ 389 0000 10B4     		push	{r4}
+ 390              		.cfi_def_cfa_offset 4
+ 391              		.cfi_offset 4, -4
+ 392              	.LVL35:
+ 359:source\asw/reactionGame.c ****     int start = 0;
+ 360:source\asw/reactionGame.c ****     int end = length - 1;
+ 393              		.loc 1 360 0
+ 394 0002 0139     		subs	r1, r1, #1
+ 395              	.LVL36:
+ 359:source\asw/reactionGame.c ****     int start = 0;
+ 396              		.loc 1 359 0
+ 397 0004 0023     		movs	r3, #0
+ 361:source\asw/reactionGame.c **** 
+ 362:source\asw/reactionGame.c ****     /* Swap characters from start to end to reverse the string. */
+ 363:source\asw/reactionGame.c ****     while (start < end) {
+ 398              		.loc 1 363 0
+ 399 0006 05E0     		b	.L28
+ 400              	.LVL37:
+ 401              	.L29:
+ 402              	.LBB2:
+ 364:source\asw/reactionGame.c ****         char_t temp = str[start];
+ 403              		.loc 1 364 0
+ 404 0008 C25C     		ldrb	r2, [r0, r3]	@ zero_extendqisi2
+ 405              	.LVL38:
+ 365:source\asw/reactionGame.c ****         str[start] = str[end];
+ 406              		.loc 1 365 0
+ 407 000a 445C     		ldrb	r4, [r0, r1]	@ zero_extendqisi2
+ 408 000c C454     		strb	r4, [r0, r3]
+ 366:source\asw/reactionGame.c ****         str[end] = temp;
+ 409              		.loc 1 366 0
+ 410 000e 4254     		strb	r2, [r0, r1]
+ 367:source\asw/reactionGame.c **** 
+ 368:source\asw/reactionGame.c ****         start++;
+ 411              		.loc 1 368 0
+ 412 0010 0133     		adds	r3, r3, #1
+ 413              	.LVL39:
+ 369:source\asw/reactionGame.c ****         end--;
+ 414              		.loc 1 369 0
+ 415 0012 0139     		subs	r1, r1, #1
+ 416              	.LVL40:
+ 417              	.L28:
+ 418              	.LBE2:
+ 363:source\asw/reactionGame.c ****         char_t temp = str[start];
+ 419              		.loc 1 363 0
+ 420 0014 8B42     		cmp	r3, r1
+ 421 0016 F7DB     		blt	.L29
+ 370:source\asw/reactionGame.c ****     }
+ 371:source\asw/reactionGame.c **** 
+ 372:source\asw/reactionGame.c ****     return RC_SUCCESS;
+ 373:source\asw/reactionGame.c **** }
+ 422              		.loc 1 373 0
+ 423 0018 0020     		movs	r0, #0
+ARM GAS  C:\Users\zakis\AppData\Local\Temp\cclDrXun.s 			page 15
+
+
+ 424              	.LVL41:
+ 425 001a 10BC     		pop	{r4}
+ 426              		.cfi_restore 4
+ 427              		.cfi_def_cfa_offset 0
+ 428 001c 7047     		bx	lr
+ 429              		.cfi_endproc
+ 430              	.LFE121:
+ 431              		.size	REACTION_reverseString, .-REACTION_reverseString
+ 432 001e 00BF     		.section	.text.REACTION_convertToString,"ax",%progbits
+ 433              		.align	2
+ 434              		.global	REACTION_convertToString
+ 435              		.thumb
+ 436              		.thumb_func
+ 437              		.type	REACTION_convertToString, %function
+ 438              	REACTION_convertToString:
+ 439              	.LFB120:
+ 324:source\asw/reactionGame.c ****     if (number == 0){
+ 440              		.loc 1 324 0
+ 441              		.cfi_startproc
+ 442              		@ args = 0, pretend = 0, frame = 0
+ 443              		@ frame_needed = 0, uses_anonymous_args = 0
+ 444              	.LVL42:
+ 445 0000 38B5     		push	{r3, r4, r5, lr}
+ 446              		.cfi_def_cfa_offset 16
+ 447              		.cfi_offset 3, -16
+ 448              		.cfi_offset 4, -12
+ 449              		.cfi_offset 5, -8
+ 450              		.cfi_offset 14, -4
+ 451 0002 0D46     		mov	r5, r1
+ 325:source\asw/reactionGame.c ****         buffer[0] = '0';
+ 452              		.loc 1 325 0
+ 453 0004 90B9     		cbnz	r0, .L35
+ 326:source\asw/reactionGame.c ****         buffer[1] = '\0';
+ 454              		.loc 1 326 0
+ 455 0006 3023     		movs	r3, #48
+ 456 0008 0B70     		strb	r3, [r1]
+ 327:source\asw/reactionGame.c ****         return RC_SUCCESS;
+ 457              		.loc 1 327 0
+ 458 000a 0023     		movs	r3, #0
+ 459 000c 4B70     		strb	r3, [r1, #1]
+ 328:source\asw/reactionGame.c ****     }
+ 460              		.loc 1 328 0
+ 461 000e 16E0     		b	.L33
+ 462              	.LVL43:
+ 463              	.L34:
+ 464              	.LBB3:
+ 335:source\asw/reactionGame.c ****         buffer[i++] = digit + '0';
+ 465              		.loc 1 335 0
+ 466 0010 0C4A     		ldr	r2, .L37
+ 467 0012 A2FB0302 		umull	r0, r2, r2, r3
+ 468 0016 D208     		lsrs	r2, r2, #3
+ 469 0018 02EB8204 		add	r4, r2, r2, lsl #2
+ 470 001c 6000     		lsls	r0, r4, #1
+ 471 001e 1B1A     		subs	r3, r3, r0
+ 472              	.LVL44:
+ 473 0020 9BB2     		uxth	r3, r3
+ 474              	.LVL45:
+ARM GAS  C:\Users\zakis\AppData\Local\Temp\cclDrXun.s 			page 16
+
+
+ 336:source\asw/reactionGame.c ****         number = number / 10;
+ 475              		.loc 1 336 0
+ 476 0022 3033     		adds	r3, r3, #48
+ 477              	.LVL46:
+ 478 0024 6B54     		strb	r3, [r5, r1]
+ 337:source\asw/reactionGame.c ****     }
+ 479              		.loc 1 337 0
+ 480 0026 93B2     		uxth	r3, r2
+ 481              	.LVL47:
+ 336:source\asw/reactionGame.c ****         number = number / 10;
+ 482              		.loc 1 336 0
+ 483 0028 0131     		adds	r1, r1, #1
+ 484              	.LVL48:
+ 485 002a 01E0     		b	.L32
+ 486              	.LVL49:
+ 487              	.L35:
+ 488 002c 0346     		mov	r3, r0
+ 489              	.LBE3:
+ 490 002e 0021     		movs	r1, #0
+ 491              	.LVL50:
+ 492              	.L32:
+ 334:source\asw/reactionGame.c ****         int digit = number % 10;
+ 493              		.loc 1 334 0
+ 494 0030 002B     		cmp	r3, #0
+ 495 0032 EDD1     		bne	.L34
+ 341:source\asw/reactionGame.c **** 
+ 496              		.loc 1 341 0
+ 497 0034 6B54     		strb	r3, [r5, r1]
+ 344:source\asw/reactionGame.c **** 
+ 498              		.loc 1 344 0
+ 499 0036 C9B2     		uxtb	r1, r1
+ 500              	.LVL51:
+ 501 0038 2846     		mov	r0, r5
+ 502 003a FFF7FEFF 		bl	REACTION_reverseString
+ 503              	.LVL52:
+ 504              	.L33:
+ 347:source\asw/reactionGame.c **** 
+ 505              		.loc 1 347 0
+ 506 003e 0020     		movs	r0, #0
+ 507 0040 38BD     		pop	{r3, r4, r5, pc}
+ 508              	.LVL53:
+ 509              	.L38:
+ 510 0042 00BF     		.align	2
+ 511              	.L37:
+ 512 0044 CDCCCCCC 		.word	-858993459
+ 513              		.cfi_endproc
+ 514              	.LFE120:
+ 515              		.size	REACTION_convertToString, .-REACTION_convertToString
+ 516              		.section	.text.REACTION_displayDetails,"ax",%progbits
+ 517              		.align	2
+ 518              		.global	REACTION_displayDetails
+ 519              		.thumb
+ 520              		.thumb_func
+ 521              		.type	REACTION_displayDetails, %function
+ 522              	REACTION_displayDetails:
+ 523              	.LFB114:
+ 187:source\asw/reactionGame.c ****     /* Display correct presses on UART. */
+ARM GAS  C:\Users\zakis\AppData\Local\Temp\cclDrXun.s 			page 17
+
+
+ 524              		.loc 1 187 0
+ 525              		.cfi_startproc
+ 526              		@ args = 0, pretend = 0, frame = 8
+ 527              		@ frame_needed = 0, uses_anonymous_args = 0
+ 528              	.LVL54:
+ 529 0000 10B5     		push	{r4, lr}
+ 530              		.cfi_def_cfa_offset 8
+ 531              		.cfi_offset 4, -8
+ 532              		.cfi_offset 14, -4
+ 533 0002 82B0     		sub	sp, sp, #8
+ 534              		.cfi_def_cfa_offset 16
+ 535 0004 0446     		mov	r4, r0
+ 189:source\asw/reactionGame.c ****     char_t buffer[4];
+ 536              		.loc 1 189 0
+ 537 0006 1248     		ldr	r0, .L41
+ 538              	.LVL55:
+ 539 0008 FFF7FEFF 		bl	UART_Logs_PutString
+ 540              	.LVL56:
+ 191:source\asw/reactionGame.c ****     UART_Logs_PutString(buffer);
+ 541              		.loc 1 191 0
+ 542 000c 01A9     		add	r1, sp, #4
+ 543 000e 2079     		ldrb	r0, [r4, #4]	@ zero_extendqisi2
+ 544 0010 FFF7FEFF 		bl	REACTION_convertToString
+ 545              	.LVL57:
+ 192:source\asw/reactionGame.c **** 
+ 546              		.loc 1 192 0
+ 547 0014 01A8     		add	r0, sp, #4
+ 548 0016 FFF7FEFF 		bl	UART_Logs_PutString
+ 549              	.LVL58:
+ 195:source\asw/reactionGame.c ****     REACTION_convertToString(game->totalTime, buffer);
+ 550              		.loc 1 195 0
+ 551 001a 0E48     		ldr	r0, .L41+4
+ 552 001c FFF7FEFF 		bl	UART_Logs_PutString
+ 553              	.LVL59:
+ 196:source\asw/reactionGame.c ****     UART_Logs_PutString(buffer);
+ 554              		.loc 1 196 0
+ 555 0020 01A9     		add	r1, sp, #4
+ 556 0022 6088     		ldrh	r0, [r4, #2]
+ 557 0024 FFF7FEFF 		bl	REACTION_convertToString
+ 558              	.LVL60:
+ 197:source\asw/reactionGame.c **** 
+ 559              		.loc 1 197 0
+ 560 0028 01A8     		add	r0, sp, #4
+ 561 002a FFF7FEFF 		bl	UART_Logs_PutString
+ 562              	.LVL61:
+ 201:source\asw/reactionGame.c ****     REACTION_convertToString(game->totalTime / game->correctPresses, buffer);
+ 563              		.loc 1 201 0
+ 564 002e 0A48     		ldr	r0, .L41+8
+ 565 0030 FFF7FEFF 		bl	UART_Logs_PutString
+ 566              	.LVL62:
+ 202:source\asw/reactionGame.c ****     UART_Logs_PutString(buffer);
+ 567              		.loc 1 202 0
+ 568 0034 6088     		ldrh	r0, [r4, #2]
+ 569 0036 2379     		ldrb	r3, [r4, #4]	@ zero_extendqisi2
+ 570 0038 01A9     		add	r1, sp, #4
+ 571 003a 90FBF3F0 		sdiv	r0, r0, r3
+ 572 003e FFF7FEFF 		bl	REACTION_convertToString
+ARM GAS  C:\Users\zakis\AppData\Local\Temp\cclDrXun.s 			page 18
+
+
+ 573              	.LVL63:
+ 203:source\asw/reactionGame.c **** 
+ 574              		.loc 1 203 0
+ 575 0042 01A8     		add	r0, sp, #4
+ 576 0044 FFF7FEFF 		bl	UART_Logs_PutString
+ 577              	.LVL64:
+ 206:source\asw/reactionGame.c **** 
+ 578              		.loc 1 206 0
+ 579 0048 0020     		movs	r0, #0
+ 580 004a 02B0     		add	sp, sp, #8
+ 581              		.cfi_def_cfa_offset 8
+ 582              		@ sp needed
+ 583 004c 10BD     		pop	{r4, pc}
+ 584              	.LVL65:
+ 585              	.L42:
+ 586 004e 00BF     		.align	2
+ 587              	.L41:
+ 588 0050 EC000000 		.word	.LC7
+ 589 0054 00010000 		.word	.LC8
+ 590 0058 10010000 		.word	.LC9
+ 591              		.cfi_endproc
+ 592              	.LFE114:
+ 593              		.size	REACTION_displayDetails, .-REACTION_displayDetails
+ 594              		.section	.text.REACTION_displaySuccessMessage,"ax",%progbits
+ 595              		.align	2
+ 596              		.global	REACTION_displaySuccessMessage
+ 597              		.thumb
+ 598              		.thumb_func
+ 599              		.type	REACTION_displaySuccessMessage, %function
+ 600              	REACTION_displaySuccessMessage:
+ 601              	.LFB117:
+ 263:source\asw/reactionGame.c ****     /* Display a success message on UART. */
+ 602              		.loc 1 263 0
+ 603              		.cfi_startproc
+ 604              		@ args = 0, pretend = 0, frame = 8
+ 605              		@ frame_needed = 0, uses_anonymous_args = 0
+ 606              	.LVL66:
+ 607 0000 10B5     		push	{r4, lr}
+ 608              		.cfi_def_cfa_offset 8
+ 609              		.cfi_offset 4, -8
+ 610              		.cfi_offset 14, -4
+ 611 0002 82B0     		sub	sp, sp, #8
+ 612              		.cfi_def_cfa_offset 16
+ 613 0004 0446     		mov	r4, r0
+ 265:source\asw/reactionGame.c ****     UART_Logs_PutString("Reaction Time in ms: ");
+ 614              		.loc 1 265 0
+ 615 0006 0948     		ldr	r0, .L45
+ 616              	.LVL67:
+ 617 0008 FFF7FEFF 		bl	UART_Logs_PutString
+ 618              	.LVL68:
+ 266:source\asw/reactionGame.c **** 
+ 619              		.loc 1 266 0
+ 620 000c 0848     		ldr	r0, .L45+4
+ 621 000e FFF7FEFF 		bl	UART_Logs_PutString
+ 622              	.LVL69:
+ 270:source\asw/reactionGame.c ****     UART_Logs_PutString(myBuffer);
+ 623              		.loc 1 270 0
+ARM GAS  C:\Users\zakis\AppData\Local\Temp\cclDrXun.s 			page 19
+
+
+ 624 0012 01A9     		add	r1, sp, #4
+ 625 0014 2046     		mov	r0, r4
+ 626 0016 FFF7FEFF 		bl	REACTION_convertToString
+ 627              	.LVL70:
+ 271:source\asw/reactionGame.c **** 
+ 628              		.loc 1 271 0
+ 629 001a 01A8     		add	r0, sp, #4
+ 630 001c FFF7FEFF 		bl	UART_Logs_PutString
+ 631              	.LVL71:
+ 274:source\asw/reactionGame.c **** 
+ 632              		.loc 1 274 0
+ 633 0020 0448     		ldr	r0, .L45+8
+ 634 0022 FFF7FEFF 		bl	UART_Logs_PutString
+ 635              	.LVL72:
+ 277:source\asw/reactionGame.c **** 
+ 636              		.loc 1 277 0
+ 637 0026 0020     		movs	r0, #0
+ 638 0028 02B0     		add	sp, sp, #8
+ 639              		.cfi_def_cfa_offset 8
+ 640              		@ sp needed
+ 641 002a 10BD     		pop	{r4, pc}
+ 642              	.L46:
+ 643              		.align	2
+ 644              	.L45:
+ 645 002c 24010000 		.word	.LC10
+ 646 0030 44010000 		.word	.LC11
+ 647 0034 5C010000 		.word	.LC12
+ 648              		.cfi_endproc
+ 649              	.LFE117:
+ 650              		.size	REACTION_displaySuccessMessage, .-REACTION_displaySuccessMessage
+ 651              		.section	.text.REACTION_printRoundNumber,"ax",%progbits
+ 652              		.align	2
+ 653              		.global	REACTION_printRoundNumber
+ 654              		.thumb
+ 655              		.thumb_func
+ 656              		.type	REACTION_printRoundNumber, %function
+ 657              	REACTION_printRoundNumber:
+ 658              	.LFB122:
+ 374:source\asw/reactionGame.c **** 
+ 375:source\asw/reactionGame.c **** 
+ 376:source\asw/reactionGame.c **** /**
+ 377:source\asw/reactionGame.c ****  * @brief Prints the start of a new round on UART.
+ 378:source\asw/reactionGame.c ****  *
+ 379:source\asw/reactionGame.c ****  * This function displays a message on UART indicating the start of a new round,
+ 380:source\asw/reactionGame.c ****  * along with the round number.
+ 381:source\asw/reactionGame.c ****  *
+ 382:source\asw/reactionGame.c ****  * @param roundNumber The number of the current round.
+ 383:source\asw/reactionGame.c ****  * @return Returns an RC_t (Return Code) indicating the success or failure of the operation.
+ 384:source\asw/reactionGame.c ****  */
+ 385:source\asw/reactionGame.c **** RC_t REACTION_printRoundNumber(uint8_t roundNumber) {
+ 659              		.loc 1 385 0
+ 660              		.cfi_startproc
+ 661              		@ args = 0, pretend = 0, frame = 8
+ 662              		@ frame_needed = 0, uses_anonymous_args = 0
+ 663              	.LVL73:
+ 664 0000 10B5     		push	{r4, lr}
+ 665              		.cfi_def_cfa_offset 8
+ARM GAS  C:\Users\zakis\AppData\Local\Temp\cclDrXun.s 			page 20
+
+
+ 666              		.cfi_offset 4, -8
+ 667              		.cfi_offset 14, -4
+ 668 0002 82B0     		sub	sp, sp, #8
+ 669              		.cfi_def_cfa_offset 16
+ 670 0004 0446     		mov	r4, r0
+ 386:source\asw/reactionGame.c ****     /* Display a message indicating the start of a new round. */
+ 387:source\asw/reactionGame.c ****     UART_Logs_PutString("\nRound ");
+ 671              		.loc 1 387 0
+ 672 0006 0848     		ldr	r0, .L49
+ 673              	.LVL74:
+ 674 0008 FFF7FEFF 		bl	UART_Logs_PutString
+ 675              	.LVL75:
+ 388:source\asw/reactionGame.c **** 
+ 389:source\asw/reactionGame.c ****     /* Convert the round number to a string and display it on UART. */
+ 390:source\asw/reactionGame.c ****     char_t myBuffer[2];
+ 391:source\asw/reactionGame.c ****     REACTION_convertToString(roundNumber, myBuffer);
+ 676              		.loc 1 391 0
+ 677 000c 01A9     		add	r1, sp, #4
+ 678 000e 2046     		mov	r0, r4
+ 679 0010 FFF7FEFF 		bl	REACTION_convertToString
+ 680              	.LVL76:
+ 392:source\asw/reactionGame.c ****     UART_Logs_PutString(myBuffer);
+ 681              		.loc 1 392 0
+ 682 0014 01A8     		add	r0, sp, #4
+ 683 0016 FFF7FEFF 		bl	UART_Logs_PutString
+ 684              	.LVL77:
+ 393:source\asw/reactionGame.c **** 
+ 394:source\asw/reactionGame.c ****     /* Display a message indicating that the round has started. */
+ 395:source\asw/reactionGame.c ****     UART_Logs_PutString(" started!\n");
+ 685              		.loc 1 395 0
+ 686 001a 0448     		ldr	r0, .L49+4
+ 687 001c FFF7FEFF 		bl	UART_Logs_PutString
+ 688              	.LVL78:
+ 396:source\asw/reactionGame.c **** 
+ 397:source\asw/reactionGame.c ****     return RC_SUCCESS;
+ 398:source\asw/reactionGame.c **** }
+ 689              		.loc 1 398 0
+ 690 0020 0020     		movs	r0, #0
+ 691 0022 02B0     		add	sp, sp, #8
+ 692              		.cfi_def_cfa_offset 8
+ 693              		@ sp needed
+ 694 0024 10BD     		pop	{r4, pc}
+ 695              	.L50:
+ 696 0026 00BF     		.align	2
+ 697              	.L49:
+ 698 0028 7C010000 		.word	.LC13
+ 699 002c 84010000 		.word	.LC14
+ 700              		.cfi_endproc
+ 701              	.LFE122:
+ 702              		.size	REACTION_printRoundNumber, .-REACTION_printRoundNumber
+ 703              		.section	.text.REACTION_stopCounter,"ax",%progbits
+ 704              		.align	2
+ 705              		.global	REACTION_stopCounter
+ 706              		.thumb
+ 707              		.thumb_func
+ 708              		.type	REACTION_stopCounter, %function
+ 709              	REACTION_stopCounter:
+ARM GAS  C:\Users\zakis\AppData\Local\Temp\cclDrXun.s 			page 21
+
+
+ 710              	.LFB123:
+ 399:source\asw/reactionGame.c **** 
+ 400:source\asw/reactionGame.c **** /**
+ 401:source\asw/reactionGame.c ****  * @brief Stops the counter.
+ 402:source\asw/reactionGame.c ****  *
+ 403:source\asw/reactionGame.c ****  * This function stops the counter used for measuring time.
+ 404:source\asw/reactionGame.c ****  *
+ 405:source\asw/reactionGame.c ****  * @return Returns an RC_t (Return Code) indicating the success or failure of the operation.
+ 406:source\asw/reactionGame.c ****  */
+ 407:source\asw/reactionGame.c **** RC_t REACTION_stopCounter() {
+ 711              		.loc 1 407 0
+ 712              		.cfi_startproc
+ 713              		@ args = 0, pretend = 0, frame = 0
+ 714              		@ frame_needed = 0, uses_anonymous_args = 0
+ 715 0000 08B5     		push	{r3, lr}
+ 716              		.cfi_def_cfa_offset 8
+ 717              		.cfi_offset 3, -8
+ 718              		.cfi_offset 14, -4
+ 408:source\asw/reactionGame.c ****     Counter_Stop();
+ 719              		.loc 1 408 0
+ 720 0002 FFF7FEFF 		bl	Counter_Stop
+ 721              	.LVL79:
+ 409:source\asw/reactionGame.c ****     return RC_SUCCESS;
+ 410:source\asw/reactionGame.c **** }
+ 722              		.loc 1 410 0
+ 723 0006 0020     		movs	r0, #0
+ 724 0008 08BD     		pop	{r3, pc}
+ 725              		.cfi_endproc
+ 726              	.LFE123:
+ 727              		.size	REACTION_stopCounter, .-REACTION_stopCounter
+ 728 000a 00BF     		.section	.text.REACTION_resetDisplay,"ax",%progbits
+ 729              		.align	2
+ 730              		.global	REACTION_resetDisplay
+ 731              		.thumb
+ 732              		.thumb_func
+ 733              		.type	REACTION_resetDisplay, %function
+ 734              	REACTION_resetDisplay:
+ 735              	.LFB124:
+ 411:source\asw/reactionGame.c **** 
+ 412:source\asw/reactionGame.c **** /**
+ 413:source\asw/reactionGame.c ****  * @brief Resets the SEVEN segment display.
+ 414:source\asw/reactionGame.c ****  *
+ 415:source\asw/reactionGame.c ****  * This function initializes the SEVEN segment display to its default state.
+ 416:source\asw/reactionGame.c ****  *
+ 417:source\asw/reactionGame.c ****  * @return Returns an RC_t (Return Code) indicating the success or failure of the operation.
+ 418:source\asw/reactionGame.c ****  */
+ 419:source\asw/reactionGame.c **** RC_t REACTION_resetDisplay() {
+ 736              		.loc 1 419 0
+ 737              		.cfi_startproc
+ 738              		@ args = 0, pretend = 0, frame = 0
+ 739              		@ frame_needed = 0, uses_anonymous_args = 0
+ 740 0000 08B5     		push	{r3, lr}
+ 741              		.cfi_def_cfa_offset 8
+ 742              		.cfi_offset 3, -8
+ 743              		.cfi_offset 14, -4
+ 420:source\asw/reactionGame.c ****     SEVEN_Init();
+ 744              		.loc 1 420 0
+ARM GAS  C:\Users\zakis\AppData\Local\Temp\cclDrXun.s 			page 22
+
+
+ 745 0002 FFF7FEFF 		bl	SEVEN_Init
+ 746              	.LVL80:
+ 421:source\asw/reactionGame.c ****     return RC_SUCCESS;
+ 422:source\asw/reactionGame.c **** }
+ 747              		.loc 1 422 0
+ 748 0006 0020     		movs	r0, #0
+ 749 0008 08BD     		pop	{r3, pc}
+ 750              		.cfi_endproc
+ 751              	.LFE124:
+ 752              		.size	REACTION_resetDisplay, .-REACTION_resetDisplay
+ 753 000a 00BF     		.section	.text.REACTION_correctButtonPressed,"ax",%progbits
+ 754              		.align	2
+ 755              		.global	REACTION_correctButtonPressed
+ 756              		.thumb
+ 757              		.thumb_func
+ 758              		.type	REACTION_correctButtonPressed, %function
+ 759              	REACTION_correctButtonPressed:
+ 760              	.LFB125:
+ 423:source\asw/reactionGame.c **** 
+ 424:source\asw/reactionGame.c **** /**
+ 425:source\asw/reactionGame.c ****  * @brief Checks if the correct button is pressed based on the SEVEN segment display value.
+ 426:source\asw/reactionGame.c ****  *
+ 427:source\asw/reactionGame.c ****  * This function retrieves the current value from the SEVEN segment display and checks
+ 428:source\asw/reactionGame.c ****  * if the corresponding correct button is pressed.
+ 429:source\asw/reactionGame.c ****  *
+ 430:source\asw/reactionGame.c ****  * @return Returns TRUE if the correct button is pressed, FALSE otherwise.
+ 431:source\asw/reactionGame.c ****  */
+ 432:source\asw/reactionGame.c **** boolean_t REACTION_correctButtonPressed() {
+ 761              		.loc 1 432 0
+ 762              		.cfi_startproc
+ 763              		@ args = 0, pretend = 0, frame = 8
+ 764              		@ frame_needed = 0, uses_anonymous_args = 0
+ 765 0000 00B5     		push	{lr}
+ 766              		.cfi_def_cfa_offset 4
+ 767              		.cfi_offset 14, -4
+ 768 0002 83B0     		sub	sp, sp, #12
+ 769              		.cfi_def_cfa_offset 16
+ 433:source\asw/reactionGame.c ****     /* Retrieve the current value from the SEVEN segment display. */
+ 434:source\asw/reactionGame.c ****     sint8_t currentDisplayVal = 0;
+ 770              		.loc 1 434 0
+ 771 0004 0020     		movs	r0, #0
+ 772 0006 02A9     		add	r1, sp, #8
+ 773 0008 01F8010D 		strb	r0, [r1, #-1]!
+ 435:source\asw/reactionGame.c ****     SEVEN_Get(SEVEN_0, &currentDisplayVal);
+ 774              		.loc 1 435 0
+ 775 000c FFF7FEFF 		bl	SEVEN_Get
+ 776              	.LVL81:
+ 436:source\asw/reactionGame.c **** 
+ 437:source\asw/reactionGame.c ****     /* Check if the correct button is pressed based on the SEVEN segment display value. */
+ 438:source\asw/reactionGame.c ****     if (currentDisplayVal == 1 && (BUTTON_IsPressed(Button_Right_1) || BUTTON_IsPressed(Button_Righ
+ 777              		.loc 1 438 0
+ 778 0010 9DF90730 		ldrsb	r3, [sp, #7]
+ 779 0014 012B     		cmp	r3, #1
+ 780 0016 07D1     		bne	.L56
+ 781              		.loc 1 438 0 is_stmt 0 discriminator 1
+ 782 0018 0020     		movs	r0, #0
+ 783 001a FFF7FEFF 		bl	BUTTON_IsPressed
+ARM GAS  C:\Users\zakis\AppData\Local\Temp\cclDrXun.s 			page 23
+
+
+ 784              	.LVL82:
+ 785 001e 88B9     		cbnz	r0, .L58
+ 786              		.loc 1 438 0 discriminator 2
+ 787 0020 0120     		movs	r0, #1
+ 788 0022 FFF7FEFF 		bl	BUTTON_IsPressed
+ 789              	.LVL83:
+ 790 0026 78B9     		cbnz	r0, .L59
+ 791              	.L56:
+ 439:source\asw/reactionGame.c ****         return TRUE;
+ 440:source\asw/reactionGame.c ****     } else if (currentDisplayVal == 2 && (BUTTON_IsPressed(Button_Left_1) || BUTTON_IsPressed(Butto
+ 792              		.loc 1 440 0 is_stmt 1
+ 793 0028 9DF90730 		ldrsb	r3, [sp, #7]
+ 794 002c 022B     		cmp	r3, #2
+ 795 002e 0DD1     		bne	.L60
+ 796              		.loc 1 440 0 is_stmt 0 discriminator 1
+ 797 0030 0220     		movs	r0, #2
+ 798 0032 FFF7FEFF 		bl	BUTTON_IsPressed
+ 799              	.LVL84:
+ 800 0036 58B9     		cbnz	r0, .L61
+ 801              		.loc 1 440 0 discriminator 2
+ 802 0038 0320     		movs	r0, #3
+ 803 003a FFF7FEFF 		bl	BUTTON_IsPressed
+ 804              	.LVL85:
+ 805 003e 0346     		mov	r3, r0
+ 806 0040 40B9     		cbnz	r0, .L62
+ 807 0042 08E0     		b	.L57
+ 808              	.L58:
+ 439:source\asw/reactionGame.c ****         return TRUE;
+ 809              		.loc 1 439 0 is_stmt 1
+ 810 0044 0123     		movs	r3, #1
+ 811 0046 06E0     		b	.L57
+ 812              	.L59:
+ 813 0048 0123     		movs	r3, #1
+ 814 004a 04E0     		b	.L57
+ 815              	.L60:
+ 441:source\asw/reactionGame.c ****         return TRUE;
+ 442:source\asw/reactionGame.c ****     } else {
+ 443:source\asw/reactionGame.c ****         return FALSE;
+ 816              		.loc 1 443 0
+ 817 004c 0023     		movs	r3, #0
+ 818 004e 02E0     		b	.L57
+ 819              	.L61:
+ 441:source\asw/reactionGame.c ****         return TRUE;
+ 820              		.loc 1 441 0
+ 821 0050 0123     		movs	r3, #1
+ 822 0052 00E0     		b	.L57
+ 823              	.L62:
+ 824 0054 0123     		movs	r3, #1
+ 825              	.L57:
+ 444:source\asw/reactionGame.c ****     }
+ 445:source\asw/reactionGame.c **** }
+ 826              		.loc 1 445 0
+ 827 0056 1846     		mov	r0, r3
+ 828 0058 03B0     		add	sp, sp, #12
+ 829              		.cfi_def_cfa_offset 4
+ 830              		@ sp needed
+ 831 005a 5DF804FB 		ldr	pc, [sp], #4
+ARM GAS  C:\Users\zakis\AppData\Local\Temp\cclDrXun.s 			page 24
+
+
+ 832              		.cfi_endproc
+ 833              	.LFE125:
+ 834              		.size	REACTION_correctButtonPressed, .-REACTION_correctButtonPressed
+ 835 005e 00BF     		.section	.rodata.str1.4,"aMS",%progbits,1
+ 836              		.align	2
+ 837              	.LC0:
+ 838 0000 0A57656C 		.ascii	"\012Welcome to the Reaction Game\012\000"
+ 838      636F6D65 
+ 838      20746F20 
+ 838      74686520 
+ 838      52656163 
+ 839 001f 00       		.space	1
+ 840              	.LC1:
+ 841 0020 50726573 		.ascii	"Press any of the right buttons for '1' and left but"
+ 841      7320616E 
+ 841      79206F66 
+ 841      20746865 
+ 841      20726967 
+ 842 0053 746F6E73 		.ascii	"tons for '2' \012\000"
+ 842      20666F72 
+ 842      20273227 
+ 842      200A00
+ 843 0062 0000     		.space	2
+ 844              	.LC2:
+ 845 0064 50726573 		.ascii	"Press any key to begin\012\012\000"
+ 845      7320616E 
+ 845      79206B65 
+ 845      7920746F 
+ 845      20626567 
+ 846 007d 000000   		.space	3
+ 847              	.LC3:
+ 848 0080 0A507265 		.ascii	"\012Press any key to play again\012\012\000"
+ 848      73732061 
+ 848      6E79206B 
+ 848      65792074 
+ 848      6F20706C 
+ 849 009f 00       		.space	1
+ 850              	.LC4:
+ 851 00a0 496E636F 		.ascii	"Incorrect Button Pressed\012\000"
+ 851      72726563 
+ 851      74204275 
+ 851      74746F6E 
+ 851      20507265 
+ 852 00ba 0000     		.space	2
+ 853              	.LC5:
+ 854 00bc 50726573 		.ascii	"Press any button to continue\012\012\000"
+ 854      7320616E 
+ 854      79206275 
+ 854      74746F6E 
+ 854      20746F20 
+ 855 00db 00       		.space	1
+ 856              	.LC6:
+ 857 00dc 54696D65 		.ascii	"Time ran out\012\000"
+ 857      2072616E 
+ 857      206F7574 
+ 857      0A00
+ 858 00ea 0000     		.space	2
+ARM GAS  C:\Users\zakis\AppData\Local\Temp\cclDrXun.s 			page 25
+
+
+ 859              	.LC7:
+ 860 00ec 0A436F72 		.ascii	"\012Correct presses : \000"
+ 860      72656374 
+ 860      20707265 
+ 860      73736573 
+ 860      203A2000 
+ 861              	.LC8:
+ 862 0100 0A546F74 		.ascii	"\012Total time : \000"
+ 862      616C2074 
+ 862      696D6520 
+ 862      3A2000
+ 863 010f 00       		.space	1
+ 864              	.LC9:
+ 865 0110 0A417665 		.ascii	"\012Average time : \000"
+ 865      72616765 
+ 865      2074696D 
+ 865      65203A20 
+ 865      00
+ 866 0121 000000   		.space	3
+ 867              	.LC10:
+ 868 0124 47726561 		.ascii	"Great! Correct Button Pressed\012\000"
+ 868      74212043 
+ 868      6F727265 
+ 868      63742042 
+ 868      7574746F 
+ 869 0143 00       		.space	1
+ 870              	.LC11:
+ 871 0144 52656163 		.ascii	"Reaction Time in ms: \000"
+ 871      74696F6E 
+ 871      2054696D 
+ 871      6520696E 
+ 871      206D733A 
+ 872 015a 0000     		.space	2
+ 873              	.LC12:
+ 874 015c 0A507265 		.ascii	"\012Press any button to continue\012\012\000"
+ 874      73732061 
+ 874      6E792062 
+ 874      7574746F 
+ 874      6E20746F 
+ 875              	.LC13:
+ 876 017c 0A526F75 		.ascii	"\012Round \000"
+ 876      6E642000 
+ 877              	.LC14:
+ 878 0184 20737461 		.ascii	" started!\012\000"
+ 878      72746564 
+ 878      210A00
+ 879              		.text
+ 880              	.Letext0:
+ 881              		.file 2 "c:\\program files (x86)\\cypress\\psoc creator\\4.4\\psoc creator\\import\\gnu\\arm\\5.4.
+ 882              		.file 3 "c:\\program files (x86)\\cypress\\psoc creator\\4.4\\psoc creator\\import\\gnu\\arm\\5.4.
+ 883              		.file 4 "Generated_Source\\PSoC5/ErikaOS_common_ee_types.inc"
+ 884              		.file 5 "Generated_Source\\PSoC5/ErikaOS_cortex_mx_ee_cpu.inc"
+ 885              		.file 6 ".\\source\\bsw/global.h"
+ 886              		.file 7 "source\\asw\\reactionGame.h"
+ 887              		.file 8 ".\\source\\bsw/seven.h"
+ 888              		.file 9 ".\\source\\bsw/button.h"
+ 889              		.file 10 "Generated_Source\\PSoC5/ErikaOS_ee_oo_intfunc.inc"
+ARM GAS  C:\Users\zakis\AppData\Local\Temp\cclDrXun.s 			page 26
+
+
+ 890              		.file 11 "Generated_Source\\PSoC5/ErikaOS_cortex_mx_ee_context.inc"
+ 891              		.file 12 "Generated_Source\\PSoC5/ErikaOS_common_ee_primitives.inc"
+ 892              		.file 13 "Generated_Source\\PSoC5/core_cm3.h"
+ 893              		.file 14 "Generated_Source\\PSoC5/UART_Logs.h"
+ 894              		.file 15 "Generated_Source\\PSoC5/Clock_Counter_RG.h"
+ 895              		.file 16 "c:\\program files (x86)\\cypress\\psoc creator\\4.4\\psoc creator\\import\\gnu\\arm\\5.4
+ 896              		.file 17 "c:\\program files (x86)\\cypress\\psoc creator\\4.4\\psoc creator\\import\\gnu\\arm\\5.4
+ 897              		.file 18 "Generated_Source\\PSoC5/Counter.h"
+ 898              		.section	.debug_info,"",%progbits
+ 899              	.Ldebug_info0:
+ 900 0000 670A0000 		.4byte	0xa67
+ 901 0004 0400     		.2byte	0x4
+ 902 0006 00000000 		.4byte	.Ldebug_abbrev0
+ 903 000a 04       		.byte	0x4
+ 904 000b 01       		.uleb128 0x1
+ 905 000c 24050000 		.4byte	.LASF123
+ 906 0010 0C       		.byte	0xc
+ 907 0011 E2020000 		.4byte	.LASF124
+ 908 0015 24010000 		.4byte	.LASF125
+ 909 0019 00000000 		.4byte	.Ldebug_ranges0+0
+ 910 001d 00000000 		.4byte	0
+ 911 0021 00000000 		.4byte	.Ldebug_line0
+ 912 0025 02       		.uleb128 0x2
+ 913 0026 01       		.byte	0x1
+ 914 0027 06       		.byte	0x6
+ 915 0028 09010000 		.4byte	.LASF0
+ 916 002c 03       		.uleb128 0x3
+ 917 002d 4A000000 		.4byte	.LASF3
+ 918 0031 02       		.byte	0x2
+ 919 0032 1D       		.byte	0x1d
+ 920 0033 37000000 		.4byte	0x37
+ 921 0037 02       		.uleb128 0x2
+ 922 0038 01       		.byte	0x1
+ 923 0039 08       		.byte	0x8
+ 924 003a ED040000 		.4byte	.LASF1
+ 925 003e 02       		.uleb128 0x2
+ 926 003f 02       		.byte	0x2
+ 927 0040 05       		.byte	0x5
+ 928 0041 1A050000 		.4byte	.LASF2
+ 929 0045 03       		.uleb128 0x3
+ 930 0046 F9010000 		.4byte	.LASF4
+ 931 004a 02       		.byte	0x2
+ 932 004b 2B       		.byte	0x2b
+ 933 004c 50000000 		.4byte	0x50
+ 934 0050 02       		.uleb128 0x2
+ 935 0051 02       		.byte	0x2
+ 936 0052 07       		.byte	0x7
+ 937 0053 FC020000 		.4byte	.LASF5
+ 938 0057 03       		.uleb128 0x3
+ 939 0058 78030000 		.4byte	.LASF6
+ 940 005c 02       		.byte	0x2
+ 941 005d 3F       		.byte	0x3f
+ 942 005e 62000000 		.4byte	0x62
+ 943 0062 02       		.uleb128 0x2
+ 944 0063 04       		.byte	0x4
+ 945 0064 05       		.byte	0x5
+ 946 0065 76010000 		.4byte	.LASF7
+ARM GAS  C:\Users\zakis\AppData\Local\Temp\cclDrXun.s 			page 27
+
+
+ 947 0069 02       		.uleb128 0x2
+ 948 006a 04       		.byte	0x4
+ 949 006b 07       		.byte	0x7
+ 950 006c 8E020000 		.4byte	.LASF8
+ 951 0070 02       		.uleb128 0x2
+ 952 0071 08       		.byte	0x8
+ 953 0072 05       		.byte	0x5
+ 954 0073 FB000000 		.4byte	.LASF9
+ 955 0077 02       		.uleb128 0x2
+ 956 0078 08       		.byte	0x8
+ 957 0079 07       		.byte	0x7
+ 958 007a 93000000 		.4byte	.LASF10
+ 959 007e 04       		.uleb128 0x4
+ 960 007f 04       		.byte	0x4
+ 961 0080 05       		.byte	0x5
+ 962 0081 696E7400 		.ascii	"int\000"
+ 963 0085 02       		.uleb128 0x2
+ 964 0086 04       		.byte	0x4
+ 965 0087 07       		.byte	0x7
+ 966 0088 46020000 		.4byte	.LASF11
+ 967 008c 02       		.uleb128 0x2
+ 968 008d 08       		.byte	0x8
+ 969 008e 04       		.byte	0x4
+ 970 008f 28060000 		.4byte	.LASF12
+ 971 0093 02       		.uleb128 0x2
+ 972 0094 04       		.byte	0x4
+ 973 0095 07       		.byte	0x7
+ 974 0096 BB030000 		.4byte	.LASF13
+ 975 009a 02       		.uleb128 0x2
+ 976 009b 01       		.byte	0x1
+ 977 009c 08       		.byte	0x8
+ 978 009d 3B060000 		.4byte	.LASF14
+ 979 00a1 03       		.uleb128 0x3
+ 980 00a2 18070000 		.4byte	.LASF15
+ 981 00a6 03       		.byte	0x3
+ 982 00a7 18       		.byte	0x18
+ 983 00a8 2C000000 		.4byte	0x2c
+ 984 00ac 03       		.uleb128 0x3
+ 985 00ad 53020000 		.4byte	.LASF16
+ 986 00b1 03       		.byte	0x3
+ 987 00b2 24       		.byte	0x24
+ 988 00b3 45000000 		.4byte	0x45
+ 989 00b7 03       		.uleb128 0x3
+ 990 00b8 E5040000 		.4byte	.LASF17
+ 991 00bc 03       		.byte	0x3
+ 992 00bd 2C       		.byte	0x2c
+ 993 00be 57000000 		.4byte	0x57
+ 994 00c2 02       		.uleb128 0x2
+ 995 00c3 04       		.byte	0x4
+ 996 00c4 04       		.byte	0x4
+ 997 00c5 88040000 		.4byte	.LASF18
+ 998 00c9 02       		.uleb128 0x2
+ 999 00ca 08       		.byte	0x8
+ 1000 00cb 04       		.byte	0x4
+ 1001 00cc B0010000 		.4byte	.LASF19
+ 1002 00d0 03       		.uleb128 0x3
+ 1003 00d1 0F070000 		.4byte	.LASF20
+ARM GAS  C:\Users\zakis\AppData\Local\Temp\cclDrXun.s 			page 28
+
+
+ 1004 00d5 04       		.byte	0x4
+ 1005 00d6 53       		.byte	0x53
+ 1006 00d7 7E000000 		.4byte	0x7e
+ 1007 00db 03       		.uleb128 0x3
+ 1008 00dc F6060000 		.4byte	.LASF21
+ 1009 00e0 04       		.byte	0x4
+ 1010 00e1 54       		.byte	0x54
+ 1011 00e2 85000000 		.4byte	0x85
+ 1012 00e6 03       		.uleb128 0x3
+ 1013 00e7 74020000 		.4byte	.LASF22
+ 1014 00eb 05       		.byte	0x5
+ 1015 00ec 4D       		.byte	0x4d
+ 1016 00ed DB000000 		.4byte	0xdb
+ 1017 00f1 03       		.uleb128 0x3
+ 1018 00f2 F5070000 		.4byte	.LASF23
+ 1019 00f6 05       		.byte	0x5
+ 1020 00f7 4F       		.byte	0x4f
+ 1021 00f8 DB000000 		.4byte	0xdb
+ 1022 00fc 03       		.uleb128 0x3
+ 1023 00fd 1D020000 		.4byte	.LASF24
+ 1024 0101 05       		.byte	0x5
+ 1025 0102 78       		.byte	0x78
+ 1026 0103 D0000000 		.4byte	0xd0
+ 1027 0107 03       		.uleb128 0x3
+ 1028 0108 C5060000 		.4byte	.LASF25
+ 1029 010c 06       		.byte	0x6
+ 1030 010d 90       		.byte	0x90
+ 1031 010e 25000000 		.4byte	0x25
+ 1032 0112 03       		.uleb128 0x3
+ 1033 0113 D5030000 		.4byte	.LASF26
+ 1034 0117 06       		.byte	0x6
+ 1035 0118 9C       		.byte	0x9c
+ 1036 0119 37000000 		.4byte	0x37
+ 1037 011d 03       		.uleb128 0x3
+ 1038 011e 6D020000 		.4byte	.LASF27
+ 1039 0122 06       		.byte	0x6
+ 1040 0123 9D       		.byte	0x9d
+ 1041 0124 9A000000 		.4byte	0x9a
+ 1042 0128 05       		.uleb128 0x5
+ 1043 0129 01       		.byte	0x1
+ 1044 012a 25000000 		.4byte	0x25
+ 1045 012e 06       		.byte	0x6
+ 1046 012f CF       		.byte	0xcf
+ 1047 0130 D1010000 		.4byte	0x1d1
+ 1048 0134 06       		.uleb128 0x6
+ 1049 0135 99040000 		.4byte	.LASF28
+ 1050 0139 00       		.byte	0
+ 1051 013a 07       		.uleb128 0x7
+ 1052 013b 7F040000 		.4byte	.LASF29
+ 1053 013f 7F       		.sleb128 -1
+ 1054 0140 07       		.uleb128 0x7
+ 1055 0141 A0020000 		.4byte	.LASF30
+ 1056 0145 7E       		.sleb128 -2
+ 1057 0146 07       		.uleb128 0x7
+ 1058 0147 C6050000 		.4byte	.LASF31
+ 1059 014b 7D       		.sleb128 -3
+ 1060 014c 07       		.uleb128 0x7
+ARM GAS  C:\Users\zakis\AppData\Local\Temp\cclDrXun.s 			page 29
+
+
+ 1061 014d 97060000 		.4byte	.LASF32
+ 1062 0151 7C       		.sleb128 -4
+ 1063 0152 07       		.uleb128 0x7
+ 1064 0153 00070000 		.4byte	.LASF33
+ 1065 0157 7B       		.sleb128 -5
+ 1066 0158 07       		.uleb128 0x7
+ 1067 0159 86060000 		.4byte	.LASF34
+ 1068 015d 7A       		.sleb128 -6
+ 1069 015e 07       		.uleb128 0x7
+ 1070 015f C6070000 		.4byte	.LASF35
+ 1071 0163 79       		.sleb128 -7
+ 1072 0164 07       		.uleb128 0x7
+ 1073 0165 27030000 		.4byte	.LASF36
+ 1074 0169 78       		.sleb128 -8
+ 1075 016a 07       		.uleb128 0x7
+ 1076 016b 60010000 		.4byte	.LASF37
+ 1077 016f 77       		.sleb128 -9
+ 1078 0170 07       		.uleb128 0x7
+ 1079 0171 AA040000 		.4byte	.LASF38
+ 1080 0175 76       		.sleb128 -10
+ 1081 0176 07       		.uleb128 0x7
+ 1082 0177 00000000 		.4byte	.LASF39
+ 1083 017b 75       		.sleb128 -11
+ 1084 017c 07       		.uleb128 0x7
+ 1085 017d A2010000 		.4byte	.LASF40
+ 1086 0181 74       		.sleb128 -12
+ 1087 0182 07       		.uleb128 0x7
+ 1088 0183 7C020000 		.4byte	.LASF41
+ 1089 0187 73       		.sleb128 -13
+ 1090 0188 07       		.uleb128 0x7
+ 1091 0189 15060000 		.4byte	.LASF42
+ 1092 018d 72       		.sleb128 -14
+ 1093 018e 07       		.uleb128 0x7
+ 1094 018f D1040000 		.4byte	.LASF43
+ 1095 0193 71       		.sleb128 -15
+ 1096 0194 07       		.uleb128 0x7
+ 1097 0195 DF030000 		.4byte	.LASF44
+ 1098 0199 70       		.sleb128 -16
+ 1099 019a 07       		.uleb128 0x7
+ 1100 019b 22040000 		.4byte	.LASF45
+ 1101 019f 6F       		.sleb128 -17
+ 1102 01a0 07       		.uleb128 0x7
+ 1103 01a1 43030000 		.4byte	.LASF46
+ 1104 01a5 6E       		.sleb128 -18
+ 1105 01a6 07       		.uleb128 0x7
+ 1106 01a7 80000000 		.4byte	.LASF47
+ 1107 01ab 6D       		.sleb128 -19
+ 1108 01ac 07       		.uleb128 0x7
+ 1109 01ad 02060000 		.4byte	.LASF48
+ 1110 01b1 6C       		.sleb128 -20
+ 1111 01b2 07       		.uleb128 0x7
+ 1112 01b3 AA000000 		.4byte	.LASF49
+ 1113 01b7 6B       		.sleb128 -21
+ 1114 01b8 07       		.uleb128 0x7
+ 1115 01b9 03040000 		.4byte	.LASF50
+ 1116 01bd 6A       		.sleb128 -22
+ 1117 01be 07       		.uleb128 0x7
+ARM GAS  C:\Users\zakis\AppData\Local\Temp\cclDrXun.s 			page 30
+
+
+ 1118 01bf 12000000 		.4byte	.LASF51
+ 1119 01c3 69       		.sleb128 -23
+ 1120 01c4 07       		.uleb128 0x7
+ 1121 01c5 5C020000 		.4byte	.LASF52
+ 1122 01c9 68       		.sleb128 -24
+ 1123 01ca 07       		.uleb128 0x7
+ 1124 01cb 6D060000 		.4byte	.LASF53
+ 1125 01cf 67       		.sleb128 -25
+ 1126 01d0 00       		.byte	0
+ 1127 01d1 03       		.uleb128 0x3
+ 1128 01d2 5C000000 		.4byte	.LASF54
+ 1129 01d6 06       		.byte	0x6
+ 1130 01d7 EA       		.byte	0xea
+ 1131 01d8 28010000 		.4byte	0x128
+ 1132 01dc 05       		.uleb128 0x5
+ 1133 01dd 01       		.byte	0x1
+ 1134 01de 37000000 		.4byte	0x37
+ 1135 01e2 07       		.byte	0x7
+ 1136 01e3 42       		.byte	0x42
+ 1137 01e4 01020000 		.4byte	0x201
+ 1138 01e8 06       		.uleb128 0x6
+ 1139 01e9 AE020000 		.4byte	.LASF55
+ 1140 01ed 00       		.byte	0
+ 1141 01ee 06       		.uleb128 0x6
+ 1142 01ef C4030000 		.4byte	.LASF56
+ 1143 01f3 01       		.byte	0x1
+ 1144 01f4 06       		.uleb128 0x6
+ 1145 01f5 E0000000 		.4byte	.LASF57
+ 1146 01f9 02       		.byte	0x2
+ 1147 01fa 06       		.uleb128 0x6
+ 1148 01fb A2030000 		.4byte	.LASF58
+ 1149 01ff 03       		.byte	0x3
+ 1150 0200 00       		.byte	0
+ 1151 0201 03       		.uleb128 0x3
+ 1152 0202 74070000 		.4byte	.LASF59
+ 1153 0206 07       		.byte	0x7
+ 1154 0207 47       		.byte	0x47
+ 1155 0208 DC010000 		.4byte	0x1dc
+ 1156 020c 08       		.uleb128 0x8
+ 1157 020d BE060000 		.4byte	.LASF66
+ 1158 0211 08       		.byte	0x8
+ 1159 0212 07       		.byte	0x7
+ 1160 0213 4C       		.byte	0x4c
+ 1161 0214 61020000 		.4byte	0x261
+ 1162 0218 09       		.uleb128 0x9
+ 1163 0219 5C060000 		.4byte	.LASF60
+ 1164 021d 07       		.byte	0x7
+ 1165 021e 4D       		.byte	0x4d
+ 1166 021f 01020000 		.4byte	0x201
+ 1167 0223 00       		.byte	0
+ 1168 0224 09       		.uleb128 0x9
+ 1169 0225 6C030000 		.4byte	.LASF61
+ 1170 0229 07       		.byte	0x7
+ 1171 022a 4E       		.byte	0x4e
+ 1172 022b A1000000 		.4byte	0xa1
+ 1173 022f 01       		.byte	0x1
+ 1174 0230 09       		.uleb128 0x9
+ARM GAS  C:\Users\zakis\AppData\Local\Temp\cclDrXun.s 			page 31
+
+
+ 1175 0231 52060000 		.4byte	.LASF62
+ 1176 0235 07       		.byte	0x7
+ 1177 0236 4F       		.byte	0x4f
+ 1178 0237 AC000000 		.4byte	0xac
+ 1179 023b 02       		.byte	0x2
+ 1180 023c 09       		.uleb128 0x9
+ 1181 023d 15010000 		.4byte	.LASF63
+ 1182 0241 07       		.byte	0x7
+ 1183 0242 50       		.byte	0x50
+ 1184 0243 A1000000 		.4byte	0xa1
+ 1185 0247 04       		.byte	0x4
+ 1186 0248 09       		.uleb128 0x9
+ 1187 0249 75040000 		.4byte	.LASF64
+ 1188 024d 07       		.byte	0x7
+ 1189 024e 51       		.byte	0x51
+ 1190 024f A1000000 		.4byte	0xa1
+ 1191 0253 05       		.byte	0x5
+ 1192 0254 09       		.uleb128 0x9
+ 1193 0255 8F030000 		.4byte	.LASF65
+ 1194 0259 07       		.byte	0x7
+ 1195 025a 52       		.byte	0x52
+ 1196 025b A1000000 		.4byte	0xa1
+ 1197 025f 06       		.byte	0x6
+ 1198 0260 00       		.byte	0
+ 1199 0261 03       		.uleb128 0x3
+ 1200 0262 BE060000 		.4byte	.LASF66
+ 1201 0266 07       		.byte	0x7
+ 1202 0267 53       		.byte	0x53
+ 1203 0268 0C020000 		.4byte	0x20c
+ 1204 026c 05       		.uleb128 0x5
+ 1205 026d 01       		.byte	0x1
+ 1206 026e 37000000 		.4byte	0x37
+ 1207 0272 08       		.byte	0x8
+ 1208 0273 5D       		.byte	0x5d
+ 1209 0274 85020000 		.4byte	0x285
+ 1210 0278 06       		.uleb128 0x6
+ 1211 0279 D8070000 		.4byte	.LASF67
+ 1212 027d 00       		.byte	0
+ 1213 027e 06       		.uleb128 0x6
+ 1214 027f 54000000 		.4byte	.LASF68
+ 1215 0283 01       		.byte	0x1
+ 1216 0284 00       		.byte	0
+ 1217 0285 05       		.uleb128 0x5
+ 1218 0286 01       		.byte	0x1
+ 1219 0287 37000000 		.4byte	0x37
+ 1220 028b 09       		.byte	0x9
+ 1221 028c 43       		.byte	0x43
+ 1222 028d AA020000 		.4byte	0x2aa
+ 1223 0291 06       		.uleb128 0x6
+ 1224 0292 3B040000 		.4byte	.LASF69
+ 1225 0296 00       		.byte	0
+ 1226 0297 06       		.uleb128 0x6
+ 1227 0298 4A040000 		.4byte	.LASF70
+ 1228 029c 01       		.byte	0x1
+ 1229 029d 06       		.uleb128 0x6
+ 1230 029e 59040000 		.4byte	.LASF71
+ 1231 02a2 02       		.byte	0x2
+ARM GAS  C:\Users\zakis\AppData\Local\Temp\cclDrXun.s 			page 32
+
+
+ 1232 02a3 06       		.uleb128 0x6
+ 1233 02a4 67040000 		.4byte	.LASF72
+ 1234 02a8 03       		.byte	0x3
+ 1235 02a9 00       		.byte	0
+ 1236 02aa 0A       		.uleb128 0xa
+ 1237 02ab EB010000 		.4byte	.LASF73
+ 1238 02af 01       		.byte	0x1
+ 1239 02b0 4E       		.byte	0x4e
+ 1240 02b1 D1010000 		.4byte	0x1d1
+ 1241 02b5 00000000 		.4byte	.LFB110
+ 1242 02b9 48000000 		.4byte	.LFE110-.LFB110
+ 1243 02bd 01       		.uleb128 0x1
+ 1244 02be 9C       		.byte	0x9c
+ 1245 02bf 42030000 		.4byte	0x342
+ 1246 02c3 0B       		.uleb128 0xb
+ 1247 02c4 F6000000 		.4byte	.LASF75
+ 1248 02c8 01       		.byte	0x1
+ 1249 02c9 4E       		.byte	0x4e
+ 1250 02ca 42030000 		.4byte	0x342
+ 1251 02ce 00000000 		.4byte	.LLST0
+ 1252 02d2 0C       		.uleb128 0xc
+ 1253 02d3 08000000 		.4byte	.LVL1
+ 1254 02d7 D0090000 		.4byte	0x9d0
+ 1255 02db 0C       		.uleb128 0xc
+ 1256 02dc 0C000000 		.4byte	.LVL2
+ 1257 02e0 DB090000 		.4byte	0x9db
+ 1258 02e4 0D       		.uleb128 0xd
+ 1259 02e5 12000000 		.4byte	.LVL3
+ 1260 02e9 E6090000 		.4byte	0x9e6
+ 1261 02ed F7020000 		.4byte	0x2f7
+ 1262 02f1 0E       		.uleb128 0xe
+ 1263 02f2 01       		.uleb128 0x1
+ 1264 02f3 50       		.byte	0x50
+ 1265 02f4 01       		.uleb128 0x1
+ 1266 02f5 30       		.byte	0x30
+ 1267 02f6 00       		.byte	0
+ 1268 02f7 0C       		.uleb128 0xc
+ 1269 02f8 16000000 		.4byte	.LVL4
+ 1270 02fc F1090000 		.4byte	0x9f1
+ 1271 0300 0D       		.uleb128 0xd
+ 1272 0301 28000000 		.4byte	.LVL5
+ 1273 0305 FC090000 		.4byte	0x9fc
+ 1274 0309 17030000 		.4byte	0x317
+ 1275 030d 0E       		.uleb128 0xe
+ 1276 030e 01       		.uleb128 0x1
+ 1277 030f 50       		.byte	0x50
+ 1278 0310 05       		.uleb128 0x5
+ 1279 0311 03       		.byte	0x3
+ 1280 0312 00000000 		.4byte	.LC0
+ 1281 0316 00       		.byte	0
+ 1282 0317 0D       		.uleb128 0xd
+ 1283 0318 2E000000 		.4byte	.LVL6
+ 1284 031c FC090000 		.4byte	0x9fc
+ 1285 0320 2E030000 		.4byte	0x32e
+ 1286 0324 0E       		.uleb128 0xe
+ 1287 0325 01       		.uleb128 0x1
+ 1288 0326 50       		.byte	0x50
+ARM GAS  C:\Users\zakis\AppData\Local\Temp\cclDrXun.s 			page 33
+
+
+ 1289 0327 05       		.uleb128 0x5
+ 1290 0328 03       		.byte	0x3
+ 1291 0329 20000000 		.4byte	.LC1
+ 1292 032d 00       		.byte	0
+ 1293 032e 0F       		.uleb128 0xf
+ 1294 032f 34000000 		.4byte	.LVL7
+ 1295 0333 FC090000 		.4byte	0x9fc
+ 1296 0337 0E       		.uleb128 0xe
+ 1297 0338 01       		.uleb128 0x1
+ 1298 0339 50       		.byte	0x50
+ 1299 033a 05       		.uleb128 0x5
+ 1300 033b 03       		.byte	0x3
+ 1301 033c 64000000 		.4byte	.LC2
+ 1302 0340 00       		.byte	0
+ 1303 0341 00       		.byte	0
+ 1304 0342 10       		.uleb128 0x10
+ 1305 0343 04       		.byte	0x4
+ 1306 0344 61020000 		.4byte	0x261
+ 1307 0348 0A       		.uleb128 0xa
+ 1308 0349 4D010000 		.4byte	.LASF74
+ 1309 034d 01       		.byte	0x1
+ 1310 034e 75       		.byte	0x75
+ 1311 034f D1010000 		.4byte	0x1d1
+ 1312 0353 00000000 		.4byte	.LFB111
+ 1313 0357 20000000 		.4byte	.LFE111-.LFB111
+ 1314 035b 01       		.uleb128 0x1
+ 1315 035c 9C       		.byte	0x9c
+ 1316 035d 84030000 		.4byte	0x384
+ 1317 0361 0B       		.uleb128 0xb
+ 1318 0362 F6000000 		.4byte	.LASF75
+ 1319 0366 01       		.byte	0x1
+ 1320 0367 75       		.byte	0x75
+ 1321 0368 42030000 		.4byte	0x342
+ 1322 036c 2C000000 		.4byte	.LLST1
+ 1323 0370 0F       		.uleb128 0xf
+ 1324 0371 0A000000 		.4byte	.LVL11
+ 1325 0375 FC090000 		.4byte	0x9fc
+ 1326 0379 0E       		.uleb128 0xe
+ 1327 037a 01       		.uleb128 0x1
+ 1328 037b 50       		.byte	0x50
+ 1329 037c 05       		.uleb128 0x5
+ 1330 037d 03       		.byte	0x3
+ 1331 037e 80000000 		.4byte	.LC3
+ 1332 0382 00       		.byte	0
+ 1333 0383 00       		.byte	0
+ 1334 0384 0A       		.uleb128 0xa
+ 1335 0385 C7020000 		.4byte	.LASF76
+ 1336 0389 01       		.byte	0x1
+ 1337 038a 8E       		.byte	0x8e
+ 1338 038b D1010000 		.4byte	0x1d1
+ 1339 038f 00000000 		.4byte	.LFB112
+ 1340 0393 1A000000 		.4byte	.LFE112-.LFB112
+ 1341 0397 01       		.uleb128 0x1
+ 1342 0398 9C       		.byte	0x9c
+ 1343 0399 C5030000 		.4byte	0x3c5
+ 1344 039d 0B       		.uleb128 0xb
+ 1345 039e 82030000 		.4byte	.LASF77
+ARM GAS  C:\Users\zakis\AppData\Local\Temp\cclDrXun.s 			page 34
+
+
+ 1346 03a2 01       		.byte	0x1
+ 1347 03a3 8E       		.byte	0x8e
+ 1348 03a4 C5030000 		.4byte	0x3c5
+ 1349 03a8 58000000 		.4byte	.LLST2
+ 1350 03ac 0B       		.uleb128 0xb
+ 1351 03ad BC000000 		.4byte	.LASF78
+ 1352 03b1 01       		.byte	0x1
+ 1353 03b2 8E       		.byte	0x8e
+ 1354 03b3 A1000000 		.4byte	0xa1
+ 1355 03b7 76000000 		.4byte	.LLST3
+ 1356 03bb 0C       		.uleb128 0xc
+ 1357 03bc 0A000000 		.4byte	.LVL14
+ 1358 03c0 070A0000 		.4byte	0xa07
+ 1359 03c4 00       		.byte	0
+ 1360 03c5 10       		.uleb128 0x10
+ 1361 03c6 04       		.byte	0x4
+ 1362 03c7 AC000000 		.4byte	0xac
+ 1363 03cb 0A       		.uleb128 0xa
+ 1364 03cc 29020000 		.4byte	.LASF79
+ 1365 03d0 01       		.byte	0x1
+ 1366 03d1 A2       		.byte	0xa2
+ 1367 03d2 D1010000 		.4byte	0x1d1
+ 1368 03d6 00000000 		.4byte	.LFB113
+ 1369 03da 28000000 		.4byte	.LFE113-.LFB113
+ 1370 03de 01       		.uleb128 0x1
+ 1371 03df 9C       		.byte	0x9c
+ 1372 03e0 23040000 		.4byte	0x423
+ 1373 03e4 0B       		.uleb128 0xb
+ 1374 03e5 36040000 		.4byte	.LASF80
+ 1375 03e9 01       		.byte	0x1
+ 1376 03ea A2       		.byte	0xa2
+ 1377 03eb AC000000 		.4byte	0xac
+ 1378 03ef 97000000 		.4byte	.LLST4
+ 1379 03f3 0C       		.uleb128 0xc
+ 1380 03f4 16000000 		.4byte	.LVL18
+ 1381 03f8 120A0000 		.4byte	0xa12
+ 1382 03fc 0C       		.uleb128 0xc
+ 1383 03fd 1A000000 		.4byte	.LVL19
+ 1384 0401 1D0A0000 		.4byte	0xa1d
+ 1385 0405 0D       		.uleb128 0xd
+ 1386 0406 20000000 		.4byte	.LVL20
+ 1387 040a 280A0000 		.4byte	0xa28
+ 1388 040e 19040000 		.4byte	0x419
+ 1389 0412 0E       		.uleb128 0xe
+ 1390 0413 01       		.uleb128 0x1
+ 1391 0414 50       		.byte	0x50
+ 1392 0415 02       		.uleb128 0x2
+ 1393 0416 74       		.byte	0x74
+ 1394 0417 00       		.sleb128 0
+ 1395 0418 00       		.byte	0
+ 1396 0419 0C       		.uleb128 0xc
+ 1397 041a 24000000 		.4byte	.LVL21
+ 1398 041e 120A0000 		.4byte	0xa12
+ 1399 0422 00       		.byte	0
+ 1400 0423 0A       		.uleb128 0xa
+ 1401 0424 B2050000 		.4byte	.LASF81
+ 1402 0428 01       		.byte	0x1
+ARM GAS  C:\Users\zakis\AppData\Local\Temp\cclDrXun.s 			page 35
+
+
+ 1403 0429 DD       		.byte	0xdd
+ 1404 042a D1010000 		.4byte	0x1d1
+ 1405 042e 00000000 		.4byte	.LFB115
+ 1406 0432 18000000 		.4byte	.LFE115-.LFB115
+ 1407 0436 01       		.uleb128 0x1
+ 1408 0437 9C       		.byte	0x9c
+ 1409 0438 7A040000 		.4byte	0x47a
+ 1410 043c 0B       		.uleb128 0xb
+ 1411 043d A7030000 		.4byte	.LASF82
+ 1412 0441 01       		.byte	0x1
+ 1413 0442 DD       		.byte	0xdd
+ 1414 0443 AC000000 		.4byte	0xac
+ 1415 0447 C3000000 		.4byte	.LLST5
+ 1416 044b 0D       		.uleb128 0xd
+ 1417 044c 0C000000 		.4byte	.LVL24
+ 1418 0450 330A0000 		.4byte	0xa33
+ 1419 0454 64040000 		.4byte	0x464
+ 1420 0458 0E       		.uleb128 0xe
+ 1421 0459 01       		.uleb128 0x1
+ 1422 045a 50       		.byte	0x50
+ 1423 045b 01       		.uleb128 0x1
+ 1424 045c 30       		.byte	0x30
+ 1425 045d 0E       		.uleb128 0xe
+ 1426 045e 01       		.uleb128 0x1
+ 1427 045f 51       		.byte	0x51
+ 1428 0460 02       		.uleb128 0x2
+ 1429 0461 74       		.byte	0x74
+ 1430 0462 00       		.sleb128 0
+ 1431 0463 00       		.byte	0
+ 1432 0464 0F       		.uleb128 0xf
+ 1433 0465 14000000 		.4byte	.LVL25
+ 1434 0469 330A0000 		.4byte	0xa33
+ 1435 046d 0E       		.uleb128 0xe
+ 1436 046e 01       		.uleb128 0x1
+ 1437 046f 50       		.byte	0x50
+ 1438 0470 01       		.uleb128 0x1
+ 1439 0471 31       		.byte	0x31
+ 1440 0472 0E       		.uleb128 0xe
+ 1441 0473 01       		.uleb128 0x1
+ 1442 0474 51       		.byte	0x51
+ 1443 0475 02       		.uleb128 0x2
+ 1444 0476 74       		.byte	0x74
+ 1445 0477 00       		.sleb128 0
+ 1446 0478 00       		.byte	0
+ 1447 0479 00       		.byte	0
+ 1448 047a 0A       		.uleb128 0xa
+ 1449 047b 59070000 		.4byte	.LASF83
+ 1450 047f 01       		.byte	0x1
+ 1451 0480 EF       		.byte	0xef
+ 1452 0481 D1010000 		.4byte	0x1d1
+ 1453 0485 00000000 		.4byte	.LFB116
+ 1454 0489 48000000 		.4byte	.LFE116-.LFB116
+ 1455 048d 01       		.uleb128 0x1
+ 1456 048e 9C       		.byte	0x9c
+ 1457 048f C3040000 		.4byte	0x4c3
+ 1458 0493 0B       		.uleb128 0xb
+ 1459 0494 15040000 		.4byte	.LASF84
+ARM GAS  C:\Users\zakis\AppData\Local\Temp\cclDrXun.s 			page 36
+
+
+ 1460 0498 01       		.byte	0x1
+ 1461 0499 EF       		.byte	0xef
+ 1462 049a C5030000 		.4byte	0x3c5
+ 1463 049e E4000000 		.4byte	.LLST6
+ 1464 04a2 11       		.uleb128 0x11
+ 1465 04a3 F6000000 		.4byte	.LASF75
+ 1466 04a7 01       		.byte	0x1
+ 1467 04a8 EF       		.byte	0xef
+ 1468 04a9 61020000 		.4byte	0x261
+ 1469 04ad 02       		.uleb128 0x2
+ 1470 04ae 91       		.byte	0x91
+ 1471 04af 68       		.sleb128 -24
+ 1472 04b0 0C       		.uleb128 0xc
+ 1473 04b1 10000000 		.4byte	.LVL27
+ 1474 04b5 1D0A0000 		.4byte	0xa1d
+ 1475 04b9 0C       		.uleb128 0xc
+ 1476 04ba 20000000 		.4byte	.LVL28
+ 1477 04be 3E0A0000 		.4byte	0xa3e
+ 1478 04c2 00       		.byte	0
+ 1479 04c3 12       		.uleb128 0x12
+ 1480 04c4 FB040000 		.4byte	.LASF85
+ 1481 04c8 01       		.byte	0x1
+ 1482 04c9 2001     		.2byte	0x120
+ 1483 04cb D1010000 		.4byte	0x1d1
+ 1484 04cf 00000000 		.4byte	.LFB118
+ 1485 04d3 1C000000 		.4byte	.LFE118-.LFB118
+ 1486 04d7 01       		.uleb128 0x1
+ 1487 04d8 9C       		.byte	0x9c
+ 1488 04d9 08050000 		.4byte	0x508
+ 1489 04dd 0D       		.uleb128 0xd
+ 1490 04de 08000000 		.4byte	.LVL30
+ 1491 04e2 FC090000 		.4byte	0x9fc
+ 1492 04e6 F4040000 		.4byte	0x4f4
+ 1493 04ea 0E       		.uleb128 0xe
+ 1494 04eb 01       		.uleb128 0x1
+ 1495 04ec 50       		.byte	0x50
+ 1496 04ed 05       		.uleb128 0x5
+ 1497 04ee 03       		.byte	0x3
+ 1498 04ef A0000000 		.4byte	.LC4
+ 1499 04f3 00       		.byte	0
+ 1500 04f4 0F       		.uleb128 0xf
+ 1501 04f5 0E000000 		.4byte	.LVL31
+ 1502 04f9 FC090000 		.4byte	0x9fc
+ 1503 04fd 0E       		.uleb128 0xe
+ 1504 04fe 01       		.uleb128 0x1
+ 1505 04ff 50       		.byte	0x50
+ 1506 0500 05       		.uleb128 0x5
+ 1507 0501 03       		.byte	0x3
+ 1508 0502 BC000000 		.4byte	.LC5
+ 1509 0506 00       		.byte	0
+ 1510 0507 00       		.byte	0
+ 1511 0508 12       		.uleb128 0x12
+ 1512 0509 20070000 		.4byte	.LASF86
+ 1513 050d 01       		.byte	0x1
+ 1514 050e 3201     		.2byte	0x132
+ 1515 0510 D1010000 		.4byte	0x1d1
+ 1516 0514 00000000 		.4byte	.LFB119
+ARM GAS  C:\Users\zakis\AppData\Local\Temp\cclDrXun.s 			page 37
+
+
+ 1517 0518 1C000000 		.4byte	.LFE119-.LFB119
+ 1518 051c 01       		.uleb128 0x1
+ 1519 051d 9C       		.byte	0x9c
+ 1520 051e 4D050000 		.4byte	0x54d
+ 1521 0522 0D       		.uleb128 0xd
+ 1522 0523 08000000 		.4byte	.LVL32
+ 1523 0527 FC090000 		.4byte	0x9fc
+ 1524 052b 39050000 		.4byte	0x539
+ 1525 052f 0E       		.uleb128 0xe
+ 1526 0530 01       		.uleb128 0x1
+ 1527 0531 50       		.byte	0x50
+ 1528 0532 05       		.uleb128 0x5
+ 1529 0533 03       		.byte	0x3
+ 1530 0534 DC000000 		.4byte	.LC6
+ 1531 0538 00       		.byte	0
+ 1532 0539 0F       		.uleb128 0xf
+ 1533 053a 0E000000 		.4byte	.LVL33
+ 1534 053e FC090000 		.4byte	0x9fc
+ 1535 0542 0E       		.uleb128 0xe
+ 1536 0543 01       		.uleb128 0x1
+ 1537 0544 50       		.byte	0x50
+ 1538 0545 05       		.uleb128 0x5
+ 1539 0546 03       		.byte	0x3
+ 1540 0547 BC000000 		.4byte	.LC5
+ 1541 054b 00       		.byte	0
+ 1542 054c 00       		.byte	0
+ 1543 054d 13       		.uleb128 0x13
+ 1544 054e 29000000 		.4byte	.LASF87
+ 1545 0552 01       		.byte	0x1
+ 1546 0553 6601     		.2byte	0x166
+ 1547 0555 D1010000 		.4byte	0x1d1
+ 1548 0559 00000000 		.4byte	.LFB121
+ 1549 055d 1E000000 		.4byte	.LFE121-.LFB121
+ 1550 0561 01       		.uleb128 0x1
+ 1551 0562 9C       		.byte	0x9c
+ 1552 0563 C0050000 		.4byte	0x5c0
+ 1553 0567 14       		.uleb128 0x14
+ 1554 0568 73747200 		.ascii	"str\000"
+ 1555 056c 01       		.byte	0x1
+ 1556 056d 6601     		.2byte	0x166
+ 1557 056f C0050000 		.4byte	0x5c0
+ 1558 0573 10010000 		.4byte	.LLST7
+ 1559 0577 15       		.uleb128 0x15
+ 1560 0578 34060000 		.4byte	.LASF88
+ 1561 057c 01       		.byte	0x1
+ 1562 057d 6601     		.2byte	0x166
+ 1563 057f A1000000 		.4byte	0xa1
+ 1564 0583 31010000 		.4byte	.LLST8
+ 1565 0587 16       		.uleb128 0x16
+ 1566 0588 AB070000 		.4byte	.LASF89
+ 1567 058c 01       		.byte	0x1
+ 1568 058d 6701     		.2byte	0x167
+ 1569 058f 7E000000 		.4byte	0x7e
+ 1570 0593 52010000 		.4byte	.LLST9
+ 1571 0597 17       		.uleb128 0x17
+ 1572 0598 656E6400 		.ascii	"end\000"
+ 1573 059c 01       		.byte	0x1
+ARM GAS  C:\Users\zakis\AppData\Local\Temp\cclDrXun.s 			page 38
+
+
+ 1574 059d 6801     		.2byte	0x168
+ 1575 059f 7E000000 		.4byte	0x7e
+ 1576 05a3 01       		.uleb128 0x1
+ 1577 05a4 51       		.byte	0x51
+ 1578 05a5 18       		.uleb128 0x18
+ 1579 05a6 08000000 		.4byte	.LBB2
+ 1580 05aa 0C000000 		.4byte	.LBE2-.LBB2
+ 1581 05ae 16       		.uleb128 0x16
+ 1582 05af 24020000 		.4byte	.LASF90
+ 1583 05b3 01       		.byte	0x1
+ 1584 05b4 6C01     		.2byte	0x16c
+ 1585 05b6 1D010000 		.4byte	0x11d
+ 1586 05ba 71010000 		.4byte	.LLST10
+ 1587 05be 00       		.byte	0
+ 1588 05bf 00       		.byte	0
+ 1589 05c0 10       		.uleb128 0x10
+ 1590 05c1 04       		.byte	0x4
+ 1591 05c2 1D010000 		.4byte	0x11d
+ 1592 05c6 13       		.uleb128 0x13
+ 1593 05c7 B8040000 		.4byte	.LASF91
+ 1594 05cb 01       		.byte	0x1
+ 1595 05cc 4401     		.2byte	0x144
+ 1596 05ce D1010000 		.4byte	0x1d1
+ 1597 05d2 00000000 		.4byte	.LFB120
+ 1598 05d6 48000000 		.4byte	.LFE120-.LFB120
+ 1599 05da 01       		.uleb128 0x1
+ 1600 05db 9C       		.byte	0x9c
+ 1601 05dc 3D060000 		.4byte	0x63d
+ 1602 05e0 15       		.uleb128 0x15
+ 1603 05e1 3C030000 		.4byte	.LASF92
+ 1604 05e5 01       		.byte	0x1
+ 1605 05e6 4401     		.2byte	0x144
+ 1606 05e8 AC000000 		.4byte	0xac
+ 1607 05ec 84010000 		.4byte	.LLST11
+ 1608 05f0 15       		.uleb128 0x15
+ 1609 05f1 66060000 		.4byte	.LASF93
+ 1610 05f5 01       		.byte	0x1
+ 1611 05f6 4401     		.2byte	0x144
+ 1612 05f8 C0050000 		.4byte	0x5c0
+ 1613 05fc C3010000 		.4byte	.LLST12
+ 1614 0600 19       		.uleb128 0x19
+ 1615 0601 6900     		.ascii	"i\000"
+ 1616 0603 01       		.byte	0x1
+ 1617 0604 4B01     		.2byte	0x14b
+ 1618 0606 7E000000 		.4byte	0x7e
+ 1619 060a 05020000 		.4byte	.LLST13
+ 1620 060e 1A       		.uleb128 0x1a
+ 1621 060f 10000000 		.4byte	.LBB3
+ 1622 0613 1E000000 		.4byte	.LBE3-.LBB3
+ 1623 0617 2C060000 		.4byte	0x62c
+ 1624 061b 16       		.uleb128 0x16
+ 1625 061c 47010000 		.4byte	.LASF94
+ 1626 0620 01       		.byte	0x1
+ 1627 0621 4F01     		.2byte	0x14f
+ 1628 0623 7E000000 		.4byte	0x7e
+ 1629 0627 3B020000 		.4byte	.LLST14
+ 1630 062b 00       		.byte	0
+ARM GAS  C:\Users\zakis\AppData\Local\Temp\cclDrXun.s 			page 39
+
+
+ 1631 062c 0F       		.uleb128 0xf
+ 1632 062d 3E000000 		.4byte	.LVL52
+ 1633 0631 4D050000 		.4byte	0x54d
+ 1634 0635 0E       		.uleb128 0xe
+ 1635 0636 01       		.uleb128 0x1
+ 1636 0637 50       		.byte	0x50
+ 1637 0638 02       		.uleb128 0x2
+ 1638 0639 75       		.byte	0x75
+ 1639 063a 00       		.sleb128 0
+ 1640 063b 00       		.byte	0
+ 1641 063c 00       		.byte	0
+ 1642 063d 0A       		.uleb128 0xa
+ 1643 063e D4050000 		.4byte	.LASF95
+ 1644 0642 01       		.byte	0x1
+ 1645 0643 BB       		.byte	0xbb
+ 1646 0644 D1010000 		.4byte	0x1d1
+ 1647 0648 00000000 		.4byte	.LFB114
+ 1648 064c 5C000000 		.4byte	.LFE114-.LFB114
+ 1649 0650 01       		.uleb128 0x1
+ 1650 0651 9C       		.byte	0x9c
+ 1651 0652 2D070000 		.4byte	0x72d
+ 1652 0656 0B       		.uleb128 0xb
+ 1653 0657 F6000000 		.4byte	.LASF75
+ 1654 065b 01       		.byte	0x1
+ 1655 065c BB       		.byte	0xbb
+ 1656 065d 2D070000 		.4byte	0x72d
+ 1657 0661 65020000 		.4byte	.LLST15
+ 1658 0665 1B       		.uleb128 0x1b
+ 1659 0666 66060000 		.4byte	.LASF93
+ 1660 066a 01       		.byte	0x1
+ 1661 066b BE       		.byte	0xbe
+ 1662 066c 38070000 		.4byte	0x738
+ 1663 0670 02       		.uleb128 0x2
+ 1664 0671 91       		.byte	0x91
+ 1665 0672 74       		.sleb128 -12
+ 1666 0673 0D       		.uleb128 0xd
+ 1667 0674 0C000000 		.4byte	.LVL56
+ 1668 0678 FC090000 		.4byte	0x9fc
+ 1669 067c 8A060000 		.4byte	0x68a
+ 1670 0680 0E       		.uleb128 0xe
+ 1671 0681 01       		.uleb128 0x1
+ 1672 0682 50       		.byte	0x50
+ 1673 0683 05       		.uleb128 0x5
+ 1674 0684 03       		.byte	0x3
+ 1675 0685 EC000000 		.4byte	.LC7
+ 1676 0689 00       		.byte	0
+ 1677 068a 0D       		.uleb128 0xd
+ 1678 068b 14000000 		.4byte	.LVL57
+ 1679 068f C6050000 		.4byte	0x5c6
+ 1680 0693 9E060000 		.4byte	0x69e
+ 1681 0697 0E       		.uleb128 0xe
+ 1682 0698 01       		.uleb128 0x1
+ 1683 0699 51       		.byte	0x51
+ 1684 069a 02       		.uleb128 0x2
+ 1685 069b 91       		.byte	0x91
+ 1686 069c 74       		.sleb128 -12
+ 1687 069d 00       		.byte	0
+ARM GAS  C:\Users\zakis\AppData\Local\Temp\cclDrXun.s 			page 40
+
+
+ 1688 069e 0D       		.uleb128 0xd
+ 1689 069f 1A000000 		.4byte	.LVL58
+ 1690 06a3 FC090000 		.4byte	0x9fc
+ 1691 06a7 B2060000 		.4byte	0x6b2
+ 1692 06ab 0E       		.uleb128 0xe
+ 1693 06ac 01       		.uleb128 0x1
+ 1694 06ad 50       		.byte	0x50
+ 1695 06ae 02       		.uleb128 0x2
+ 1696 06af 91       		.byte	0x91
+ 1697 06b0 74       		.sleb128 -12
+ 1698 06b1 00       		.byte	0
+ 1699 06b2 0D       		.uleb128 0xd
+ 1700 06b3 20000000 		.4byte	.LVL59
+ 1701 06b7 FC090000 		.4byte	0x9fc
+ 1702 06bb C9060000 		.4byte	0x6c9
+ 1703 06bf 0E       		.uleb128 0xe
+ 1704 06c0 01       		.uleb128 0x1
+ 1705 06c1 50       		.byte	0x50
+ 1706 06c2 05       		.uleb128 0x5
+ 1707 06c3 03       		.byte	0x3
+ 1708 06c4 00010000 		.4byte	.LC8
+ 1709 06c8 00       		.byte	0
+ 1710 06c9 0D       		.uleb128 0xd
+ 1711 06ca 28000000 		.4byte	.LVL60
+ 1712 06ce C6050000 		.4byte	0x5c6
+ 1713 06d2 DD060000 		.4byte	0x6dd
+ 1714 06d6 0E       		.uleb128 0xe
+ 1715 06d7 01       		.uleb128 0x1
+ 1716 06d8 51       		.byte	0x51
+ 1717 06d9 02       		.uleb128 0x2
+ 1718 06da 91       		.byte	0x91
+ 1719 06db 74       		.sleb128 -12
+ 1720 06dc 00       		.byte	0
+ 1721 06dd 0D       		.uleb128 0xd
+ 1722 06de 2E000000 		.4byte	.LVL61
+ 1723 06e2 FC090000 		.4byte	0x9fc
+ 1724 06e6 F1060000 		.4byte	0x6f1
+ 1725 06ea 0E       		.uleb128 0xe
+ 1726 06eb 01       		.uleb128 0x1
+ 1727 06ec 50       		.byte	0x50
+ 1728 06ed 02       		.uleb128 0x2
+ 1729 06ee 91       		.byte	0x91
+ 1730 06ef 74       		.sleb128 -12
+ 1731 06f0 00       		.byte	0
+ 1732 06f1 0D       		.uleb128 0xd
+ 1733 06f2 34000000 		.4byte	.LVL62
+ 1734 06f6 FC090000 		.4byte	0x9fc
+ 1735 06fa 08070000 		.4byte	0x708
+ 1736 06fe 0E       		.uleb128 0xe
+ 1737 06ff 01       		.uleb128 0x1
+ 1738 0700 50       		.byte	0x50
+ 1739 0701 05       		.uleb128 0x5
+ 1740 0702 03       		.byte	0x3
+ 1741 0703 10010000 		.4byte	.LC9
+ 1742 0707 00       		.byte	0
+ 1743 0708 0D       		.uleb128 0xd
+ 1744 0709 42000000 		.4byte	.LVL63
+ARM GAS  C:\Users\zakis\AppData\Local\Temp\cclDrXun.s 			page 41
+
+
+ 1745 070d C6050000 		.4byte	0x5c6
+ 1746 0711 1C070000 		.4byte	0x71c
+ 1747 0715 0E       		.uleb128 0xe
+ 1748 0716 01       		.uleb128 0x1
+ 1749 0717 51       		.byte	0x51
+ 1750 0718 02       		.uleb128 0x2
+ 1751 0719 91       		.byte	0x91
+ 1752 071a 74       		.sleb128 -12
+ 1753 071b 00       		.byte	0
+ 1754 071c 0F       		.uleb128 0xf
+ 1755 071d 48000000 		.4byte	.LVL64
+ 1756 0721 FC090000 		.4byte	0x9fc
+ 1757 0725 0E       		.uleb128 0xe
+ 1758 0726 01       		.uleb128 0x1
+ 1759 0727 50       		.byte	0x50
+ 1760 0728 02       		.uleb128 0x2
+ 1761 0729 91       		.byte	0x91
+ 1762 072a 74       		.sleb128 -12
+ 1763 072b 00       		.byte	0
+ 1764 072c 00       		.byte	0
+ 1765 072d 10       		.uleb128 0x10
+ 1766 072e 04       		.byte	0x4
+ 1767 072f 33070000 		.4byte	0x733
+ 1768 0733 1C       		.uleb128 0x1c
+ 1769 0734 61020000 		.4byte	0x261
+ 1770 0738 1D       		.uleb128 0x1d
+ 1771 0739 1D010000 		.4byte	0x11d
+ 1772 073d 48070000 		.4byte	0x748
+ 1773 0741 1E       		.uleb128 0x1e
+ 1774 0742 93000000 		.4byte	0x93
+ 1775 0746 03       		.byte	0x3
+ 1776 0747 00       		.byte	0
+ 1777 0748 13       		.uleb128 0x13
+ 1778 0749 61000000 		.4byte	.LASF96
+ 1779 074d 01       		.byte	0x1
+ 1780 074e 0701     		.2byte	0x107
+ 1781 0750 D1010000 		.4byte	0x1d1
+ 1782 0754 00000000 		.4byte	.LFB117
+ 1783 0758 38000000 		.4byte	.LFE117-.LFB117
+ 1784 075c 01       		.uleb128 0x1
+ 1785 075d 9C       		.byte	0x9c
+ 1786 075e F1070000 		.4byte	0x7f1
+ 1787 0762 15       		.uleb128 0x15
+ 1788 0763 15040000 		.4byte	.LASF84
+ 1789 0767 01       		.byte	0x1
+ 1790 0768 0701     		.2byte	0x107
+ 1791 076a AC000000 		.4byte	0xac
+ 1792 076e 91020000 		.4byte	.LLST16
+ 1793 0772 1F       		.uleb128 0x1f
+ 1794 0773 7F010000 		.4byte	.LASF97
+ 1795 0777 01       		.byte	0x1
+ 1796 0778 0D01     		.2byte	0x10d
+ 1797 077a F1070000 		.4byte	0x7f1
+ 1798 077e 02       		.uleb128 0x2
+ 1799 077f 91       		.byte	0x91
+ 1800 0780 74       		.sleb128 -12
+ 1801 0781 0D       		.uleb128 0xd
+ARM GAS  C:\Users\zakis\AppData\Local\Temp\cclDrXun.s 			page 42
+
+
+ 1802 0782 0C000000 		.4byte	.LVL68
+ 1803 0786 FC090000 		.4byte	0x9fc
+ 1804 078a 98070000 		.4byte	0x798
+ 1805 078e 0E       		.uleb128 0xe
+ 1806 078f 01       		.uleb128 0x1
+ 1807 0790 50       		.byte	0x50
+ 1808 0791 05       		.uleb128 0x5
+ 1809 0792 03       		.byte	0x3
+ 1810 0793 24010000 		.4byte	.LC10
+ 1811 0797 00       		.byte	0
+ 1812 0798 0D       		.uleb128 0xd
+ 1813 0799 12000000 		.4byte	.LVL69
+ 1814 079d FC090000 		.4byte	0x9fc
+ 1815 07a1 AF070000 		.4byte	0x7af
+ 1816 07a5 0E       		.uleb128 0xe
+ 1817 07a6 01       		.uleb128 0x1
+ 1818 07a7 50       		.byte	0x50
+ 1819 07a8 05       		.uleb128 0x5
+ 1820 07a9 03       		.byte	0x3
+ 1821 07aa 44010000 		.4byte	.LC11
+ 1822 07ae 00       		.byte	0
+ 1823 07af 0D       		.uleb128 0xd
+ 1824 07b0 1A000000 		.4byte	.LVL70
+ 1825 07b4 C6050000 		.4byte	0x5c6
+ 1826 07b8 C9070000 		.4byte	0x7c9
+ 1827 07bc 0E       		.uleb128 0xe
+ 1828 07bd 01       		.uleb128 0x1
+ 1829 07be 50       		.byte	0x50
+ 1830 07bf 02       		.uleb128 0x2
+ 1831 07c0 74       		.byte	0x74
+ 1832 07c1 00       		.sleb128 0
+ 1833 07c2 0E       		.uleb128 0xe
+ 1834 07c3 01       		.uleb128 0x1
+ 1835 07c4 51       		.byte	0x51
+ 1836 07c5 02       		.uleb128 0x2
+ 1837 07c6 91       		.byte	0x91
+ 1838 07c7 74       		.sleb128 -12
+ 1839 07c8 00       		.byte	0
+ 1840 07c9 0D       		.uleb128 0xd
+ 1841 07ca 20000000 		.4byte	.LVL71
+ 1842 07ce FC090000 		.4byte	0x9fc
+ 1843 07d2 DD070000 		.4byte	0x7dd
+ 1844 07d6 0E       		.uleb128 0xe
+ 1845 07d7 01       		.uleb128 0x1
+ 1846 07d8 50       		.byte	0x50
+ 1847 07d9 02       		.uleb128 0x2
+ 1848 07da 91       		.byte	0x91
+ 1849 07db 74       		.sleb128 -12
+ 1850 07dc 00       		.byte	0
+ 1851 07dd 0F       		.uleb128 0xf
+ 1852 07de 26000000 		.4byte	.LVL72
+ 1853 07e2 FC090000 		.4byte	0x9fc
+ 1854 07e6 0E       		.uleb128 0xe
+ 1855 07e7 01       		.uleb128 0x1
+ 1856 07e8 50       		.byte	0x50
+ 1857 07e9 05       		.uleb128 0x5
+ 1858 07ea 03       		.byte	0x3
+ARM GAS  C:\Users\zakis\AppData\Local\Temp\cclDrXun.s 			page 43
+
+
+ 1859 07eb 5C010000 		.4byte	.LC12
+ 1860 07ef 00       		.byte	0
+ 1861 07f0 00       		.byte	0
+ 1862 07f1 1D       		.uleb128 0x1d
+ 1863 07f2 1D010000 		.4byte	0x11d
+ 1864 07f6 01080000 		.4byte	0x801
+ 1865 07fa 1E       		.uleb128 0x1e
+ 1866 07fb 93000000 		.4byte	0x93
+ 1867 07ff 02       		.byte	0x2
+ 1868 0800 00       		.byte	0
+ 1869 0801 13       		.uleb128 0x13
+ 1870 0802 3F070000 		.4byte	.LASF98
+ 1871 0806 01       		.byte	0x1
+ 1872 0807 8101     		.2byte	0x181
+ 1873 0809 D1010000 		.4byte	0x1d1
+ 1874 080d 00000000 		.4byte	.LFB122
+ 1875 0811 30000000 		.4byte	.LFE122-.LFB122
+ 1876 0815 01       		.uleb128 0x1
+ 1877 0816 9C       		.byte	0x9c
+ 1878 0817 93080000 		.4byte	0x893
+ 1879 081b 15       		.uleb128 0x15
+ 1880 081c 6C030000 		.4byte	.LASF61
+ 1881 0820 01       		.byte	0x1
+ 1882 0821 8101     		.2byte	0x181
+ 1883 0823 A1000000 		.4byte	0xa1
+ 1884 0827 B2020000 		.4byte	.LLST17
+ 1885 082b 1F       		.uleb128 0x1f
+ 1886 082c 7F010000 		.4byte	.LASF97
+ 1887 0830 01       		.byte	0x1
+ 1888 0831 8601     		.2byte	0x186
+ 1889 0833 93080000 		.4byte	0x893
+ 1890 0837 02       		.uleb128 0x2
+ 1891 0838 91       		.byte	0x91
+ 1892 0839 74       		.sleb128 -12
+ 1893 083a 0D       		.uleb128 0xd
+ 1894 083b 0C000000 		.4byte	.LVL75
+ 1895 083f FC090000 		.4byte	0x9fc
+ 1896 0843 51080000 		.4byte	0x851
+ 1897 0847 0E       		.uleb128 0xe
+ 1898 0848 01       		.uleb128 0x1
+ 1899 0849 50       		.byte	0x50
+ 1900 084a 05       		.uleb128 0x5
+ 1901 084b 03       		.byte	0x3
+ 1902 084c 7C010000 		.4byte	.LC13
+ 1903 0850 00       		.byte	0
+ 1904 0851 0D       		.uleb128 0xd
+ 1905 0852 14000000 		.4byte	.LVL76
+ 1906 0856 C6050000 		.4byte	0x5c6
+ 1907 085a 6B080000 		.4byte	0x86b
+ 1908 085e 0E       		.uleb128 0xe
+ 1909 085f 01       		.uleb128 0x1
+ 1910 0860 50       		.byte	0x50
+ 1911 0861 02       		.uleb128 0x2
+ 1912 0862 74       		.byte	0x74
+ 1913 0863 00       		.sleb128 0
+ 1914 0864 0E       		.uleb128 0xe
+ 1915 0865 01       		.uleb128 0x1
+ARM GAS  C:\Users\zakis\AppData\Local\Temp\cclDrXun.s 			page 44
+
+
+ 1916 0866 51       		.byte	0x51
+ 1917 0867 02       		.uleb128 0x2
+ 1918 0868 91       		.byte	0x91
+ 1919 0869 74       		.sleb128 -12
+ 1920 086a 00       		.byte	0
+ 1921 086b 0D       		.uleb128 0xd
+ 1922 086c 1A000000 		.4byte	.LVL77
+ 1923 0870 FC090000 		.4byte	0x9fc
+ 1924 0874 7F080000 		.4byte	0x87f
+ 1925 0878 0E       		.uleb128 0xe
+ 1926 0879 01       		.uleb128 0x1
+ 1927 087a 50       		.byte	0x50
+ 1928 087b 02       		.uleb128 0x2
+ 1929 087c 91       		.byte	0x91
+ 1930 087d 74       		.sleb128 -12
+ 1931 087e 00       		.byte	0
+ 1932 087f 0F       		.uleb128 0xf
+ 1933 0880 20000000 		.4byte	.LVL78
+ 1934 0884 FC090000 		.4byte	0x9fc
+ 1935 0888 0E       		.uleb128 0xe
+ 1936 0889 01       		.uleb128 0x1
+ 1937 088a 50       		.byte	0x50
+ 1938 088b 05       		.uleb128 0x5
+ 1939 088c 03       		.byte	0x3
+ 1940 088d 84010000 		.4byte	.LC14
+ 1941 0891 00       		.byte	0
+ 1942 0892 00       		.byte	0
+ 1943 0893 1D       		.uleb128 0x1d
+ 1944 0894 1D010000 		.4byte	0x11d
+ 1945 0898 A3080000 		.4byte	0x8a3
+ 1946 089c 1E       		.uleb128 0x1e
+ 1947 089d 93000000 		.4byte	0x93
+ 1948 08a1 01       		.byte	0x1
+ 1949 08a2 00       		.byte	0
+ 1950 08a3 12       		.uleb128 0x12
+ 1951 08a4 B1070000 		.4byte	.LASF99
+ 1952 08a8 01       		.byte	0x1
+ 1953 08a9 9701     		.2byte	0x197
+ 1954 08ab D1010000 		.4byte	0x1d1
+ 1955 08af 00000000 		.4byte	.LFB123
+ 1956 08b3 0A000000 		.4byte	.LFE123-.LFB123
+ 1957 08b7 01       		.uleb128 0x1
+ 1958 08b8 9C       		.byte	0x9c
+ 1959 08b9 C7080000 		.4byte	0x8c7
+ 1960 08bd 0C       		.uleb128 0xc
+ 1961 08be 06000000 		.4byte	.LVL79
+ 1962 08c2 1D0A0000 		.4byte	0xa1d
+ 1963 08c6 00       		.byte	0
+ 1964 08c7 12       		.uleb128 0x12
+ 1965 08c8 EC050000 		.4byte	.LASF100
+ 1966 08cc 01       		.byte	0x1
+ 1967 08cd A301     		.2byte	0x1a3
+ 1968 08cf D1010000 		.4byte	0x1d1
+ 1969 08d3 00000000 		.4byte	.LFB124
+ 1970 08d7 0A000000 		.4byte	.LFE124-.LFB124
+ 1971 08db 01       		.uleb128 0x1
+ 1972 08dc 9C       		.byte	0x9c
+ARM GAS  C:\Users\zakis\AppData\Local\Temp\cclDrXun.s 			page 45
+
+
+ 1973 08dd EB080000 		.4byte	0x8eb
+ 1974 08e1 0C       		.uleb128 0xc
+ 1975 08e2 06000000 		.4byte	.LVL80
+ 1976 08e6 490A0000 		.4byte	0xa49
+ 1977 08ea 00       		.byte	0
+ 1978 08eb 12       		.uleb128 0x12
+ 1979 08ec 7F070000 		.4byte	.LASF101
+ 1980 08f0 01       		.byte	0x1
+ 1981 08f1 B001     		.2byte	0x1b0
+ 1982 08f3 12010000 		.4byte	0x112
+ 1983 08f7 00000000 		.4byte	.LFB125
+ 1984 08fb 5E000000 		.4byte	.LFE125-.LFB125
+ 1985 08ff 01       		.uleb128 0x1
+ 1986 0900 9C       		.byte	0x9c
+ 1987 0901 76090000 		.4byte	0x976
+ 1988 0905 1F       		.uleb128 0x1f
+ 1989 0906 40060000 		.4byte	.LASF102
+ 1990 090a 01       		.byte	0x1
+ 1991 090b B201     		.2byte	0x1b2
+ 1992 090d 07010000 		.4byte	0x107
+ 1993 0911 02       		.uleb128 0x2
+ 1994 0912 91       		.byte	0x91
+ 1995 0913 77       		.sleb128 -9
+ 1996 0914 0D       		.uleb128 0xd
+ 1997 0915 10000000 		.4byte	.LVL81
+ 1998 0919 540A0000 		.4byte	0xa54
+ 1999 091d 2D090000 		.4byte	0x92d
+ 2000 0921 0E       		.uleb128 0xe
+ 2001 0922 01       		.uleb128 0x1
+ 2002 0923 50       		.byte	0x50
+ 2003 0924 01       		.uleb128 0x1
+ 2004 0925 30       		.byte	0x30
+ 2005 0926 0E       		.uleb128 0xe
+ 2006 0927 01       		.uleb128 0x1
+ 2007 0928 51       		.byte	0x51
+ 2008 0929 02       		.uleb128 0x2
+ 2009 092a 91       		.byte	0x91
+ 2010 092b 77       		.sleb128 -9
+ 2011 092c 00       		.byte	0
+ 2012 092d 0D       		.uleb128 0xd
+ 2013 092e 1E000000 		.4byte	.LVL82
+ 2014 0932 5F0A0000 		.4byte	0xa5f
+ 2015 0936 40090000 		.4byte	0x940
+ 2016 093a 0E       		.uleb128 0xe
+ 2017 093b 01       		.uleb128 0x1
+ 2018 093c 50       		.byte	0x50
+ 2019 093d 01       		.uleb128 0x1
+ 2020 093e 30       		.byte	0x30
+ 2021 093f 00       		.byte	0
+ 2022 0940 0D       		.uleb128 0xd
+ 2023 0941 26000000 		.4byte	.LVL83
+ 2024 0945 5F0A0000 		.4byte	0xa5f
+ 2025 0949 53090000 		.4byte	0x953
+ 2026 094d 0E       		.uleb128 0xe
+ 2027 094e 01       		.uleb128 0x1
+ 2028 094f 50       		.byte	0x50
+ 2029 0950 01       		.uleb128 0x1
+ARM GAS  C:\Users\zakis\AppData\Local\Temp\cclDrXun.s 			page 46
+
+
+ 2030 0951 31       		.byte	0x31
+ 2031 0952 00       		.byte	0
+ 2032 0953 0D       		.uleb128 0xd
+ 2033 0954 36000000 		.4byte	.LVL84
+ 2034 0958 5F0A0000 		.4byte	0xa5f
+ 2035 095c 66090000 		.4byte	0x966
+ 2036 0960 0E       		.uleb128 0xe
+ 2037 0961 01       		.uleb128 0x1
+ 2038 0962 50       		.byte	0x50
+ 2039 0963 01       		.uleb128 0x1
+ 2040 0964 32       		.byte	0x32
+ 2041 0965 00       		.byte	0
+ 2042 0966 0F       		.uleb128 0xf
+ 2043 0967 3E000000 		.4byte	.LVL85
+ 2044 096b 5F0A0000 		.4byte	0xa5f
+ 2045 096f 0E       		.uleb128 0xe
+ 2046 0970 01       		.uleb128 0x1
+ 2047 0971 50       		.byte	0x50
+ 2048 0972 01       		.uleb128 0x1
+ 2049 0973 33       		.byte	0x33
+ 2050 0974 00       		.byte	0
+ 2051 0975 00       		.byte	0
+ 2052 0976 20       		.uleb128 0x20
+ 2053 0977 9D070000 		.4byte	.LASF103
+ 2054 097b 01       		.byte	0x1
+ 2055 097c 34       		.byte	0x34
+ 2056 097d 83090000 		.4byte	0x983
+ 2057 0981 E02E     		.2byte	0x2ee0
+ 2058 0983 1C       		.uleb128 0x1c
+ 2059 0984 AC000000 		.4byte	0xac
+ 2060 0988 21       		.uleb128 0x21
+ 2061 0989 0F030000 		.4byte	.LASF104
+ 2062 098d 0A       		.byte	0xa
+ 2063 098e 40       		.byte	0x40
+ 2064 098f E6000000 		.4byte	0xe6
+ 2065 0993 21       		.uleb128 0x21
+ 2066 0994 D2010000 		.4byte	.LASF105
+ 2067 0998 0A       		.byte	0xa
+ 2068 0999 47       		.byte	0x47
+ 2069 099a F1000000 		.4byte	0xf1
+ 2070 099e 21       		.uleb128 0x21
+ 2071 099f F0030000 		.4byte	.LASF106
+ 2072 09a3 0A       		.byte	0xa
+ 2073 09a4 4A       		.byte	0x4a
+ 2074 09a5 E6000000 		.4byte	0xe6
+ 2075 09a9 21       		.uleb128 0x21
+ 2076 09aa 04020000 		.4byte	.LASF107
+ 2077 09ae 0B       		.byte	0xb
+ 2078 09af 48       		.byte	0x48
+ 2079 09b0 FC000000 		.4byte	0xfc
+ 2080 09b4 21       		.uleb128 0x21
+ 2081 09b5 E1060000 		.4byte	.LASF108
+ 2082 09b9 0C       		.byte	0xc
+ 2083 09ba 44       		.byte	0x44
+ 2084 09bb E6000000 		.4byte	0xe6
+ 2085 09bf 22       		.uleb128 0x22
+ 2086 09c0 C2000000 		.4byte	.LASF109
+ARM GAS  C:\Users\zakis\AppData\Local\Temp\cclDrXun.s 			page 47
+
+
+ 2087 09c4 0D       		.byte	0xd
+ 2088 09c5 1207     		.2byte	0x712
+ 2089 09c7 CB090000 		.4byte	0x9cb
+ 2090 09cb 23       		.uleb128 0x23
+ 2091 09cc B7000000 		.4byte	0xb7
+ 2092 09d0 24       		.uleb128 0x24
+ 2093 09d1 92010000 		.4byte	.LASF110
+ 2094 09d5 92010000 		.4byte	.LASF110
+ 2095 09d9 0E       		.byte	0xe
+ 2096 09da 54       		.byte	0x54
+ 2097 09db 24       		.uleb128 0x24
+ 2098 09dc A7060000 		.4byte	.LASF111
+ 2099 09e0 A7060000 		.4byte	.LASF111
+ 2100 09e4 0F       		.byte	0xf
+ 2101 09e5 27       		.byte	0x27
+ 2102 09e6 24       		.uleb128 0x24
+ 2103 09e7 36040000 		.4byte	.LASF80
+ 2104 09eb 36040000 		.4byte	.LASF80
+ 2105 09ef 10       		.byte	0x10
+ 2106 09f0 37       		.byte	0x37
+ 2107 09f1 24       		.uleb128 0x24
+ 2108 09f2 A4040000 		.4byte	.LASF112
+ 2109 09f6 A4040000 		.4byte	.LASF112
+ 2110 09fa 11       		.byte	0x11
+ 2111 09fb 96       		.byte	0x96
+ 2112 09fc 24       		.uleb128 0x24
+ 2113 09fd 58030000 		.4byte	.LASF113
+ 2114 0a01 58030000 		.4byte	.LASF113
+ 2115 0a05 0E       		.byte	0xe
+ 2116 0a06 8B       		.byte	0x8b
+ 2117 0a07 24       		.uleb128 0x24
+ 2118 0a08 C2020000 		.4byte	.LASF114
+ 2119 0a0c C2020000 		.4byte	.LASF114
+ 2120 0a10 11       		.byte	0x11
+ 2121 0a11 88       		.byte	0x88
+ 2122 0a12 24       		.uleb128 0x24
+ 2123 0a13 B7010000 		.4byte	.LASF115
+ 2124 0a17 B7010000 		.4byte	.LASF115
+ 2125 0a1b 12       		.byte	0x12
+ 2126 0a1c 4F       		.byte	0x4f
+ 2127 0a1d 24       		.uleb128 0x24
+ 2128 0a1e C5010000 		.4byte	.LASF116
+ 2129 0a22 C5010000 		.4byte	.LASF116
+ 2130 0a26 12       		.byte	0x12
+ 2131 0a27 50       		.byte	0x50
+ 2132 0a28 24       		.uleb128 0x24
+ 2133 0a29 E0070000 		.4byte	.LASF117
+ 2134 0a2d E0070000 		.4byte	.LASF117
+ 2135 0a31 12       		.byte	0x12
+ 2136 0a32 5A       		.byte	0x5a
+ 2137 0a33 24       		.uleb128 0x24
+ 2138 0a34 40000000 		.4byte	.LASF118
+ 2139 0a38 40000000 		.4byte	.LASF118
+ 2140 0a3c 08       		.byte	0x8
+ 2141 0a3d 80       		.byte	0x80
+ 2142 0a3e 24       		.uleb128 0x24
+ 2143 0a3f CD060000 		.4byte	.LASF119
+ARM GAS  C:\Users\zakis\AppData\Local\Temp\cclDrXun.s 			page 48
+
+
+ 2144 0a43 CD060000 		.4byte	.LASF119
+ 2145 0a47 12       		.byte	0x12
+ 2146 0a48 5D       		.byte	0x5d
+ 2147 0a49 24       		.uleb128 0x24
+ 2148 0a4a 8E040000 		.4byte	.LASF120
+ 2149 0a4e 8E040000 		.4byte	.LASF120
+ 2150 0a52 08       		.byte	0x8
+ 2151 0a53 78       		.byte	0x78
+ 2152 0a54 24       		.uleb128 0x24
+ 2153 0a55 88010000 		.4byte	.LASF121
+ 2154 0a59 88010000 		.4byte	.LASF121
+ 2155 0a5d 08       		.byte	0x8
+ 2156 0a5e 88       		.byte	0x88
+ 2157 0a5f 24       		.uleb128 0x24
+ 2158 0a60 CF000000 		.4byte	.LASF122
+ 2159 0a64 CF000000 		.4byte	.LASF122
+ 2160 0a68 09       		.byte	0x9
+ 2161 0a69 66       		.byte	0x66
+ 2162 0a6a 00       		.byte	0
+ 2163              		.section	.debug_abbrev,"",%progbits
+ 2164              	.Ldebug_abbrev0:
+ 2165 0000 01       		.uleb128 0x1
+ 2166 0001 11       		.uleb128 0x11
+ 2167 0002 01       		.byte	0x1
+ 2168 0003 25       		.uleb128 0x25
+ 2169 0004 0E       		.uleb128 0xe
+ 2170 0005 13       		.uleb128 0x13
+ 2171 0006 0B       		.uleb128 0xb
+ 2172 0007 03       		.uleb128 0x3
+ 2173 0008 0E       		.uleb128 0xe
+ 2174 0009 1B       		.uleb128 0x1b
+ 2175 000a 0E       		.uleb128 0xe
+ 2176 000b 55       		.uleb128 0x55
+ 2177 000c 17       		.uleb128 0x17
+ 2178 000d 11       		.uleb128 0x11
+ 2179 000e 01       		.uleb128 0x1
+ 2180 000f 10       		.uleb128 0x10
+ 2181 0010 17       		.uleb128 0x17
+ 2182 0011 00       		.byte	0
+ 2183 0012 00       		.byte	0
+ 2184 0013 02       		.uleb128 0x2
+ 2185 0014 24       		.uleb128 0x24
+ 2186 0015 00       		.byte	0
+ 2187 0016 0B       		.uleb128 0xb
+ 2188 0017 0B       		.uleb128 0xb
+ 2189 0018 3E       		.uleb128 0x3e
+ 2190 0019 0B       		.uleb128 0xb
+ 2191 001a 03       		.uleb128 0x3
+ 2192 001b 0E       		.uleb128 0xe
+ 2193 001c 00       		.byte	0
+ 2194 001d 00       		.byte	0
+ 2195 001e 03       		.uleb128 0x3
+ 2196 001f 16       		.uleb128 0x16
+ 2197 0020 00       		.byte	0
+ 2198 0021 03       		.uleb128 0x3
+ 2199 0022 0E       		.uleb128 0xe
+ 2200 0023 3A       		.uleb128 0x3a
+ARM GAS  C:\Users\zakis\AppData\Local\Temp\cclDrXun.s 			page 49
+
+
+ 2201 0024 0B       		.uleb128 0xb
+ 2202 0025 3B       		.uleb128 0x3b
+ 2203 0026 0B       		.uleb128 0xb
+ 2204 0027 49       		.uleb128 0x49
+ 2205 0028 13       		.uleb128 0x13
+ 2206 0029 00       		.byte	0
+ 2207 002a 00       		.byte	0
+ 2208 002b 04       		.uleb128 0x4
+ 2209 002c 24       		.uleb128 0x24
+ 2210 002d 00       		.byte	0
+ 2211 002e 0B       		.uleb128 0xb
+ 2212 002f 0B       		.uleb128 0xb
+ 2213 0030 3E       		.uleb128 0x3e
+ 2214 0031 0B       		.uleb128 0xb
+ 2215 0032 03       		.uleb128 0x3
+ 2216 0033 08       		.uleb128 0x8
+ 2217 0034 00       		.byte	0
+ 2218 0035 00       		.byte	0
+ 2219 0036 05       		.uleb128 0x5
+ 2220 0037 04       		.uleb128 0x4
+ 2221 0038 01       		.byte	0x1
+ 2222 0039 0B       		.uleb128 0xb
+ 2223 003a 0B       		.uleb128 0xb
+ 2224 003b 49       		.uleb128 0x49
+ 2225 003c 13       		.uleb128 0x13
+ 2226 003d 3A       		.uleb128 0x3a
+ 2227 003e 0B       		.uleb128 0xb
+ 2228 003f 3B       		.uleb128 0x3b
+ 2229 0040 0B       		.uleb128 0xb
+ 2230 0041 01       		.uleb128 0x1
+ 2231 0042 13       		.uleb128 0x13
+ 2232 0043 00       		.byte	0
+ 2233 0044 00       		.byte	0
+ 2234 0045 06       		.uleb128 0x6
+ 2235 0046 28       		.uleb128 0x28
+ 2236 0047 00       		.byte	0
+ 2237 0048 03       		.uleb128 0x3
+ 2238 0049 0E       		.uleb128 0xe
+ 2239 004a 1C       		.uleb128 0x1c
+ 2240 004b 0B       		.uleb128 0xb
+ 2241 004c 00       		.byte	0
+ 2242 004d 00       		.byte	0
+ 2243 004e 07       		.uleb128 0x7
+ 2244 004f 28       		.uleb128 0x28
+ 2245 0050 00       		.byte	0
+ 2246 0051 03       		.uleb128 0x3
+ 2247 0052 0E       		.uleb128 0xe
+ 2248 0053 1C       		.uleb128 0x1c
+ 2249 0054 0D       		.uleb128 0xd
+ 2250 0055 00       		.byte	0
+ 2251 0056 00       		.byte	0
+ 2252 0057 08       		.uleb128 0x8
+ 2253 0058 13       		.uleb128 0x13
+ 2254 0059 01       		.byte	0x1
+ 2255 005a 03       		.uleb128 0x3
+ 2256 005b 0E       		.uleb128 0xe
+ 2257 005c 0B       		.uleb128 0xb
+ARM GAS  C:\Users\zakis\AppData\Local\Temp\cclDrXun.s 			page 50
+
+
+ 2258 005d 0B       		.uleb128 0xb
+ 2259 005e 3A       		.uleb128 0x3a
+ 2260 005f 0B       		.uleb128 0xb
+ 2261 0060 3B       		.uleb128 0x3b
+ 2262 0061 0B       		.uleb128 0xb
+ 2263 0062 01       		.uleb128 0x1
+ 2264 0063 13       		.uleb128 0x13
+ 2265 0064 00       		.byte	0
+ 2266 0065 00       		.byte	0
+ 2267 0066 09       		.uleb128 0x9
+ 2268 0067 0D       		.uleb128 0xd
+ 2269 0068 00       		.byte	0
+ 2270 0069 03       		.uleb128 0x3
+ 2271 006a 0E       		.uleb128 0xe
+ 2272 006b 3A       		.uleb128 0x3a
+ 2273 006c 0B       		.uleb128 0xb
+ 2274 006d 3B       		.uleb128 0x3b
+ 2275 006e 0B       		.uleb128 0xb
+ 2276 006f 49       		.uleb128 0x49
+ 2277 0070 13       		.uleb128 0x13
+ 2278 0071 38       		.uleb128 0x38
+ 2279 0072 0B       		.uleb128 0xb
+ 2280 0073 00       		.byte	0
+ 2281 0074 00       		.byte	0
+ 2282 0075 0A       		.uleb128 0xa
+ 2283 0076 2E       		.uleb128 0x2e
+ 2284 0077 01       		.byte	0x1
+ 2285 0078 3F       		.uleb128 0x3f
+ 2286 0079 19       		.uleb128 0x19
+ 2287 007a 03       		.uleb128 0x3
+ 2288 007b 0E       		.uleb128 0xe
+ 2289 007c 3A       		.uleb128 0x3a
+ 2290 007d 0B       		.uleb128 0xb
+ 2291 007e 3B       		.uleb128 0x3b
+ 2292 007f 0B       		.uleb128 0xb
+ 2293 0080 27       		.uleb128 0x27
+ 2294 0081 19       		.uleb128 0x19
+ 2295 0082 49       		.uleb128 0x49
+ 2296 0083 13       		.uleb128 0x13
+ 2297 0084 11       		.uleb128 0x11
+ 2298 0085 01       		.uleb128 0x1
+ 2299 0086 12       		.uleb128 0x12
+ 2300 0087 06       		.uleb128 0x6
+ 2301 0088 40       		.uleb128 0x40
+ 2302 0089 18       		.uleb128 0x18
+ 2303 008a 9742     		.uleb128 0x2117
+ 2304 008c 19       		.uleb128 0x19
+ 2305 008d 01       		.uleb128 0x1
+ 2306 008e 13       		.uleb128 0x13
+ 2307 008f 00       		.byte	0
+ 2308 0090 00       		.byte	0
+ 2309 0091 0B       		.uleb128 0xb
+ 2310 0092 05       		.uleb128 0x5
+ 2311 0093 00       		.byte	0
+ 2312 0094 03       		.uleb128 0x3
+ 2313 0095 0E       		.uleb128 0xe
+ 2314 0096 3A       		.uleb128 0x3a
+ARM GAS  C:\Users\zakis\AppData\Local\Temp\cclDrXun.s 			page 51
+
+
+ 2315 0097 0B       		.uleb128 0xb
+ 2316 0098 3B       		.uleb128 0x3b
+ 2317 0099 0B       		.uleb128 0xb
+ 2318 009a 49       		.uleb128 0x49
+ 2319 009b 13       		.uleb128 0x13
+ 2320 009c 02       		.uleb128 0x2
+ 2321 009d 17       		.uleb128 0x17
+ 2322 009e 00       		.byte	0
+ 2323 009f 00       		.byte	0
+ 2324 00a0 0C       		.uleb128 0xc
+ 2325 00a1 898201   		.uleb128 0x4109
+ 2326 00a4 00       		.byte	0
+ 2327 00a5 11       		.uleb128 0x11
+ 2328 00a6 01       		.uleb128 0x1
+ 2329 00a7 31       		.uleb128 0x31
+ 2330 00a8 13       		.uleb128 0x13
+ 2331 00a9 00       		.byte	0
+ 2332 00aa 00       		.byte	0
+ 2333 00ab 0D       		.uleb128 0xd
+ 2334 00ac 898201   		.uleb128 0x4109
+ 2335 00af 01       		.byte	0x1
+ 2336 00b0 11       		.uleb128 0x11
+ 2337 00b1 01       		.uleb128 0x1
+ 2338 00b2 31       		.uleb128 0x31
+ 2339 00b3 13       		.uleb128 0x13
+ 2340 00b4 01       		.uleb128 0x1
+ 2341 00b5 13       		.uleb128 0x13
+ 2342 00b6 00       		.byte	0
+ 2343 00b7 00       		.byte	0
+ 2344 00b8 0E       		.uleb128 0xe
+ 2345 00b9 8A8201   		.uleb128 0x410a
+ 2346 00bc 00       		.byte	0
+ 2347 00bd 02       		.uleb128 0x2
+ 2348 00be 18       		.uleb128 0x18
+ 2349 00bf 9142     		.uleb128 0x2111
+ 2350 00c1 18       		.uleb128 0x18
+ 2351 00c2 00       		.byte	0
+ 2352 00c3 00       		.byte	0
+ 2353 00c4 0F       		.uleb128 0xf
+ 2354 00c5 898201   		.uleb128 0x4109
+ 2355 00c8 01       		.byte	0x1
+ 2356 00c9 11       		.uleb128 0x11
+ 2357 00ca 01       		.uleb128 0x1
+ 2358 00cb 31       		.uleb128 0x31
+ 2359 00cc 13       		.uleb128 0x13
+ 2360 00cd 00       		.byte	0
+ 2361 00ce 00       		.byte	0
+ 2362 00cf 10       		.uleb128 0x10
+ 2363 00d0 0F       		.uleb128 0xf
+ 2364 00d1 00       		.byte	0
+ 2365 00d2 0B       		.uleb128 0xb
+ 2366 00d3 0B       		.uleb128 0xb
+ 2367 00d4 49       		.uleb128 0x49
+ 2368 00d5 13       		.uleb128 0x13
+ 2369 00d6 00       		.byte	0
+ 2370 00d7 00       		.byte	0
+ 2371 00d8 11       		.uleb128 0x11
+ARM GAS  C:\Users\zakis\AppData\Local\Temp\cclDrXun.s 			page 52
+
+
+ 2372 00d9 05       		.uleb128 0x5
+ 2373 00da 00       		.byte	0
+ 2374 00db 03       		.uleb128 0x3
+ 2375 00dc 0E       		.uleb128 0xe
+ 2376 00dd 3A       		.uleb128 0x3a
+ 2377 00de 0B       		.uleb128 0xb
+ 2378 00df 3B       		.uleb128 0x3b
+ 2379 00e0 0B       		.uleb128 0xb
+ 2380 00e1 49       		.uleb128 0x49
+ 2381 00e2 13       		.uleb128 0x13
+ 2382 00e3 02       		.uleb128 0x2
+ 2383 00e4 18       		.uleb128 0x18
+ 2384 00e5 00       		.byte	0
+ 2385 00e6 00       		.byte	0
+ 2386 00e7 12       		.uleb128 0x12
+ 2387 00e8 2E       		.uleb128 0x2e
+ 2388 00e9 01       		.byte	0x1
+ 2389 00ea 3F       		.uleb128 0x3f
+ 2390 00eb 19       		.uleb128 0x19
+ 2391 00ec 03       		.uleb128 0x3
+ 2392 00ed 0E       		.uleb128 0xe
+ 2393 00ee 3A       		.uleb128 0x3a
+ 2394 00ef 0B       		.uleb128 0xb
+ 2395 00f0 3B       		.uleb128 0x3b
+ 2396 00f1 05       		.uleb128 0x5
+ 2397 00f2 49       		.uleb128 0x49
+ 2398 00f3 13       		.uleb128 0x13
+ 2399 00f4 11       		.uleb128 0x11
+ 2400 00f5 01       		.uleb128 0x1
+ 2401 00f6 12       		.uleb128 0x12
+ 2402 00f7 06       		.uleb128 0x6
+ 2403 00f8 40       		.uleb128 0x40
+ 2404 00f9 18       		.uleb128 0x18
+ 2405 00fa 9742     		.uleb128 0x2117
+ 2406 00fc 19       		.uleb128 0x19
+ 2407 00fd 01       		.uleb128 0x1
+ 2408 00fe 13       		.uleb128 0x13
+ 2409 00ff 00       		.byte	0
+ 2410 0100 00       		.byte	0
+ 2411 0101 13       		.uleb128 0x13
+ 2412 0102 2E       		.uleb128 0x2e
+ 2413 0103 01       		.byte	0x1
+ 2414 0104 3F       		.uleb128 0x3f
+ 2415 0105 19       		.uleb128 0x19
+ 2416 0106 03       		.uleb128 0x3
+ 2417 0107 0E       		.uleb128 0xe
+ 2418 0108 3A       		.uleb128 0x3a
+ 2419 0109 0B       		.uleb128 0xb
+ 2420 010a 3B       		.uleb128 0x3b
+ 2421 010b 05       		.uleb128 0x5
+ 2422 010c 27       		.uleb128 0x27
+ 2423 010d 19       		.uleb128 0x19
+ 2424 010e 49       		.uleb128 0x49
+ 2425 010f 13       		.uleb128 0x13
+ 2426 0110 11       		.uleb128 0x11
+ 2427 0111 01       		.uleb128 0x1
+ 2428 0112 12       		.uleb128 0x12
+ARM GAS  C:\Users\zakis\AppData\Local\Temp\cclDrXun.s 			page 53
+
+
+ 2429 0113 06       		.uleb128 0x6
+ 2430 0114 40       		.uleb128 0x40
+ 2431 0115 18       		.uleb128 0x18
+ 2432 0116 9742     		.uleb128 0x2117
+ 2433 0118 19       		.uleb128 0x19
+ 2434 0119 01       		.uleb128 0x1
+ 2435 011a 13       		.uleb128 0x13
+ 2436 011b 00       		.byte	0
+ 2437 011c 00       		.byte	0
+ 2438 011d 14       		.uleb128 0x14
+ 2439 011e 05       		.uleb128 0x5
+ 2440 011f 00       		.byte	0
+ 2441 0120 03       		.uleb128 0x3
+ 2442 0121 08       		.uleb128 0x8
+ 2443 0122 3A       		.uleb128 0x3a
+ 2444 0123 0B       		.uleb128 0xb
+ 2445 0124 3B       		.uleb128 0x3b
+ 2446 0125 05       		.uleb128 0x5
+ 2447 0126 49       		.uleb128 0x49
+ 2448 0127 13       		.uleb128 0x13
+ 2449 0128 02       		.uleb128 0x2
+ 2450 0129 17       		.uleb128 0x17
+ 2451 012a 00       		.byte	0
+ 2452 012b 00       		.byte	0
+ 2453 012c 15       		.uleb128 0x15
+ 2454 012d 05       		.uleb128 0x5
+ 2455 012e 00       		.byte	0
+ 2456 012f 03       		.uleb128 0x3
+ 2457 0130 0E       		.uleb128 0xe
+ 2458 0131 3A       		.uleb128 0x3a
+ 2459 0132 0B       		.uleb128 0xb
+ 2460 0133 3B       		.uleb128 0x3b
+ 2461 0134 05       		.uleb128 0x5
+ 2462 0135 49       		.uleb128 0x49
+ 2463 0136 13       		.uleb128 0x13
+ 2464 0137 02       		.uleb128 0x2
+ 2465 0138 17       		.uleb128 0x17
+ 2466 0139 00       		.byte	0
+ 2467 013a 00       		.byte	0
+ 2468 013b 16       		.uleb128 0x16
+ 2469 013c 34       		.uleb128 0x34
+ 2470 013d 00       		.byte	0
+ 2471 013e 03       		.uleb128 0x3
+ 2472 013f 0E       		.uleb128 0xe
+ 2473 0140 3A       		.uleb128 0x3a
+ 2474 0141 0B       		.uleb128 0xb
+ 2475 0142 3B       		.uleb128 0x3b
+ 2476 0143 05       		.uleb128 0x5
+ 2477 0144 49       		.uleb128 0x49
+ 2478 0145 13       		.uleb128 0x13
+ 2479 0146 02       		.uleb128 0x2
+ 2480 0147 17       		.uleb128 0x17
+ 2481 0148 00       		.byte	0
+ 2482 0149 00       		.byte	0
+ 2483 014a 17       		.uleb128 0x17
+ 2484 014b 34       		.uleb128 0x34
+ 2485 014c 00       		.byte	0
+ARM GAS  C:\Users\zakis\AppData\Local\Temp\cclDrXun.s 			page 54
+
+
+ 2486 014d 03       		.uleb128 0x3
+ 2487 014e 08       		.uleb128 0x8
+ 2488 014f 3A       		.uleb128 0x3a
+ 2489 0150 0B       		.uleb128 0xb
+ 2490 0151 3B       		.uleb128 0x3b
+ 2491 0152 05       		.uleb128 0x5
+ 2492 0153 49       		.uleb128 0x49
+ 2493 0154 13       		.uleb128 0x13
+ 2494 0155 02       		.uleb128 0x2
+ 2495 0156 18       		.uleb128 0x18
+ 2496 0157 00       		.byte	0
+ 2497 0158 00       		.byte	0
+ 2498 0159 18       		.uleb128 0x18
+ 2499 015a 0B       		.uleb128 0xb
+ 2500 015b 01       		.byte	0x1
+ 2501 015c 11       		.uleb128 0x11
+ 2502 015d 01       		.uleb128 0x1
+ 2503 015e 12       		.uleb128 0x12
+ 2504 015f 06       		.uleb128 0x6
+ 2505 0160 00       		.byte	0
+ 2506 0161 00       		.byte	0
+ 2507 0162 19       		.uleb128 0x19
+ 2508 0163 34       		.uleb128 0x34
+ 2509 0164 00       		.byte	0
+ 2510 0165 03       		.uleb128 0x3
+ 2511 0166 08       		.uleb128 0x8
+ 2512 0167 3A       		.uleb128 0x3a
+ 2513 0168 0B       		.uleb128 0xb
+ 2514 0169 3B       		.uleb128 0x3b
+ 2515 016a 05       		.uleb128 0x5
+ 2516 016b 49       		.uleb128 0x49
+ 2517 016c 13       		.uleb128 0x13
+ 2518 016d 02       		.uleb128 0x2
+ 2519 016e 17       		.uleb128 0x17
+ 2520 016f 00       		.byte	0
+ 2521 0170 00       		.byte	0
+ 2522 0171 1A       		.uleb128 0x1a
+ 2523 0172 0B       		.uleb128 0xb
+ 2524 0173 01       		.byte	0x1
+ 2525 0174 11       		.uleb128 0x11
+ 2526 0175 01       		.uleb128 0x1
+ 2527 0176 12       		.uleb128 0x12
+ 2528 0177 06       		.uleb128 0x6
+ 2529 0178 01       		.uleb128 0x1
+ 2530 0179 13       		.uleb128 0x13
+ 2531 017a 00       		.byte	0
+ 2532 017b 00       		.byte	0
+ 2533 017c 1B       		.uleb128 0x1b
+ 2534 017d 34       		.uleb128 0x34
+ 2535 017e 00       		.byte	0
+ 2536 017f 03       		.uleb128 0x3
+ 2537 0180 0E       		.uleb128 0xe
+ 2538 0181 3A       		.uleb128 0x3a
+ 2539 0182 0B       		.uleb128 0xb
+ 2540 0183 3B       		.uleb128 0x3b
+ 2541 0184 0B       		.uleb128 0xb
+ 2542 0185 49       		.uleb128 0x49
+ARM GAS  C:\Users\zakis\AppData\Local\Temp\cclDrXun.s 			page 55
+
+
+ 2543 0186 13       		.uleb128 0x13
+ 2544 0187 02       		.uleb128 0x2
+ 2545 0188 18       		.uleb128 0x18
+ 2546 0189 00       		.byte	0
+ 2547 018a 00       		.byte	0
+ 2548 018b 1C       		.uleb128 0x1c
+ 2549 018c 26       		.uleb128 0x26
+ 2550 018d 00       		.byte	0
+ 2551 018e 49       		.uleb128 0x49
+ 2552 018f 13       		.uleb128 0x13
+ 2553 0190 00       		.byte	0
+ 2554 0191 00       		.byte	0
+ 2555 0192 1D       		.uleb128 0x1d
+ 2556 0193 01       		.uleb128 0x1
+ 2557 0194 01       		.byte	0x1
+ 2558 0195 49       		.uleb128 0x49
+ 2559 0196 13       		.uleb128 0x13
+ 2560 0197 01       		.uleb128 0x1
+ 2561 0198 13       		.uleb128 0x13
+ 2562 0199 00       		.byte	0
+ 2563 019a 00       		.byte	0
+ 2564 019b 1E       		.uleb128 0x1e
+ 2565 019c 21       		.uleb128 0x21
+ 2566 019d 00       		.byte	0
+ 2567 019e 49       		.uleb128 0x49
+ 2568 019f 13       		.uleb128 0x13
+ 2569 01a0 2F       		.uleb128 0x2f
+ 2570 01a1 0B       		.uleb128 0xb
+ 2571 01a2 00       		.byte	0
+ 2572 01a3 00       		.byte	0
+ 2573 01a4 1F       		.uleb128 0x1f
+ 2574 01a5 34       		.uleb128 0x34
+ 2575 01a6 00       		.byte	0
+ 2576 01a7 03       		.uleb128 0x3
+ 2577 01a8 0E       		.uleb128 0xe
+ 2578 01a9 3A       		.uleb128 0x3a
+ 2579 01aa 0B       		.uleb128 0xb
+ 2580 01ab 3B       		.uleb128 0x3b
+ 2581 01ac 05       		.uleb128 0x5
+ 2582 01ad 49       		.uleb128 0x49
+ 2583 01ae 13       		.uleb128 0x13
+ 2584 01af 02       		.uleb128 0x2
+ 2585 01b0 18       		.uleb128 0x18
+ 2586 01b1 00       		.byte	0
+ 2587 01b2 00       		.byte	0
+ 2588 01b3 20       		.uleb128 0x20
+ 2589 01b4 34       		.uleb128 0x34
+ 2590 01b5 00       		.byte	0
+ 2591 01b6 03       		.uleb128 0x3
+ 2592 01b7 0E       		.uleb128 0xe
+ 2593 01b8 3A       		.uleb128 0x3a
+ 2594 01b9 0B       		.uleb128 0xb
+ 2595 01ba 3B       		.uleb128 0x3b
+ 2596 01bb 0B       		.uleb128 0xb
+ 2597 01bc 49       		.uleb128 0x49
+ 2598 01bd 13       		.uleb128 0x13
+ 2599 01be 1C       		.uleb128 0x1c
+ARM GAS  C:\Users\zakis\AppData\Local\Temp\cclDrXun.s 			page 56
+
+
+ 2600 01bf 05       		.uleb128 0x5
+ 2601 01c0 00       		.byte	0
+ 2602 01c1 00       		.byte	0
+ 2603 01c2 21       		.uleb128 0x21
+ 2604 01c3 34       		.uleb128 0x34
+ 2605 01c4 00       		.byte	0
+ 2606 01c5 03       		.uleb128 0x3
+ 2607 01c6 0E       		.uleb128 0xe
+ 2608 01c7 3A       		.uleb128 0x3a
+ 2609 01c8 0B       		.uleb128 0xb
+ 2610 01c9 3B       		.uleb128 0x3b
+ 2611 01ca 0B       		.uleb128 0xb
+ 2612 01cb 49       		.uleb128 0x49
+ 2613 01cc 13       		.uleb128 0x13
+ 2614 01cd 3F       		.uleb128 0x3f
+ 2615 01ce 19       		.uleb128 0x19
+ 2616 01cf 3C       		.uleb128 0x3c
+ 2617 01d0 19       		.uleb128 0x19
+ 2618 01d1 00       		.byte	0
+ 2619 01d2 00       		.byte	0
+ 2620 01d3 22       		.uleb128 0x22
+ 2621 01d4 34       		.uleb128 0x34
+ 2622 01d5 00       		.byte	0
+ 2623 01d6 03       		.uleb128 0x3
+ 2624 01d7 0E       		.uleb128 0xe
+ 2625 01d8 3A       		.uleb128 0x3a
+ 2626 01d9 0B       		.uleb128 0xb
+ 2627 01da 3B       		.uleb128 0x3b
+ 2628 01db 05       		.uleb128 0x5
+ 2629 01dc 49       		.uleb128 0x49
+ 2630 01dd 13       		.uleb128 0x13
+ 2631 01de 3F       		.uleb128 0x3f
+ 2632 01df 19       		.uleb128 0x19
+ 2633 01e0 3C       		.uleb128 0x3c
+ 2634 01e1 19       		.uleb128 0x19
+ 2635 01e2 00       		.byte	0
+ 2636 01e3 00       		.byte	0
+ 2637 01e4 23       		.uleb128 0x23
+ 2638 01e5 35       		.uleb128 0x35
+ 2639 01e6 00       		.byte	0
+ 2640 01e7 49       		.uleb128 0x49
+ 2641 01e8 13       		.uleb128 0x13
+ 2642 01e9 00       		.byte	0
+ 2643 01ea 00       		.byte	0
+ 2644 01eb 24       		.uleb128 0x24
+ 2645 01ec 2E       		.uleb128 0x2e
+ 2646 01ed 00       		.byte	0
+ 2647 01ee 3F       		.uleb128 0x3f
+ 2648 01ef 19       		.uleb128 0x19
+ 2649 01f0 3C       		.uleb128 0x3c
+ 2650 01f1 19       		.uleb128 0x19
+ 2651 01f2 6E       		.uleb128 0x6e
+ 2652 01f3 0E       		.uleb128 0xe
+ 2653 01f4 03       		.uleb128 0x3
+ 2654 01f5 0E       		.uleb128 0xe
+ 2655 01f6 3A       		.uleb128 0x3a
+ 2656 01f7 0B       		.uleb128 0xb
+ARM GAS  C:\Users\zakis\AppData\Local\Temp\cclDrXun.s 			page 57
+
+
+ 2657 01f8 3B       		.uleb128 0x3b
+ 2658 01f9 0B       		.uleb128 0xb
+ 2659 01fa 00       		.byte	0
+ 2660 01fb 00       		.byte	0
+ 2661 01fc 00       		.byte	0
+ 2662              		.section	.debug_loc,"",%progbits
+ 2663              	.Ldebug_loc0:
+ 2664              	.LLST0:
+ 2665 0000 00000000 		.4byte	.LVL0
+ 2666 0004 07000000 		.4byte	.LVL1-1
+ 2667 0008 0100     		.2byte	0x1
+ 2668 000a 50       		.byte	0x50
+ 2669 000b 07000000 		.4byte	.LVL1-1
+ 2670 000f 3C000000 		.4byte	.LVL8
+ 2671 0013 0100     		.2byte	0x1
+ 2672 0015 54       		.byte	0x54
+ 2673 0016 3C000000 		.4byte	.LVL8
+ 2674 001a 48000000 		.4byte	.LFE110
+ 2675 001e 0400     		.2byte	0x4
+ 2676 0020 F3       		.byte	0xf3
+ 2677 0021 01       		.uleb128 0x1
+ 2678 0022 50       		.byte	0x50
+ 2679 0023 9F       		.byte	0x9f
+ 2680 0024 00000000 		.4byte	0
+ 2681 0028 00000000 		.4byte	0
+ 2682              	.LLST1:
+ 2683 002c 00000000 		.4byte	.LVL9
+ 2684 0030 06000000 		.4byte	.LVL10
+ 2685 0034 0100     		.2byte	0x1
+ 2686 0036 50       		.byte	0x50
+ 2687 0037 06000000 		.4byte	.LVL10
+ 2688 003b 1C000000 		.4byte	.LVL12
+ 2689 003f 0100     		.2byte	0x1
+ 2690 0041 54       		.byte	0x54
+ 2691 0042 1C000000 		.4byte	.LVL12
+ 2692 0046 20000000 		.4byte	.LFE111
+ 2693 004a 0400     		.2byte	0x4
+ 2694 004c F3       		.byte	0xf3
+ 2695 004d 01       		.uleb128 0x1
+ 2696 004e 50       		.byte	0x50
+ 2697 004f 9F       		.byte	0x9f
+ 2698 0050 00000000 		.4byte	0
+ 2699 0054 00000000 		.4byte	0
+ 2700              	.LLST2:
+ 2701 0058 00000000 		.4byte	.LVL13
+ 2702 005c 09000000 		.4byte	.LVL14-1
+ 2703 0060 0100     		.2byte	0x1
+ 2704 0062 50       		.byte	0x50
+ 2705 0063 09000000 		.4byte	.LVL14-1
+ 2706 0067 1A000000 		.4byte	.LFE112
+ 2707 006b 0100     		.2byte	0x1
+ 2708 006d 55       		.byte	0x55
+ 2709 006e 00000000 		.4byte	0
+ 2710 0072 00000000 		.4byte	0
+ 2711              	.LLST3:
+ 2712 0076 00000000 		.4byte	.LVL13
+ 2713 007a 09000000 		.4byte	.LVL14-1
+ARM GAS  C:\Users\zakis\AppData\Local\Temp\cclDrXun.s 			page 58
+
+
+ 2714 007e 0100     		.2byte	0x1
+ 2715 0080 51       		.byte	0x51
+ 2716 0081 09000000 		.4byte	.LVL14-1
+ 2717 0085 1A000000 		.4byte	.LFE112
+ 2718 0089 0400     		.2byte	0x4
+ 2719 008b F3       		.byte	0xf3
+ 2720 008c 01       		.uleb128 0x1
+ 2721 008d 51       		.byte	0x51
+ 2722 008e 9F       		.byte	0x9f
+ 2723 008f 00000000 		.4byte	0
+ 2724 0093 00000000 		.4byte	0
+ 2725              	.LLST4:
+ 2726 0097 00000000 		.4byte	.LVL15
+ 2727 009b 06000000 		.4byte	.LVL16
+ 2728 009f 0100     		.2byte	0x1
+ 2729 00a1 50       		.byte	0x50
+ 2730 00a2 06000000 		.4byte	.LVL16
+ 2731 00a6 12000000 		.4byte	.LVL17
+ 2732 00aa 0400     		.2byte	0x4
+ 2733 00ac F3       		.byte	0xf3
+ 2734 00ad 01       		.uleb128 0x1
+ 2735 00ae 50       		.byte	0x50
+ 2736 00af 9F       		.byte	0x9f
+ 2737 00b0 12000000 		.4byte	.LVL17
+ 2738 00b4 28000000 		.4byte	.LFE113
+ 2739 00b8 0100     		.2byte	0x1
+ 2740 00ba 54       		.byte	0x54
+ 2741 00bb 00000000 		.4byte	0
+ 2742 00bf 00000000 		.4byte	0
+ 2743              	.LLST5:
+ 2744 00c3 00000000 		.4byte	.LVL22
+ 2745 00c7 08000000 		.4byte	.LVL23
+ 2746 00cb 0100     		.2byte	0x1
+ 2747 00cd 50       		.byte	0x50
+ 2748 00ce 08000000 		.4byte	.LVL23
+ 2749 00d2 18000000 		.4byte	.LFE115
+ 2750 00d6 0400     		.2byte	0x4
+ 2751 00d8 F3       		.byte	0xf3
+ 2752 00d9 01       		.uleb128 0x1
+ 2753 00da 50       		.byte	0x50
+ 2754 00db 9F       		.byte	0x9f
+ 2755 00dc 00000000 		.4byte	0
+ 2756 00e0 00000000 		.4byte	0
+ 2757              	.LLST6:
+ 2758 00e4 00000000 		.4byte	.LVL26
+ 2759 00e8 0F000000 		.4byte	.LVL27-1
+ 2760 00ec 0100     		.2byte	0x1
+ 2761 00ee 50       		.byte	0x50
+ 2762 00ef 0F000000 		.4byte	.LVL27-1
+ 2763 00f3 42000000 		.4byte	.LVL29
+ 2764 00f7 0100     		.2byte	0x1
+ 2765 00f9 55       		.byte	0x55
+ 2766 00fa 42000000 		.4byte	.LVL29
+ 2767 00fe 48000000 		.4byte	.LFE116
+ 2768 0102 0400     		.2byte	0x4
+ 2769 0104 F3       		.byte	0xf3
+ 2770 0105 01       		.uleb128 0x1
+ARM GAS  C:\Users\zakis\AppData\Local\Temp\cclDrXun.s 			page 59
+
+
+ 2771 0106 50       		.byte	0x50
+ 2772 0107 9F       		.byte	0x9f
+ 2773 0108 00000000 		.4byte	0
+ 2774 010c 00000000 		.4byte	0
+ 2775              	.LLST7:
+ 2776 0110 00000000 		.4byte	.LVL34
+ 2777 0114 1A000000 		.4byte	.LVL41
+ 2778 0118 0100     		.2byte	0x1
+ 2779 011a 50       		.byte	0x50
+ 2780 011b 1A000000 		.4byte	.LVL41
+ 2781 011f 1E000000 		.4byte	.LFE121
+ 2782 0123 0400     		.2byte	0x4
+ 2783 0125 F3       		.byte	0xf3
+ 2784 0126 01       		.uleb128 0x1
+ 2785 0127 50       		.byte	0x50
+ 2786 0128 9F       		.byte	0x9f
+ 2787 0129 00000000 		.4byte	0
+ 2788 012d 00000000 		.4byte	0
+ 2789              	.LLST8:
+ 2790 0131 00000000 		.4byte	.LVL34
+ 2791 0135 04000000 		.4byte	.LVL36
+ 2792 0139 0100     		.2byte	0x1
+ 2793 013b 51       		.byte	0x51
+ 2794 013c 04000000 		.4byte	.LVL36
+ 2795 0140 1E000000 		.4byte	.LFE121
+ 2796 0144 0400     		.2byte	0x4
+ 2797 0146 F3       		.byte	0xf3
+ 2798 0147 01       		.uleb128 0x1
+ 2799 0148 51       		.byte	0x51
+ 2800 0149 9F       		.byte	0x9f
+ 2801 014a 00000000 		.4byte	0
+ 2802 014e 00000000 		.4byte	0
+ 2803              	.LLST9:
+ 2804 0152 02000000 		.4byte	.LVL35
+ 2805 0156 08000000 		.4byte	.LVL37
+ 2806 015a 0200     		.2byte	0x2
+ 2807 015c 30       		.byte	0x30
+ 2808 015d 9F       		.byte	0x9f
+ 2809 015e 08000000 		.4byte	.LVL37
+ 2810 0162 1E000000 		.4byte	.LFE121
+ 2811 0166 0100     		.2byte	0x1
+ 2812 0168 53       		.byte	0x53
+ 2813 0169 00000000 		.4byte	0
+ 2814 016d 00000000 		.4byte	0
+ 2815              	.LLST10:
+ 2816 0171 0A000000 		.4byte	.LVL38
+ 2817 0175 14000000 		.4byte	.LVL40
+ 2818 0179 0100     		.2byte	0x1
+ 2819 017b 52       		.byte	0x52
+ 2820 017c 00000000 		.4byte	0
+ 2821 0180 00000000 		.4byte	0
+ 2822              	.LLST11:
+ 2823 0184 00000000 		.4byte	.LVL42
+ 2824 0188 10000000 		.4byte	.LVL43
+ 2825 018c 0100     		.2byte	0x1
+ 2826 018e 50       		.byte	0x50
+ 2827 018f 10000000 		.4byte	.LVL43
+ARM GAS  C:\Users\zakis\AppData\Local\Temp\cclDrXun.s 			page 60
+
+
+ 2828 0193 20000000 		.4byte	.LVL44
+ 2829 0197 0100     		.2byte	0x1
+ 2830 0199 53       		.byte	0x53
+ 2831 019a 28000000 		.4byte	.LVL47
+ 2832 019e 2C000000 		.4byte	.LVL49
+ 2833 01a2 0100     		.2byte	0x1
+ 2834 01a4 53       		.byte	0x53
+ 2835 01a5 2C000000 		.4byte	.LVL49
+ 2836 01a9 30000000 		.4byte	.LVL50
+ 2837 01ad 0100     		.2byte	0x1
+ 2838 01af 50       		.byte	0x50
+ 2839 01b0 30000000 		.4byte	.LVL50
+ 2840 01b4 3D000000 		.4byte	.LVL52-1
+ 2841 01b8 0100     		.2byte	0x1
+ 2842 01ba 53       		.byte	0x53
+ 2843 01bb 00000000 		.4byte	0
+ 2844 01bf 00000000 		.4byte	0
+ 2845              	.LLST12:
+ 2846 01c3 00000000 		.4byte	.LVL42
+ 2847 01c7 10000000 		.4byte	.LVL43
+ 2848 01cb 0100     		.2byte	0x1
+ 2849 01cd 51       		.byte	0x51
+ 2850 01ce 10000000 		.4byte	.LVL43
+ 2851 01d2 2C000000 		.4byte	.LVL49
+ 2852 01d6 0100     		.2byte	0x1
+ 2853 01d8 55       		.byte	0x55
+ 2854 01d9 2C000000 		.4byte	.LVL49
+ 2855 01dd 30000000 		.4byte	.LVL50
+ 2856 01e1 0100     		.2byte	0x1
+ 2857 01e3 51       		.byte	0x51
+ 2858 01e4 30000000 		.4byte	.LVL50
+ 2859 01e8 42000000 		.4byte	.LVL53
+ 2860 01ec 0100     		.2byte	0x1
+ 2861 01ee 55       		.byte	0x55
+ 2862 01ef 42000000 		.4byte	.LVL53
+ 2863 01f3 48000000 		.4byte	.LFE120
+ 2864 01f7 0400     		.2byte	0x4
+ 2865 01f9 F3       		.byte	0xf3
+ 2866 01fa 01       		.uleb128 0x1
+ 2867 01fb 51       		.byte	0x51
+ 2868 01fc 9F       		.byte	0x9f
+ 2869 01fd 00000000 		.4byte	0
+ 2870 0201 00000000 		.4byte	0
+ 2871              	.LLST13:
+ 2872 0205 10000000 		.4byte	.LVL43
+ 2873 0209 22000000 		.4byte	.LVL45
+ 2874 020d 0100     		.2byte	0x1
+ 2875 020f 51       		.byte	0x51
+ 2876 0210 22000000 		.4byte	.LVL45
+ 2877 0214 2A000000 		.4byte	.LVL48
+ 2878 0218 0300     		.2byte	0x3
+ 2879 021a 71       		.byte	0x71
+ 2880 021b 01       		.sleb128 1
+ 2881 021c 9F       		.byte	0x9f
+ 2882 021d 2A000000 		.4byte	.LVL48
+ 2883 0221 2C000000 		.4byte	.LVL49
+ 2884 0225 0100     		.2byte	0x1
+ARM GAS  C:\Users\zakis\AppData\Local\Temp\cclDrXun.s 			page 61
+
+
+ 2885 0227 51       		.byte	0x51
+ 2886 0228 30000000 		.4byte	.LVL50
+ 2887 022c 38000000 		.4byte	.LVL51
+ 2888 0230 0100     		.2byte	0x1
+ 2889 0232 51       		.byte	0x51
+ 2890 0233 00000000 		.4byte	0
+ 2891 0237 00000000 		.4byte	0
+ 2892              	.LLST14:
+ 2893 023b 22000000 		.4byte	.LVL45
+ 2894 023f 24000000 		.4byte	.LVL46
+ 2895 0243 0700     		.2byte	0x7
+ 2896 0245 73       		.byte	0x73
+ 2897 0246 00       		.sleb128 0
+ 2898 0247 0A       		.byte	0xa
+ 2899 0248 FFFF     		.2byte	0xffff
+ 2900 024a 1A       		.byte	0x1a
+ 2901 024b 9F       		.byte	0x9f
+ 2902 024c 24000000 		.4byte	.LVL46
+ 2903 0250 28000000 		.4byte	.LVL47
+ 2904 0254 0700     		.2byte	0x7
+ 2905 0256 73       		.byte	0x73
+ 2906 0257 50       		.sleb128 -48
+ 2907 0258 0A       		.byte	0xa
+ 2908 0259 FFFF     		.2byte	0xffff
+ 2909 025b 1A       		.byte	0x1a
+ 2910 025c 9F       		.byte	0x9f
+ 2911 025d 00000000 		.4byte	0
+ 2912 0261 00000000 		.4byte	0
+ 2913              	.LLST15:
+ 2914 0265 00000000 		.4byte	.LVL54
+ 2915 0269 08000000 		.4byte	.LVL55
+ 2916 026d 0100     		.2byte	0x1
+ 2917 026f 50       		.byte	0x50
+ 2918 0270 08000000 		.4byte	.LVL55
+ 2919 0274 4E000000 		.4byte	.LVL65
+ 2920 0278 0100     		.2byte	0x1
+ 2921 027a 54       		.byte	0x54
+ 2922 027b 4E000000 		.4byte	.LVL65
+ 2923 027f 5C000000 		.4byte	.LFE114
+ 2924 0283 0400     		.2byte	0x4
+ 2925 0285 F3       		.byte	0xf3
+ 2926 0286 01       		.uleb128 0x1
+ 2927 0287 50       		.byte	0x50
+ 2928 0288 9F       		.byte	0x9f
+ 2929 0289 00000000 		.4byte	0
+ 2930 028d 00000000 		.4byte	0
+ 2931              	.LLST16:
+ 2932 0291 00000000 		.4byte	.LVL66
+ 2933 0295 08000000 		.4byte	.LVL67
+ 2934 0299 0100     		.2byte	0x1
+ 2935 029b 50       		.byte	0x50
+ 2936 029c 08000000 		.4byte	.LVL67
+ 2937 02a0 38000000 		.4byte	.LFE117
+ 2938 02a4 0400     		.2byte	0x4
+ 2939 02a6 F3       		.byte	0xf3
+ 2940 02a7 01       		.uleb128 0x1
+ 2941 02a8 50       		.byte	0x50
+ARM GAS  C:\Users\zakis\AppData\Local\Temp\cclDrXun.s 			page 62
+
+
+ 2942 02a9 9F       		.byte	0x9f
+ 2943 02aa 00000000 		.4byte	0
+ 2944 02ae 00000000 		.4byte	0
+ 2945              	.LLST17:
+ 2946 02b2 00000000 		.4byte	.LVL73
+ 2947 02b6 08000000 		.4byte	.LVL74
+ 2948 02ba 0100     		.2byte	0x1
+ 2949 02bc 50       		.byte	0x50
+ 2950 02bd 08000000 		.4byte	.LVL74
+ 2951 02c1 30000000 		.4byte	.LFE122
+ 2952 02c5 0400     		.2byte	0x4
+ 2953 02c7 F3       		.byte	0xf3
+ 2954 02c8 01       		.uleb128 0x1
+ 2955 02c9 50       		.byte	0x50
+ 2956 02ca 9F       		.byte	0x9f
+ 2957 02cb 00000000 		.4byte	0
+ 2958 02cf 00000000 		.4byte	0
+ 2959              		.section	.debug_aranges,"",%progbits
+ 2960 0000 94000000 		.4byte	0x94
+ 2961 0004 0200     		.2byte	0x2
+ 2962 0006 00000000 		.4byte	.Ldebug_info0
+ 2963 000a 04       		.byte	0x4
+ 2964 000b 00       		.byte	0
+ 2965 000c 0000     		.2byte	0
+ 2966 000e 0000     		.2byte	0
+ 2967 0010 00000000 		.4byte	.LFB110
+ 2968 0014 48000000 		.4byte	.LFE110-.LFB110
+ 2969 0018 00000000 		.4byte	.LFB111
+ 2970 001c 20000000 		.4byte	.LFE111-.LFB111
+ 2971 0020 00000000 		.4byte	.LFB112
+ 2972 0024 1A000000 		.4byte	.LFE112-.LFB112
+ 2973 0028 00000000 		.4byte	.LFB113
+ 2974 002c 28000000 		.4byte	.LFE113-.LFB113
+ 2975 0030 00000000 		.4byte	.LFB115
+ 2976 0034 18000000 		.4byte	.LFE115-.LFB115
+ 2977 0038 00000000 		.4byte	.LFB116
+ 2978 003c 48000000 		.4byte	.LFE116-.LFB116
+ 2979 0040 00000000 		.4byte	.LFB118
+ 2980 0044 1C000000 		.4byte	.LFE118-.LFB118
+ 2981 0048 00000000 		.4byte	.LFB119
+ 2982 004c 1C000000 		.4byte	.LFE119-.LFB119
+ 2983 0050 00000000 		.4byte	.LFB121
+ 2984 0054 1E000000 		.4byte	.LFE121-.LFB121
+ 2985 0058 00000000 		.4byte	.LFB120
+ 2986 005c 48000000 		.4byte	.LFE120-.LFB120
+ 2987 0060 00000000 		.4byte	.LFB114
+ 2988 0064 5C000000 		.4byte	.LFE114-.LFB114
+ 2989 0068 00000000 		.4byte	.LFB117
+ 2990 006c 38000000 		.4byte	.LFE117-.LFB117
+ 2991 0070 00000000 		.4byte	.LFB122
+ 2992 0074 30000000 		.4byte	.LFE122-.LFB122
+ 2993 0078 00000000 		.4byte	.LFB123
+ 2994 007c 0A000000 		.4byte	.LFE123-.LFB123
+ 2995 0080 00000000 		.4byte	.LFB124
+ 2996 0084 0A000000 		.4byte	.LFE124-.LFB124
+ 2997 0088 00000000 		.4byte	.LFB125
+ 2998 008c 5E000000 		.4byte	.LFE125-.LFB125
+ARM GAS  C:\Users\zakis\AppData\Local\Temp\cclDrXun.s 			page 63
+
+
+ 2999 0090 00000000 		.4byte	0
+ 3000 0094 00000000 		.4byte	0
+ 3001              		.section	.debug_ranges,"",%progbits
+ 3002              	.Ldebug_ranges0:
+ 3003 0000 00000000 		.4byte	.LFB110
+ 3004 0004 48000000 		.4byte	.LFE110
+ 3005 0008 00000000 		.4byte	.LFB111
+ 3006 000c 20000000 		.4byte	.LFE111
+ 3007 0010 00000000 		.4byte	.LFB112
+ 3008 0014 1A000000 		.4byte	.LFE112
+ 3009 0018 00000000 		.4byte	.LFB113
+ 3010 001c 28000000 		.4byte	.LFE113
+ 3011 0020 00000000 		.4byte	.LFB115
+ 3012 0024 18000000 		.4byte	.LFE115
+ 3013 0028 00000000 		.4byte	.LFB116
+ 3014 002c 48000000 		.4byte	.LFE116
+ 3015 0030 00000000 		.4byte	.LFB118
+ 3016 0034 1C000000 		.4byte	.LFE118
+ 3017 0038 00000000 		.4byte	.LFB119
+ 3018 003c 1C000000 		.4byte	.LFE119
+ 3019 0040 00000000 		.4byte	.LFB121
+ 3020 0044 1E000000 		.4byte	.LFE121
+ 3021 0048 00000000 		.4byte	.LFB120
+ 3022 004c 48000000 		.4byte	.LFE120
+ 3023 0050 00000000 		.4byte	.LFB114
+ 3024 0054 5C000000 		.4byte	.LFE114
+ 3025 0058 00000000 		.4byte	.LFB117
+ 3026 005c 38000000 		.4byte	.LFE117
+ 3027 0060 00000000 		.4byte	.LFB122
+ 3028 0064 30000000 		.4byte	.LFE122
+ 3029 0068 00000000 		.4byte	.LFB123
+ 3030 006c 0A000000 		.4byte	.LFE123
+ 3031 0070 00000000 		.4byte	.LFB124
+ 3032 0074 0A000000 		.4byte	.LFE124
+ 3033 0078 00000000 		.4byte	.LFB125
+ 3034 007c 5E000000 		.4byte	.LFE125
+ 3035 0080 00000000 		.4byte	0
+ 3036 0084 00000000 		.4byte	0
+ 3037              		.section	.debug_line,"",%progbits
+ 3038              	.Ldebug_line0:
+ 3039 0000 69040000 		.section	.debug_str,"MS",%progbits,1
+ 3039      0200E802 
+ 3039      00000201 
+ 3039      FB0E0D00 
+ 3039      01010101 
+ 3040              	.LASF39:
+ 3041 0000 52435F45 		.ascii	"RC_ERROR_TIME_OUT\000"
+ 3041      52524F52 
+ 3041      5F54494D 
+ 3041      455F4F55 
+ 3041      5400
+ 3042              	.LASF51:
+ 3043 0012 52435F45 		.ascii	"RC_ERROR_INVALID_STATE\000"
+ 3043      52524F52 
+ 3043      5F494E56 
+ 3043      414C4944 
+ 3043      5F535441 
+ARM GAS  C:\Users\zakis\AppData\Local\Temp\cclDrXun.s 			page 64
+
+
+ 3044              	.LASF87:
+ 3045 0029 52454143 		.ascii	"REACTION_reverseString\000"
+ 3045      54494F4E 
+ 3045      5F726576 
+ 3045      65727365 
+ 3045      53747269 
+ 3046              	.LASF118:
+ 3047 0040 53455645 		.ascii	"SEVEN_Set\000"
+ 3047      4E5F5365 
+ 3047      7400
+ 3048              	.LASF3:
+ 3049 004a 5F5F7569 		.ascii	"__uint8_t\000"
+ 3049      6E74385F 
+ 3049      7400
+ 3050              	.LASF68:
+ 3051 0054 53455645 		.ascii	"SEVEN_1\000"
+ 3051      4E5F3100 
+ 3052              	.LASF54:
+ 3053 005c 52435F74 		.ascii	"RC_t\000"
+ 3053      00
+ 3054              	.LASF96:
+ 3055 0061 52454143 		.ascii	"REACTION_displaySuccessMessage\000"
+ 3055      54494F4E 
+ 3055      5F646973 
+ 3055      706C6179 
+ 3055      53756363 
+ 3056              	.LASF47:
+ 3057 0080 52435F45 		.ascii	"RC_ERROR_NOT_MATCH\000"
+ 3057      52524F52 
+ 3057      5F4E4F54 
+ 3057      5F4D4154 
+ 3057      434800
+ 3058              	.LASF10:
+ 3059 0093 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 3059      206C6F6E 
+ 3059      6720756E 
+ 3059      7369676E 
+ 3059      65642069 
+ 3060              	.LASF49:
+ 3061 00aa 52435F45 		.ascii	"RC_ERROR_BAD_DATA\000"
+ 3061      52524F52 
+ 3061      5F424144 
+ 3061      5F444154 
+ 3061      4100
+ 3062              	.LASF78:
+ 3063 00bc 6C696D69 		.ascii	"limit\000"
+ 3063      7400
+ 3064              	.LASF109:
+ 3065 00c2 49544D5F 		.ascii	"ITM_RxBuffer\000"
+ 3065      52784275 
+ 3065      66666572 
+ 3065      00
+ 3066              	.LASF122:
+ 3067 00cf 42555454 		.ascii	"BUTTON_IsPressed\000"
+ 3067      4F4E5F49 
+ 3067      73507265 
+ 3067      73736564 
+ARM GAS  C:\Users\zakis\AppData\Local\Temp\cclDrXun.s 			page 65
+
+
+ 3067      00
+ 3068              	.LASF57:
+ 3069 00e0 49735761 		.ascii	"IsWaitingUserReaction\000"
+ 3069      6974696E 
+ 3069      67557365 
+ 3069      72526561 
+ 3069      6374696F 
+ 3070              	.LASF75:
+ 3071 00f6 67616D65 		.ascii	"game\000"
+ 3071      00
+ 3072              	.LASF9:
+ 3073 00fb 6C6F6E67 		.ascii	"long long int\000"
+ 3073      206C6F6E 
+ 3073      6720696E 
+ 3073      7400
+ 3074              	.LASF0:
+ 3075 0109 7369676E 		.ascii	"signed char\000"
+ 3075      65642063 
+ 3075      68617200 
+ 3076              	.LASF63:
+ 3077 0115 636F7272 		.ascii	"correctPresses\000"
+ 3077      65637450 
+ 3077      72657373 
+ 3077      657300
+ 3078              	.LASF125:
+ 3079 0124 433A5C55 		.ascii	"C:\\Users\\zakis\\Desktop\\RG\\RG.cydsn\000"
+ 3079      73657273 
+ 3079      5C7A616B 
+ 3079      69735C44 
+ 3079      65736B74 
+ 3080              	.LASF94:
+ 3081 0147 64696769 		.ascii	"digit\000"
+ 3081      7400
+ 3082              	.LASF74:
+ 3083 014d 52454143 		.ascii	"REACTION_resetGame\000"
+ 3083      54494F4E 
+ 3083      5F726573 
+ 3083      65744761 
+ 3083      6D6500
+ 3084              	.LASF37:
+ 3085 0160 52435F45 		.ascii	"RC_ERROR_BUFFER_EMTPY\000"
+ 3085      52524F52 
+ 3085      5F425546 
+ 3085      4645525F 
+ 3085      454D5450 
+ 3086              	.LASF7:
+ 3087 0176 6C6F6E67 		.ascii	"long int\000"
+ 3087      20696E74 
+ 3087      00
+ 3088              	.LASF97:
+ 3089 017f 6D794275 		.ascii	"myBuffer\000"
+ 3089      66666572 
+ 3089      00
+ 3090              	.LASF121:
+ 3091 0188 53455645 		.ascii	"SEVEN_Get\000"
+ 3091      4E5F4765 
+ 3091      7400
+ARM GAS  C:\Users\zakis\AppData\Local\Temp\cclDrXun.s 			page 66
+
+
+ 3092              	.LASF110:
+ 3093 0192 55415254 		.ascii	"UART_Logs_Start\000"
+ 3093      5F4C6F67 
+ 3093      735F5374 
+ 3093      61727400 
+ 3094              	.LASF40:
+ 3095 01a2 52435F45 		.ascii	"RC_ERROR_OPEN\000"
+ 3095      52524F52 
+ 3095      5F4F5045 
+ 3095      4E00
+ 3096              	.LASF19:
+ 3097 01b0 646F7562 		.ascii	"double\000"
+ 3097      6C6500
+ 3098              	.LASF115:
+ 3099 01b7 436F756E 		.ascii	"Counter_Start\000"
+ 3099      7465725F 
+ 3099      53746172 
+ 3099      7400
+ 3100              	.LASF116:
+ 3101 01c5 436F756E 		.ascii	"Counter_Stop\000"
+ 3101      7465725F 
+ 3101      53746F70 
+ 3101      00
+ 3102              	.LASF105:
+ 3103 01d2 45455F6F 		.ascii	"EE_oo_IRQ_suspend_status\000"
+ 3103      6F5F4952 
+ 3103      515F7375 
+ 3103      7370656E 
+ 3103      645F7374 
+ 3104              	.LASF73:
+ 3105 01eb 52454143 		.ascii	"REACTION_init\000"
+ 3105      54494F4E 
+ 3105      5F696E69 
+ 3105      7400
+ 3106              	.LASF4:
+ 3107 01f9 5F5F7569 		.ascii	"__uint16_t\000"
+ 3107      6E743136 
+ 3107      5F7400
+ 3108              	.LASF107:
+ 3109 0204 45455F73 		.ascii	"EE_std_endcycle_next_tid\000"
+ 3109      74645F65 
+ 3109      6E646379 
+ 3109      636C655F 
+ 3109      6E657874 
+ 3110              	.LASF24:
+ 3111 021d 45455F54 		.ascii	"EE_TID\000"
+ 3111      494400
+ 3112              	.LASF90:
+ 3113 0224 74656D70 		.ascii	"temp\000"
+ 3113      00
+ 3114              	.LASF79:
+ 3115 0229 52454143 		.ascii	"REACTION_startCounterForTime\000"
+ 3115      54494F4E 
+ 3115      5F737461 
+ 3115      7274436F 
+ 3115      756E7465 
+ 3116              	.LASF11:
+ARM GAS  C:\Users\zakis\AppData\Local\Temp\cclDrXun.s 			page 67
+
+
+ 3117 0246 756E7369 		.ascii	"unsigned int\000"
+ 3117      676E6564 
+ 3117      20696E74 
+ 3117      00
+ 3118              	.LASF16:
+ 3119 0253 75696E74 		.ascii	"uint16_t\000"
+ 3119      31365F74 
+ 3119      00
+ 3120              	.LASF52:
+ 3121 025c 52435F45 		.ascii	"RC_ERROR_UNKNOWN\000"
+ 3121      52524F52 
+ 3121      5F554E4B 
+ 3121      4E4F574E 
+ 3121      00
+ 3122              	.LASF27:
+ 3123 026d 63686172 		.ascii	"char_t\000"
+ 3123      5F7400
+ 3124              	.LASF22:
+ 3125 0274 45455F55 		.ascii	"EE_UREG\000"
+ 3125      52454700 
+ 3126              	.LASF41:
+ 3127 027c 52435F45 		.ascii	"RC_ERROR_CHECKSUM\000"
+ 3127      52524F52 
+ 3127      5F434845 
+ 3127      434B5355 
+ 3127      4D00
+ 3128              	.LASF8:
+ 3129 028e 6C6F6E67 		.ascii	"long unsigned int\000"
+ 3129      20756E73 
+ 3129      69676E65 
+ 3129      6420696E 
+ 3129      7400
+ 3130              	.LASF30:
+ 3131 02a0 52435F45 		.ascii	"RC_ERROR_NULL\000"
+ 3131      52524F52 
+ 3131      5F4E554C 
+ 3131      4C00
+ 3132              	.LASF55:
+ 3133 02ae 49735761 		.ascii	"IsWaitingRoundStart\000"
+ 3133      6974696E 
+ 3133      67526F75 
+ 3133      6E645374 
+ 3133      61727400 
+ 3134              	.LASF114:
+ 3135 02c2 72616E64 		.ascii	"rand\000"
+ 3135      00
+ 3136              	.LASF76:
+ 3137 02c7 52454143 		.ascii	"REACTION_generateRandomNum\000"
+ 3137      54494F4E 
+ 3137      5F67656E 
+ 3137      65726174 
+ 3137      6552616E 
+ 3138              	.LASF124:
+ 3139 02e2 736F7572 		.ascii	"source\\asw\\reactionGame.c\000"
+ 3139      63655C61 
+ 3139      73775C72 
+ 3139      65616374 
+ARM GAS  C:\Users\zakis\AppData\Local\Temp\cclDrXun.s 			page 68
+
+
+ 3139      696F6E47 
+ 3140              	.LASF5:
+ 3141 02fc 73686F72 		.ascii	"short unsigned int\000"
+ 3141      7420756E 
+ 3141      7369676E 
+ 3141      65642069 
+ 3141      6E7400
+ 3142              	.LASF104:
+ 3143 030f 45455F6F 		.ascii	"EE_oo_IRQ_disable_count\000"
+ 3143      6F5F4952 
+ 3143      515F6469 
+ 3143      7361626C 
+ 3143      655F636F 
+ 3144              	.LASF36:
+ 3145 0327 52435F45 		.ascii	"RC_ERROR_BUFFER_FULL\000"
+ 3145      52524F52 
+ 3145      5F425546 
+ 3145      4645525F 
+ 3145      46554C4C 
+ 3146              	.LASF92:
+ 3147 033c 6E756D62 		.ascii	"number\000"
+ 3147      657200
+ 3148              	.LASF46:
+ 3149 0343 52435F45 		.ascii	"RC_ERROR_WRITE_FAILS\000"
+ 3149      52524F52 
+ 3149      5F575249 
+ 3149      54455F46 
+ 3149      41494C53 
+ 3150              	.LASF113:
+ 3151 0358 55415254 		.ascii	"UART_Logs_PutString\000"
+ 3151      5F4C6F67 
+ 3151      735F5075 
+ 3151      74537472 
+ 3151      696E6700 
+ 3152              	.LASF61:
+ 3153 036c 726F756E 		.ascii	"roundNumber\000"
+ 3153      644E756D 
+ 3153      62657200 
+ 3154              	.LASF6:
+ 3155 0378 5F5F696E 		.ascii	"__int32_t\000"
+ 3155      7433325F 
+ 3155      7400
+ 3156              	.LASF77:
+ 3157 0382 72616E64 		.ascii	"randomNumber\000"
+ 3157      6F6D4E75 
+ 3157      6D626572 
+ 3157      00
+ 3158              	.LASF65:
+ 3159 038f 64757261 		.ascii	"durationOfRoundSec\000"
+ 3159      74696F6E 
+ 3159      4F66526F 
+ 3159      756E6453 
+ 3159      656300
+ 3160              	.LASF58:
+ 3161 03a2 4E6F6E65 		.ascii	"None\000"
+ 3161      00
+ 3162              	.LASF82:
+ARM GAS  C:\Users\zakis\AppData\Local\Temp\cclDrXun.s 			page 69
+
+
+ 3163 03a7 72616E64 		.ascii	"randomNumberDisplay\000"
+ 3163      6F6D4E75 
+ 3163      6D626572 
+ 3163      44697370 
+ 3163      6C617900 
+ 3164              	.LASF13:
+ 3165 03bb 73697A65 		.ascii	"sizetype\000"
+ 3165      74797065 
+ 3165      00
+ 3166              	.LASF56:
+ 3167 03c4 49735761 		.ascii	"IsWaitingDisplay\000"
+ 3167      6974696E 
+ 3167      67446973 
+ 3167      706C6179 
+ 3167      00
+ 3168              	.LASF26:
+ 3169 03d5 626F6F6C 		.ascii	"boolean_t\000"
+ 3169      65616E5F 
+ 3169      7400
+ 3170              	.LASF44:
+ 3171 03df 52435F45 		.ascii	"RC_ERROR_INVALID\000"
+ 3171      52524F52 
+ 3171      5F494E56 
+ 3171      414C4944 
+ 3171      00
+ 3172              	.LASF106:
+ 3173 03f0 45455F41 		.ascii	"EE_ApplicationMode\000"
+ 3173      70706C69 
+ 3173      63617469 
+ 3173      6F6E4D6F 
+ 3173      646500
+ 3174              	.LASF50:
+ 3175 0403 52435F45 		.ascii	"RC_ERROR_CANCELED\000"
+ 3175      52524F52 
+ 3175      5F43414E 
+ 3175      43454C45 
+ 3175      4400
+ 3176              	.LASF84:
+ 3177 0415 72656163 		.ascii	"reactionTime\000"
+ 3177      74696F6E 
+ 3177      54696D65 
+ 3177      00
+ 3178              	.LASF45:
+ 3179 0422 52435F45 		.ascii	"RC_ERROR_READ_FAILS\000"
+ 3179      52524F52 
+ 3179      5F524541 
+ 3179      445F4641 
+ 3179      494C5300 
+ 3180              	.LASF80:
+ 3181 0436 74696D65 		.ascii	"time\000"
+ 3181      00
+ 3182              	.LASF69:
+ 3183 043b 42757474 		.ascii	"Button_Right_1\000"
+ 3183      6F6E5F52 
+ 3183      69676874 
+ 3183      5F3100
+ 3184              	.LASF70:
+ARM GAS  C:\Users\zakis\AppData\Local\Temp\cclDrXun.s 			page 70
+
+
+ 3185 044a 42757474 		.ascii	"Button_Right_2\000"
+ 3185      6F6E5F52 
+ 3185      69676874 
+ 3185      5F3200
+ 3186              	.LASF71:
+ 3187 0459 42757474 		.ascii	"Button_Left_1\000"
+ 3187      6F6E5F4C 
+ 3187      6566745F 
+ 3187      3100
+ 3188              	.LASF72:
+ 3189 0467 42757474 		.ascii	"Button_Left_2\000"
+ 3189      6F6E5F4C 
+ 3189      6566745F 
+ 3189      3200
+ 3190              	.LASF64:
+ 3191 0475 6D617852 		.ascii	"maxRounds\000"
+ 3191      6F756E64 
+ 3191      7300
+ 3192              	.LASF29:
+ 3193 047f 52435F45 		.ascii	"RC_ERROR\000"
+ 3193      52524F52 
+ 3193      00
+ 3194              	.LASF18:
+ 3195 0488 666C6F61 		.ascii	"float\000"
+ 3195      7400
+ 3196              	.LASF120:
+ 3197 048e 53455645 		.ascii	"SEVEN_Init\000"
+ 3197      4E5F496E 
+ 3197      697400
+ 3198              	.LASF28:
+ 3199 0499 52435F53 		.ascii	"RC_SUCCESS\000"
+ 3199      55434345 
+ 3199      535300
+ 3200              	.LASF112:
+ 3201 04a4 7372616E 		.ascii	"srand\000"
+ 3201      6400
+ 3202              	.LASF38:
+ 3203 04aa 52435F45 		.ascii	"RC_ERROR_BUSY\000"
+ 3203      52524F52 
+ 3203      5F425553 
+ 3203      5900
+ 3204              	.LASF91:
+ 3205 04b8 52454143 		.ascii	"REACTION_convertToString\000"
+ 3205      54494F4E 
+ 3205      5F636F6E 
+ 3205      76657274 
+ 3205      546F5374 
+ 3206              	.LASF43:
+ 3207 04d1 52435F45 		.ascii	"RC_ERROR_WRITE_ONLY\000"
+ 3207      52524F52 
+ 3207      5F575249 
+ 3207      54455F4F 
+ 3207      4E4C5900 
+ 3208              	.LASF17:
+ 3209 04e5 696E7433 		.ascii	"int32_t\000"
+ 3209      325F7400 
+ 3210              	.LASF1:
+ARM GAS  C:\Users\zakis\AppData\Local\Temp\cclDrXun.s 			page 71
+
+
+ 3211 04ed 756E7369 		.ascii	"unsigned char\000"
+ 3211      676E6564 
+ 3211      20636861 
+ 3211      7200
+ 3212              	.LASF85:
+ 3213 04fb 52454143 		.ascii	"REACTION_displayFailureMessage\000"
+ 3213      54494F4E 
+ 3213      5F646973 
+ 3213      706C6179 
+ 3213      4661696C 
+ 3214              	.LASF2:
+ 3215 051a 73686F72 		.ascii	"short int\000"
+ 3215      7420696E 
+ 3215      7400
+ 3216              	.LASF123:
+ 3217 0524 474E5520 		.ascii	"GNU C11 5.4.1 20160609 (release) [ARM/embedded-5-br"
+ 3217      43313120 
+ 3217      352E342E 
+ 3217      31203230 
+ 3217      31363036 
+ 3218 0557 616E6368 		.ascii	"anch revision 237715] -mcpu=cortex-m3 -mthumb -g -O"
+ 3218      20726576 
+ 3218      6973696F 
+ 3218      6E203233 
+ 3218      37373135 
+ 3219 058a 67202D66 		.ascii	"g -ffunction-sections -ffat-lto-objects\000"
+ 3219      66756E63 
+ 3219      74696F6E 
+ 3219      2D736563 
+ 3219      74696F6E 
+ 3220              	.LASF81:
+ 3221 05b2 52454143 		.ascii	"REACTION_setDisplay\000"
+ 3221      54494F4E 
+ 3221      5F736574 
+ 3221      44697370 
+ 3221      6C617900 
+ 3222              	.LASF31:
+ 3223 05c6 52435F45 		.ascii	"RC_ERROR_ZERO\000"
+ 3223      52524F52 
+ 3223      5F5A4552 
+ 3223      4F00
+ 3224              	.LASF95:
+ 3225 05d4 52454143 		.ascii	"REACTION_displayDetails\000"
+ 3225      54494F4E 
+ 3225      5F646973 
+ 3225      706C6179 
+ 3225      44657461 
+ 3226              	.LASF100:
+ 3227 05ec 52454143 		.ascii	"REACTION_resetDisplay\000"
+ 3227      54494F4E 
+ 3227      5F726573 
+ 3227      65744469 
+ 3227      73706C61 
+ 3228              	.LASF48:
+ 3229 0602 52435F45 		.ascii	"RC_ERROR_BAD_PARAM\000"
+ 3229      52524F52 
+ 3229      5F424144 
+ARM GAS  C:\Users\zakis\AppData\Local\Temp\cclDrXun.s 			page 72
+
+
+ 3229      5F504152 
+ 3229      414D00
+ 3230              	.LASF42:
+ 3231 0615 52435F45 		.ascii	"RC_ERROR_READ_ONLY\000"
+ 3231      52524F52 
+ 3231      5F524541 
+ 3231      445F4F4E 
+ 3231      4C5900
+ 3232              	.LASF12:
+ 3233 0628 6C6F6E67 		.ascii	"long double\000"
+ 3233      20646F75 
+ 3233      626C6500 
+ 3234              	.LASF88:
+ 3235 0634 6C656E67 		.ascii	"length\000"
+ 3235      746800
+ 3236              	.LASF14:
+ 3237 063b 63686172 		.ascii	"char\000"
+ 3237      00
+ 3238              	.LASF102:
+ 3239 0640 63757272 		.ascii	"currentDisplayVal\000"
+ 3239      656E7444 
+ 3239      6973706C 
+ 3239      61795661 
+ 3239      6C00
+ 3240              	.LASF62:
+ 3241 0652 746F7461 		.ascii	"totalTime\000"
+ 3241      6C54696D 
+ 3241      6500
+ 3242              	.LASF60:
+ 3243 065c 67616D65 		.ascii	"gameState\000"
+ 3243      53746174 
+ 3243      6500
+ 3244              	.LASF93:
+ 3245 0666 62756666 		.ascii	"buffer\000"
+ 3245      657200
+ 3246              	.LASF53:
+ 3247 066d 52435F45 		.ascii	"RC_ERROR_NOT_IMPLEMENTED\000"
+ 3247      52524F52 
+ 3247      5F4E4F54 
+ 3247      5F494D50 
+ 3247      4C454D45 
+ 3248              	.LASF34:
+ 3249 0686 52435F45 		.ascii	"RC_ERROR_OVERRUN\000"
+ 3249      52524F52 
+ 3249      5F4F5645 
+ 3249      5252554E 
+ 3249      00
+ 3250              	.LASF32:
+ 3251 0697 52435F45 		.ascii	"RC_ERROR_MEMORY\000"
+ 3251      52524F52 
+ 3251      5F4D454D 
+ 3251      4F525900 
+ 3252              	.LASF111:
+ 3253 06a7 436C6F63 		.ascii	"Clock_Counter_RG_Start\000"
+ 3253      6B5F436F 
+ 3253      756E7465 
+ 3253      725F5247 
+ARM GAS  C:\Users\zakis\AppData\Local\Temp\cclDrXun.s 			page 73
+
+
+ 3253      5F537461 
+ 3254              	.LASF66:
+ 3255 06be 47616D65 		.ascii	"Game_t\000"
+ 3255      5F7400
+ 3256              	.LASF25:
+ 3257 06c5 73696E74 		.ascii	"sint8_t\000"
+ 3257      385F7400 
+ 3258              	.LASF119:
+ 3259 06cd 436F756E 		.ascii	"Counter_ReadCounter\000"
+ 3259      7465725F 
+ 3259      52656164 
+ 3259      436F756E 
+ 3259      74657200 
+ 3260              	.LASF108:
+ 3261 06e1 45455F49 		.ascii	"EE_IRQ_nesting_level\000"
+ 3261      52515F6E 
+ 3261      65737469 
+ 3261      6E675F6C 
+ 3261      6576656C 
+ 3262              	.LASF21:
+ 3263 06f6 45455F55 		.ascii	"EE_UINT32\000"
+ 3263      494E5433 
+ 3263      3200
+ 3264              	.LASF33:
+ 3265 0700 52435F45 		.ascii	"RC_ERROR_RANGE\000"
+ 3265      52524F52 
+ 3265      5F52414E 
+ 3265      474500
+ 3266              	.LASF20:
+ 3267 070f 45455F49 		.ascii	"EE_INT32\000"
+ 3267      4E543332 
+ 3267      00
+ 3268              	.LASF15:
+ 3269 0718 75696E74 		.ascii	"uint8_t\000"
+ 3269      385F7400 
+ 3270              	.LASF86:
+ 3271 0720 52454143 		.ascii	"REACTION_displayTimeoutMessage\000"
+ 3271      54494F4E 
+ 3271      5F646973 
+ 3271      706C6179 
+ 3271      54696D65 
+ 3272              	.LASF98:
+ 3273 073f 52454143 		.ascii	"REACTION_printRoundNumber\000"
+ 3273      54494F4E 
+ 3273      5F707269 
+ 3273      6E74526F 
+ 3273      756E644E 
+ 3274              	.LASF83:
+ 3275 0759 52454143 		.ascii	"REACTION_getReactionTimeMS\000"
+ 3275      54494F4E 
+ 3275      5F676574 
+ 3275      52656163 
+ 3275      74696F6E 
+ 3276              	.LASF59:
+ 3277 0774 47616D65 		.ascii	"GameStates\000"
+ 3277      53746174 
+ 3277      657300
+ARM GAS  C:\Users\zakis\AppData\Local\Temp\cclDrXun.s 			page 74
+
+
+ 3278              	.LASF101:
+ 3279 077f 52454143 		.ascii	"REACTION_correctButtonPressed\000"
+ 3279      54494F4E 
+ 3279      5F636F72 
+ 3279      72656374 
+ 3279      42757474 
+ 3280              	.LASF103:
+ 3281 079d 636F756E 		.ascii	"countInOneSec\000"
+ 3281      74496E4F 
+ 3281      6E655365 
+ 3281      6300
+ 3282              	.LASF89:
+ 3283 07ab 73746172 		.ascii	"start\000"
+ 3283      7400
+ 3284              	.LASF99:
+ 3285 07b1 52454143 		.ascii	"REACTION_stopCounter\000"
+ 3285      54494F4E 
+ 3285      5F73746F 
+ 3285      70436F75 
+ 3285      6E746572 
+ 3286              	.LASF35:
+ 3287 07c6 52435F45 		.ascii	"RC_ERROR_UNDERRUN\000"
+ 3287      52524F52 
+ 3287      5F554E44 
+ 3287      45525255 
+ 3287      4E00
+ 3288              	.LASF67:
+ 3289 07d8 53455645 		.ascii	"SEVEN_0\000"
+ 3289      4E5F3000 
+ 3290              	.LASF117:
+ 3291 07e0 436F756E 		.ascii	"Counter_WriteCounter\000"
+ 3291      7465725F 
+ 3291      57726974 
+ 3291      65436F75 
+ 3291      6E746572 
+ 3292              	.LASF23:
+ 3293 07f5 45455F46 		.ascii	"EE_FREG\000"
+ 3293      52454700 
+ 3294              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 5.4.1 20160609 (release) [ARM/embedded-5-bran

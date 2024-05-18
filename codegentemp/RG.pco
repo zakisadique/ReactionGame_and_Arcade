@@ -1,0 +1,114 @@
+# RG
+# 2023-12-12 07:59:59Z
+
+set_location "ClockBlock" clockblockcell -1 -1 0
+set_io "DEBUG_TX(0)" iocell 12 7
+set_io "Button_Right_1(0)" iocell 0 4
+set_io "Button_Left_1(0)" iocell 0 3
+set_io "Button_Left_2(0)" iocell 0 5
+set_io "DEBUG_RX(0)" iocell 12 6
+set_io "Button_Right_2(0)" iocell 3 2
+set_io "SEVEN_SELECT(0)" iocell 3 5
+set_io "SEVEN_DP(0)" iocell 1 0
+set_io "SEVEN_G(0)" iocell 1 1
+set_io "SEVEN_F(0)" iocell 1 2
+set_io "SEVEN_E(0)" iocell 1 3
+set_io "SEVEN_D(0)" iocell 1 4
+set_io "SEVEN_C(0)" iocell 1 5
+set_io "SEVEN_B(0)" iocell 1 6
+set_io "SEVEN_A(0)" iocell 1 7
+set_io "led_red(0)" iocell 0 6
+set_io "led_yellow(0)" iocell 2 0
+set_io "led_green(0)" iocell 0 7
+set_io "RGB_blue(0)" iocell 2 3
+set_io "RGB_green(0)" iocell 2 4
+set_io "RGB_red(0)" iocell 2 5
+set_location "\PWM_RGB_blue:PWMUDB:status_2\" 0 2 0 0
+set_location "Net_2888" 1 1 0 0
+set_location "\UART_Logs:BUART:counter_load_not\" 3 0 1 1
+set_location "\UART_Logs:BUART:tx_status_0\" 2 0 0 1
+set_location "\UART_Logs:BUART:tx_status_2\" 2 1 0 3
+set_location "\UART_Logs:BUART:rx_counter_load\" 1 1 0 2
+set_location "\UART_Logs:BUART:rx_postpoll\" 2 0 1 1
+set_location "\UART_Logs:BUART:rx_status_4\" 2 0 0 0
+set_location "\UART_Logs:BUART:rx_status_5\" 2 0 1 3
+set_location "Net_2881" 3 2 0 0
+set_location "\PWM_led_red:PWMUDB:status_2\" 0 3 1 1
+set_location "\PWM_led_yellow:PWMUDB:status_2\" 2 2 1 0
+set_location "\PWM_led_green:PWMUDB:status_2\" 3 2 1 3
+set_location "\PWM_RGB_green:PWMUDB:status_2\" 0 4 0 1
+set_location "\PWM_RGB_red:PWMUDB:status_2\" 1 3 1 1
+set_location "isr_timer" interrupt -1 -1 17
+set_location "\PWM_RGB_blue:PWMUDB:genblk1:ctrlreg\" 1 3 6
+set_location "__ZERO__" 3 4 0 0
+set_location "\PWM_RGB_blue:PWMUDB:genblk8:stsreg\" 0 2 4
+set_location "\PWM_RGB_blue:PWMUDB:sP16:pwmdp:u0\" 1 2 2
+set_location "\PWM_RGB_blue:PWMUDB:sP16:pwmdp:u1\" 0 2 2
+set_location "\UART_Logs:TXInternalInterrupt\" interrupt -1 -1 1
+set_location "\UART_Logs:RXInternalInterrupt\" interrupt -1 -1 0
+set_location "\UART_Logs:BUART:sTX:TxShifter:u0\" 2 1 2
+set_location "\UART_Logs:BUART:sTX:sCLOCK:TxBitClkGen\" 3 1 2
+set_location "\UART_Logs:BUART:sTX:TxSts\" 2 1 4
+set_location "\UART_Logs:BUART:sRX:RxShifter:u0\" 2 0 2
+set_location "\UART_Logs:BUART:sRX:RxBitCounter\" 1 1 7
+set_location "\UART_Logs:BUART:sRX:RxSts\" 2 0 4
+set_location "isr_buttons" interrupt -1 -1 2
+set_location "\Counter:CounterHW\" timercell -1 -1 0
+set_location "\SEVEN_reg:Sync:ctrl_reg\" 0 1 6
+set_location "\PWM_led_red:PWMUDB:genblk1:ctrlreg\" 0 2 6
+set_location "\PWM_led_red:PWMUDB:genblk8:stsreg\" 0 3 4
+set_location "\PWM_led_red:PWMUDB:sP8:pwmdp:u0\" 0 1 2
+set_location "\PWM_led_yellow:PWMUDB:genblk1:ctrlreg\" 3 1 6
+set_location "\PWM_led_yellow:PWMUDB:genblk8:stsreg\" 2 2 4
+set_location "\PWM_led_yellow:PWMUDB:sP8:pwmdp:u0\" 2 2 2
+set_location "\PWM_led_green:PWMUDB:genblk1:ctrlreg\" 3 2 6
+set_location "\PWM_led_green:PWMUDB:genblk8:stsreg\" 3 2 4
+set_location "\PWM_led_green:PWMUDB:sP8:pwmdp:u0\" 3 2 2
+set_location "\PWM_RGB_green:PWMUDB:genblk1:ctrlreg\" 0 4 6
+set_location "\PWM_RGB_green:PWMUDB:genblk8:stsreg\" 0 4 4
+set_location "\PWM_RGB_green:PWMUDB:sP16:pwmdp:u0\" 1 4 2
+set_location "\PWM_RGB_green:PWMUDB:sP16:pwmdp:u1\" 0 4 2
+set_location "\PWM_RGB_red:PWMUDB:genblk1:ctrlreg\" 0 3 6
+set_location "\PWM_RGB_red:PWMUDB:genblk8:stsreg\" 1 3 4
+set_location "\PWM_RGB_red:PWMUDB:sP16:pwmdp:u0\" 0 3 2
+set_location "\PWM_RGB_red:PWMUDB:sP16:pwmdp:u1\" 1 3 2
+set_location "\PWM_RGB_blue:PWMUDB:runmode_enable\" 1 3 0 0
+set_location "\PWM_RGB_blue:PWMUDB:prevCompare1\" 0 2 1 3
+set_location "\PWM_RGB_blue:PWMUDB:status_0\" 0 2 0 3
+set_location "Net_268" 0 4 0 2
+set_location "\UART_Logs:BUART:txn\" 2 1 0 0
+set_location "\UART_Logs:BUART:tx_state_1\" 3 1 0 2
+set_location "\UART_Logs:BUART:tx_state_0\" 2 1 1 0
+set_location "\UART_Logs:BUART:tx_state_2\" 3 1 0 1
+set_location "\UART_Logs:BUART:tx_bitclk\" 2 1 1 3
+set_location "\UART_Logs:BUART:tx_ctrl_mark_last\" 2 0 0 3
+set_location "\UART_Logs:BUART:rx_state_0\" 1 2 0 2
+set_location "\UART_Logs:BUART:rx_load_fifo\" 1 1 1 3
+set_location "\UART_Logs:BUART:rx_state_3\" 1 2 1 1
+set_location "\UART_Logs:BUART:rx_state_2\" 0 1 1 2
+set_location "\UART_Logs:BUART:rx_bitclk_enable\" 2 0 1 2
+set_location "\UART_Logs:BUART:rx_state_stop1_reg\" 2 0 1 0
+set_location "\UART_Logs:BUART:pollcount_1\" 2 0 0 2
+set_location "\UART_Logs:BUART:pollcount_0\" 2 1 1 1
+set_location "\UART_Logs:BUART:rx_status_3\" 0 1 1 0
+set_location "\UART_Logs:BUART:rx_last\" 0 1 1 3
+set_location "\PWM_led_red:PWMUDB:runmode_enable\" 0 2 0 1
+set_location "\PWM_led_red:PWMUDB:prevCompare1\" 0 3 1 0
+set_location "\PWM_led_red:PWMUDB:status_0\" 0 3 0 1
+set_location "Net_452" 0 4 0 0
+set_location "\PWM_led_yellow:PWMUDB:runmode_enable\" 3 1 1 2
+set_location "\PWM_led_yellow:PWMUDB:prevCompare1\" 2 2 0 1
+set_location "\PWM_led_yellow:PWMUDB:status_0\" 2 2 1 1
+set_location "Net_387" 2 2 1 2
+set_location "\PWM_led_green:PWMUDB:runmode_enable\" 3 2 1 0
+set_location "\PWM_led_green:PWMUDB:prevCompare1\" 3 2 0 3
+set_location "\PWM_led_green:PWMUDB:status_0\" 3 2 1 1
+set_location "Net_450" 3 2 1 2
+set_location "\PWM_RGB_green:PWMUDB:runmode_enable\" 0 4 1 3
+set_location "\PWM_RGB_green:PWMUDB:prevCompare1\" 0 4 0 3
+set_location "\PWM_RGB_green:PWMUDB:status_0\" 0 4 1 0
+set_location "Net_267" 0 4 1 2
+set_location "\PWM_RGB_red:PWMUDB:runmode_enable\" 0 3 0 3
+set_location "\PWM_RGB_red:PWMUDB:prevCompare1\" 1 3 0 3
+set_location "\PWM_RGB_red:PWMUDB:status_0\" 1 3 1 0
+set_location "Net_2451" 1 4 0 0

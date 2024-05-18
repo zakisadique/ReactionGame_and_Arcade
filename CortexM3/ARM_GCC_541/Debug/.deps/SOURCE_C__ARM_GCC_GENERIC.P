@@ -1,0 +1,210 @@
+C:/Users/zakis/Desktop/RG/RG.cydsn/CortexM3/ARM_GCC_541/Debug/main.o : C:/Users/zakis/Desktop/RG/RG.cydsn/Generated_Source/PSoC5/Button_Left_1.h C:/Users/zakis/Desktop/RG/RG.cydsn/Generated_Source/PSoC5/Button_Left_1_aliases.h C:/Users/zakis/Desktop/RG/RG.cydsn/Generated_Source/PSoC5/Button_Left_2.h C:/Users/zakis/Desktop/RG/RG.cydsn/Generated_Source/PSoC5/Button_Left_2_aliases.h C:/Users/zakis/Desktop/RG/RG.cydsn/Generated_Source/PSoC5/Button_Right_1.h C:/Users/zakis/Desktop/RG/RG.cydsn/Generated_Source/PSoC5/Button_Right_1_aliases.h C:/Users/zakis/Desktop/RG/RG.cydsn/Generated_Source/PSoC5/Button_Right_2.h C:/Users/zakis/Desktop/RG/RG.cydsn/Generated_Source/PSoC5/Button_Right_2_aliases.h C:/Users/zakis/Desktop/RG/RG.cydsn/Generated_Source/PSoC5/Clock_Counter_RG.h C:/Users/zakis/Desktop/RG/RG.cydsn/Generated_Source/PSoC5/Clock_PWM.h C:/Users/zakis/Desktop/RG/RG.cydsn/Generated_Source/PSoC5/Counter.h C:/Users/zakis/Desktop/RG/RG.cydsn/Generated_Source/PSoC5/CyDmac.h C:/Users/zakis/Desktop/RG/RG.cydsn/Generated_Source/PSoC5/CyFlash.h C:/Users/zakis/Desktop/RG/RG.cydsn/Generated_Source/PSoC5/CyLib.h C:/Users/zakis/Desktop/RG/RG.cydsn/Generated_Source/PSoC5/CySpc.h C:/Users/zakis/Desktop/RG/RG.cydsn/Generated_Source/PSoC5/ErikaOS_ISR_definition.inc C:/Users/zakis/Desktop/RG/RG.cydsn/Generated_Source/PSoC5/ErikaOS_common_ee_compiler_gcc.inc C:/Users/zakis/Desktop/RG/RG.cydsn/Generated_Source/PSoC5/ErikaOS_common_ee_hal_structs.inc C:/Users/zakis/Desktop/RG/RG.cydsn/Generated_Source/PSoC5/ErikaOS_common_ee_irqstub.inc C:/Users/zakis/Desktop/RG/RG.cydsn/Generated_Source/PSoC5/ErikaOS_common_ee_primitives.inc C:/Users/zakis/Desktop/RG/RG.cydsn/Generated_Source/PSoC5/ErikaOS_common_ee_types.inc C:/Users/zakis/Desktop/RG/RG.cydsn/Generated_Source/PSoC5/ErikaOS_cortex_mx_ee_context.inc C:/Users/zakis/Desktop/RG/RG.cydsn/Generated_Source/PSoC5/ErikaOS_cortex_mx_ee_cpu.inc C:/Users/zakis/Desktop/RG/RG.cydsn/Generated_Source/PSoC5/ErikaOS_cortex_mx_ee_irq.inc C:/Users/zakis/Desktop/RG/RG.cydsn/Generated_Source/PSoC5/ErikaOS_cortex_mx_ee_irq_cng_cont.inc C:/Users/zakis/Desktop/RG/RG.cydsn/Generated_Source/PSoC5/ErikaOS_cortex_mx_ee_nvic.inc C:/Users/zakis/Desktop/RG/RG.cydsn/Generated_Source/PSoC5/ErikaOS_cortex_mx_ee_systick.inc C:/Users/zakis/Desktop/RG/RG.cydsn/Generated_Source/PSoC5/ErikaOS_ee.h C:/Users/zakis/Desktop/RG/RG.cydsn/Generated_Source/PSoC5/ErikaOS_ee_api.inc C:/Users/zakis/Desktop/RG/RG.cydsn/Generated_Source/PSoC5/ErikaOS_ee_as_kernel.inc C:/Users/zakis/Desktop/RG/RG.cydsn/Generated_Source/PSoC5/ErikaOS_ee_as_timing_prot.inc C:/Users/zakis/Desktop/RG/RG.cydsn/Generated_Source/PSoC5/ErikaOS_ee_irq.inc C:/Users/zakis/Desktop/RG/RG.cydsn/Generated_Source/PSoC5/ErikaOS_ee_oo_api.inc C:/Users/zakis/Desktop/RG/RG.cydsn/Generated_Source/PSoC5/ErikaOS_ee_oo_common.inc C:/Users/zakis/Desktop/RG/RG.cydsn/Generated_Source/PSoC5/ErikaOS_ee_oo_inline.inc C:/Users/zakis/Desktop/RG/RG.cydsn/Generated_Source/PSoC5/ErikaOS_ee_oo_intfunc.inc C:/Users/zakis/Desktop/RG/RG.cydsn/Generated_Source/PSoC5/ErikaOS_ee_oo_irq.inc C:/Users/zakis/Desktop/RG/RG.cydsn/Generated_Source/PSoC5/ErikaOS_ee_oo_kernel.inc C:/Users/zakis/Desktop/RG/RG.cydsn/Generated_Source/PSoC5/ErikaOS_ee_rtdruid_versions.inc C:/Users/zakis/Desktop/RG/RG.cydsn/Generated_Source/PSoC5/ErikaOS_ee_tracing.h C:/Users/zakis/Desktop/RG/RG.cydsn/Generated_Source/PSoC5/ErikaOS_eecfg.inc C:/Users/zakis/Desktop/RG/RG.cydsn/Generated_Source/PSoC5/ErikaOS_event_definition.inc C:/Users/zakis/Desktop/RG/RG.cydsn/Generated_Source/PSoC5/PWM_RGB_blue.h C:/Users/zakis/Desktop/RG/RG.cydsn/Generated_Source/PSoC5/PWM_RGB_green.h C:/Users/zakis/Desktop/RG/RG.cydsn/Generated_Source/PSoC5/PWM_RGB_red.h C:/Users/zakis/Desktop/RG/RG.cydsn/Generated_Source/PSoC5/PWM_led_green.h C:/Users/zakis/Desktop/RG/RG.cydsn/Generated_Source/PSoC5/PWM_led_red.h C:/Users/zakis/Desktop/RG/RG.cydsn/Generated_Source/PSoC5/PWM_led_yellow.h C:/Users/zakis/Desktop/RG/RG.cydsn/Generated_Source/PSoC5/RGB_blue.h C:/Users/zakis/Desktop/RG/RG.cydsn/Generated_Source/PSoC5/RGB_blue_aliases.h C:/Users/zakis/Desktop/RG/RG.cydsn/Generated_Source/PSoC5/RGB_green.h C:/Users/zakis/Desktop/RG/RG.cydsn/Generated_Source/PSoC5/RGB_green_aliases.h C:/Users/zakis/Desktop/RG/RG.cydsn/Generated_Source/PSoC5/RGB_red.h C:/Users/zakis/Desktop/RG/RG.cydsn/Generated_Source/PSoC5/RGB_red_aliases.h C:/Users/zakis/Desktop/RG/RG.cydsn/Generated_Source/PSoC5/SEVEN_A.h C:/Users/zakis/Desktop/RG/RG.cydsn/Generated_Source/PSoC5/SEVEN_A_aliases.h C:/Users/zakis/Desktop/RG/RG.cydsn/Generated_Source/PSoC5/SEVEN_B.h C:/Users/zakis/Desktop/RG/RG.cydsn/Generated_Source/PSoC5/SEVEN_B_aliases.h C:/Users/zakis/Desktop/RG/RG.cydsn/Generated_Source/PSoC5/SEVEN_C.h C:/Users/zakis/Desktop/RG/RG.cydsn/Generated_Source/PSoC5/SEVEN_C_aliases.h C:/Users/zakis/Desktop/RG/RG.cydsn/Generated_Source/PSoC5/SEVEN_D.h C:/Users/zakis/Desktop/RG/RG.cydsn/Generated_Source/PSoC5/SEVEN_DP.h C:/Users/zakis/Desktop/RG/RG.cydsn/Generated_Source/PSoC5/SEVEN_DP_aliases.h C:/Users/zakis/Desktop/RG/RG.cydsn/Generated_Source/PSoC5/SEVEN_D_aliases.h C:/Users/zakis/Desktop/RG/RG.cydsn/Generated_Source/PSoC5/SEVEN_E.h C:/Users/zakis/Desktop/RG/RG.cydsn/Generated_Source/PSoC5/SEVEN_E_aliases.h C:/Users/zakis/Desktop/RG/RG.cydsn/Generated_Source/PSoC5/SEVEN_F.h C:/Users/zakis/Desktop/RG/RG.cydsn/Generated_Source/PSoC5/SEVEN_F_aliases.h C:/Users/zakis/Desktop/RG/RG.cydsn/Generated_Source/PSoC5/SEVEN_G.h C:/Users/zakis/Desktop/RG/RG.cydsn/Generated_Source/PSoC5/SEVEN_G_aliases.h C:/Users/zakis/Desktop/RG/RG.cydsn/Generated_Source/PSoC5/SEVEN_SELECT.h C:/Users/zakis/Desktop/RG/RG.cydsn/Generated_Source/PSoC5/SEVEN_SELECT_aliases.h C:/Users/zakis/Desktop/RG/RG.cydsn/Generated_Source/PSoC5/SEVEN_reg.h C:/Users/zakis/Desktop/RG/RG.cydsn/Generated_Source/PSoC5/UART_Logs.h C:/Users/zakis/Desktop/RG/RG.cydsn/Generated_Source/PSoC5/UART_Logs_IntClock.h C:/Users/zakis/Desktop/RG/RG.cydsn/Generated_Source/PSoC5/cmsis_armcc.h C:/Users/zakis/Desktop/RG/RG.cydsn/Generated_Source/PSoC5/cmsis_compiler.h C:/Users/zakis/Desktop/RG/RG.cydsn/Generated_Source/PSoC5/cmsis_gcc.h C:/Users/zakis/Desktop/RG/RG.cydsn/Generated_Source/PSoC5/core_cm3.h C:/Users/zakis/Desktop/RG/RG.cydsn/Generated_Source/PSoC5/core_cm3_psoc5.h C:/Users/zakis/Desktop/RG/RG.cydsn/Generated_Source/PSoC5/cyPm.h C:/Users/zakis/Desktop/RG/RG.cydsn/Generated_Source/PSoC5/cy_em_eeprom.h C:/Users/zakis/Desktop/RG/RG.cydsn/Generated_Source/PSoC5/cydevice.h C:/Users/zakis/Desktop/RG/RG.cydsn/Generated_Source/PSoC5/cydevice_trm.h C:/Users/zakis/Desktop/RG/RG.cydsn/Generated_Source/PSoC5/cydisabledsheets.h C:/Users/zakis/Desktop/RG/RG.cydsn/Generated_Source/PSoC5/cyfitter.h C:/Users/zakis/Desktop/RG/RG.cydsn/Generated_Source/PSoC5/cyfitter_cfg.h C:/Users/zakis/Desktop/RG/RG.cydsn/Generated_Source/PSoC5/cypins.h C:/Users/zakis/Desktop/RG/RG.cydsn/Generated_Source/PSoC5/cytypes.h C:/Users/zakis/Desktop/RG/RG.cydsn/Generated_Source/PSoC5/isr_buttons.h C:/Users/zakis/Desktop/RG/RG.cydsn/Generated_Source/PSoC5/isr_timer.h C:/Users/zakis/Desktop/RG/RG.cydsn/Generated_Source/PSoC5/led_green.h C:/Users/zakis/Desktop/RG/RG.cydsn/Generated_Source/PSoC5/led_green_aliases.h C:/Users/zakis/Desktop/RG/RG.cydsn/Generated_Source/PSoC5/led_red.h C:/Users/zakis/Desktop/RG/RG.cydsn/Generated_Source/PSoC5/led_red_aliases.h C:/Users/zakis/Desktop/RG/RG.cydsn/Generated_Source/PSoC5/led_yellow.h C:/Users/zakis/Desktop/RG/RG.cydsn/Generated_Source/PSoC5/led_yellow_aliases.h C:/Users/zakis/Desktop/RG/RG.cydsn/Generated_Source/PSoC5/project.h C:/Users/zakis/Desktop/RG/RG.cydsn/source/bsw/PWM.h C:/Users/zakis/Desktop/RG/RG.cydsn/source/bsw/derivate.h C:/Users/zakis/Desktop/RG/RG.cydsn/source/bsw/global.h C:/Users/zakis/Desktop/RG/RG.cydsn/source/asw/arcadian.h C:/Users/zakis/Desktop/RG/RG.cydsn/source/asw/main.c C:/Users/zakis/Desktop/RG/RG.cydsn/source/asw/reactionGame.h 
+
+C:/Users/zakis/Desktop/RG/RG.cydsn/Generated_Source/PSoC5/Button_Left_1.h : 
+
+C:/Users/zakis/Desktop/RG/RG.cydsn/Generated_Source/PSoC5/Button_Left_1_aliases.h : 
+
+C:/Users/zakis/Desktop/RG/RG.cydsn/Generated_Source/PSoC5/Button_Left_2.h : 
+
+C:/Users/zakis/Desktop/RG/RG.cydsn/Generated_Source/PSoC5/Button_Left_2_aliases.h : 
+
+C:/Users/zakis/Desktop/RG/RG.cydsn/Generated_Source/PSoC5/Button_Right_1.h : 
+
+C:/Users/zakis/Desktop/RG/RG.cydsn/Generated_Source/PSoC5/Button_Right_1_aliases.h : 
+
+C:/Users/zakis/Desktop/RG/RG.cydsn/Generated_Source/PSoC5/Button_Right_2.h : 
+
+C:/Users/zakis/Desktop/RG/RG.cydsn/Generated_Source/PSoC5/Button_Right_2_aliases.h : 
+
+C:/Users/zakis/Desktop/RG/RG.cydsn/Generated_Source/PSoC5/Clock_Counter_RG.h : 
+
+C:/Users/zakis/Desktop/RG/RG.cydsn/Generated_Source/PSoC5/Clock_PWM.h : 
+
+C:/Users/zakis/Desktop/RG/RG.cydsn/Generated_Source/PSoC5/Counter.h : 
+
+C:/Users/zakis/Desktop/RG/RG.cydsn/Generated_Source/PSoC5/CyDmac.h : 
+
+C:/Users/zakis/Desktop/RG/RG.cydsn/Generated_Source/PSoC5/CyFlash.h : 
+
+C:/Users/zakis/Desktop/RG/RG.cydsn/Generated_Source/PSoC5/CyLib.h : 
+
+C:/Users/zakis/Desktop/RG/RG.cydsn/Generated_Source/PSoC5/CySpc.h : 
+
+C:/Users/zakis/Desktop/RG/RG.cydsn/Generated_Source/PSoC5/ErikaOS_ISR_definition.inc : 
+
+C:/Users/zakis/Desktop/RG/RG.cydsn/Generated_Source/PSoC5/ErikaOS_common_ee_compiler_gcc.inc : 
+
+C:/Users/zakis/Desktop/RG/RG.cydsn/Generated_Source/PSoC5/ErikaOS_common_ee_hal_structs.inc : 
+
+C:/Users/zakis/Desktop/RG/RG.cydsn/Generated_Source/PSoC5/ErikaOS_common_ee_irqstub.inc : 
+
+C:/Users/zakis/Desktop/RG/RG.cydsn/Generated_Source/PSoC5/ErikaOS_common_ee_primitives.inc : 
+
+C:/Users/zakis/Desktop/RG/RG.cydsn/Generated_Source/PSoC5/ErikaOS_common_ee_types.inc : 
+
+C:/Users/zakis/Desktop/RG/RG.cydsn/Generated_Source/PSoC5/ErikaOS_cortex_mx_ee_context.inc : 
+
+C:/Users/zakis/Desktop/RG/RG.cydsn/Generated_Source/PSoC5/ErikaOS_cortex_mx_ee_cpu.inc : 
+
+C:/Users/zakis/Desktop/RG/RG.cydsn/Generated_Source/PSoC5/ErikaOS_cortex_mx_ee_irq.inc : 
+
+C:/Users/zakis/Desktop/RG/RG.cydsn/Generated_Source/PSoC5/ErikaOS_cortex_mx_ee_irq_cng_cont.inc : 
+
+C:/Users/zakis/Desktop/RG/RG.cydsn/Generated_Source/PSoC5/ErikaOS_cortex_mx_ee_nvic.inc : 
+
+C:/Users/zakis/Desktop/RG/RG.cydsn/Generated_Source/PSoC5/ErikaOS_cortex_mx_ee_systick.inc : 
+
+C:/Users/zakis/Desktop/RG/RG.cydsn/Generated_Source/PSoC5/ErikaOS_ee.h : 
+
+C:/Users/zakis/Desktop/RG/RG.cydsn/Generated_Source/PSoC5/ErikaOS_ee_api.inc : 
+
+C:/Users/zakis/Desktop/RG/RG.cydsn/Generated_Source/PSoC5/ErikaOS_ee_as_kernel.inc : 
+
+C:/Users/zakis/Desktop/RG/RG.cydsn/Generated_Source/PSoC5/ErikaOS_ee_as_timing_prot.inc : 
+
+C:/Users/zakis/Desktop/RG/RG.cydsn/Generated_Source/PSoC5/ErikaOS_ee_irq.inc : 
+
+C:/Users/zakis/Desktop/RG/RG.cydsn/Generated_Source/PSoC5/ErikaOS_ee_oo_api.inc : 
+
+C:/Users/zakis/Desktop/RG/RG.cydsn/Generated_Source/PSoC5/ErikaOS_ee_oo_common.inc : 
+
+C:/Users/zakis/Desktop/RG/RG.cydsn/Generated_Source/PSoC5/ErikaOS_ee_oo_inline.inc : 
+
+C:/Users/zakis/Desktop/RG/RG.cydsn/Generated_Source/PSoC5/ErikaOS_ee_oo_intfunc.inc : 
+
+C:/Users/zakis/Desktop/RG/RG.cydsn/Generated_Source/PSoC5/ErikaOS_ee_oo_irq.inc : 
+
+C:/Users/zakis/Desktop/RG/RG.cydsn/Generated_Source/PSoC5/ErikaOS_ee_oo_kernel.inc : 
+
+C:/Users/zakis/Desktop/RG/RG.cydsn/Generated_Source/PSoC5/ErikaOS_ee_rtdruid_versions.inc : 
+
+C:/Users/zakis/Desktop/RG/RG.cydsn/Generated_Source/PSoC5/ErikaOS_ee_tracing.h : 
+
+C:/Users/zakis/Desktop/RG/RG.cydsn/Generated_Source/PSoC5/ErikaOS_eecfg.inc : 
+
+C:/Users/zakis/Desktop/RG/RG.cydsn/Generated_Source/PSoC5/ErikaOS_event_definition.inc : 
+
+C:/Users/zakis/Desktop/RG/RG.cydsn/Generated_Source/PSoC5/PWM_RGB_blue.h : 
+
+C:/Users/zakis/Desktop/RG/RG.cydsn/Generated_Source/PSoC5/PWM_RGB_green.h : 
+
+C:/Users/zakis/Desktop/RG/RG.cydsn/Generated_Source/PSoC5/PWM_RGB_red.h : 
+
+C:/Users/zakis/Desktop/RG/RG.cydsn/Generated_Source/PSoC5/PWM_led_green.h : 
+
+C:/Users/zakis/Desktop/RG/RG.cydsn/Generated_Source/PSoC5/PWM_led_red.h : 
+
+C:/Users/zakis/Desktop/RG/RG.cydsn/Generated_Source/PSoC5/PWM_led_yellow.h : 
+
+C:/Users/zakis/Desktop/RG/RG.cydsn/Generated_Source/PSoC5/RGB_blue.h : 
+
+C:/Users/zakis/Desktop/RG/RG.cydsn/Generated_Source/PSoC5/RGB_blue_aliases.h : 
+
+C:/Users/zakis/Desktop/RG/RG.cydsn/Generated_Source/PSoC5/RGB_green.h : 
+
+C:/Users/zakis/Desktop/RG/RG.cydsn/Generated_Source/PSoC5/RGB_green_aliases.h : 
+
+C:/Users/zakis/Desktop/RG/RG.cydsn/Generated_Source/PSoC5/RGB_red.h : 
+
+C:/Users/zakis/Desktop/RG/RG.cydsn/Generated_Source/PSoC5/RGB_red_aliases.h : 
+
+C:/Users/zakis/Desktop/RG/RG.cydsn/Generated_Source/PSoC5/SEVEN_A.h : 
+
+C:/Users/zakis/Desktop/RG/RG.cydsn/Generated_Source/PSoC5/SEVEN_A_aliases.h : 
+
+C:/Users/zakis/Desktop/RG/RG.cydsn/Generated_Source/PSoC5/SEVEN_B.h : 
+
+C:/Users/zakis/Desktop/RG/RG.cydsn/Generated_Source/PSoC5/SEVEN_B_aliases.h : 
+
+C:/Users/zakis/Desktop/RG/RG.cydsn/Generated_Source/PSoC5/SEVEN_C.h : 
+
+C:/Users/zakis/Desktop/RG/RG.cydsn/Generated_Source/PSoC5/SEVEN_C_aliases.h : 
+
+C:/Users/zakis/Desktop/RG/RG.cydsn/Generated_Source/PSoC5/SEVEN_D.h : 
+
+C:/Users/zakis/Desktop/RG/RG.cydsn/Generated_Source/PSoC5/SEVEN_DP.h : 
+
+C:/Users/zakis/Desktop/RG/RG.cydsn/Generated_Source/PSoC5/SEVEN_DP_aliases.h : 
+
+C:/Users/zakis/Desktop/RG/RG.cydsn/Generated_Source/PSoC5/SEVEN_D_aliases.h : 
+
+C:/Users/zakis/Desktop/RG/RG.cydsn/Generated_Source/PSoC5/SEVEN_E.h : 
+
+C:/Users/zakis/Desktop/RG/RG.cydsn/Generated_Source/PSoC5/SEVEN_E_aliases.h : 
+
+C:/Users/zakis/Desktop/RG/RG.cydsn/Generated_Source/PSoC5/SEVEN_F.h : 
+
+C:/Users/zakis/Desktop/RG/RG.cydsn/Generated_Source/PSoC5/SEVEN_F_aliases.h : 
+
+C:/Users/zakis/Desktop/RG/RG.cydsn/Generated_Source/PSoC5/SEVEN_G.h : 
+
+C:/Users/zakis/Desktop/RG/RG.cydsn/Generated_Source/PSoC5/SEVEN_G_aliases.h : 
+
+C:/Users/zakis/Desktop/RG/RG.cydsn/Generated_Source/PSoC5/SEVEN_SELECT.h : 
+
+C:/Users/zakis/Desktop/RG/RG.cydsn/Generated_Source/PSoC5/SEVEN_SELECT_aliases.h : 
+
+C:/Users/zakis/Desktop/RG/RG.cydsn/Generated_Source/PSoC5/SEVEN_reg.h : 
+
+C:/Users/zakis/Desktop/RG/RG.cydsn/Generated_Source/PSoC5/UART_Logs.h : 
+
+C:/Users/zakis/Desktop/RG/RG.cydsn/Generated_Source/PSoC5/UART_Logs_IntClock.h : 
+
+C:/Users/zakis/Desktop/RG/RG.cydsn/Generated_Source/PSoC5/cmsis_armcc.h : 
+
+C:/Users/zakis/Desktop/RG/RG.cydsn/Generated_Source/PSoC5/cmsis_compiler.h : 
+
+C:/Users/zakis/Desktop/RG/RG.cydsn/Generated_Source/PSoC5/cmsis_gcc.h : 
+
+C:/Users/zakis/Desktop/RG/RG.cydsn/Generated_Source/PSoC5/core_cm3.h : 
+
+C:/Users/zakis/Desktop/RG/RG.cydsn/Generated_Source/PSoC5/core_cm3_psoc5.h : 
+
+C:/Users/zakis/Desktop/RG/RG.cydsn/Generated_Source/PSoC5/cyPm.h : 
+
+C:/Users/zakis/Desktop/RG/RG.cydsn/Generated_Source/PSoC5/cy_em_eeprom.h : 
+
+C:/Users/zakis/Desktop/RG/RG.cydsn/Generated_Source/PSoC5/cydevice.h : 
+
+C:/Users/zakis/Desktop/RG/RG.cydsn/Generated_Source/PSoC5/cydevice_trm.h : 
+
+C:/Users/zakis/Desktop/RG/RG.cydsn/Generated_Source/PSoC5/cydisabledsheets.h : 
+
+C:/Users/zakis/Desktop/RG/RG.cydsn/Generated_Source/PSoC5/cyfitter.h : 
+
+C:/Users/zakis/Desktop/RG/RG.cydsn/Generated_Source/PSoC5/cyfitter_cfg.h : 
+
+C:/Users/zakis/Desktop/RG/RG.cydsn/Generated_Source/PSoC5/cypins.h : 
+
+C:/Users/zakis/Desktop/RG/RG.cydsn/Generated_Source/PSoC5/cytypes.h : 
+
+C:/Users/zakis/Desktop/RG/RG.cydsn/Generated_Source/PSoC5/isr_buttons.h : 
+
+C:/Users/zakis/Desktop/RG/RG.cydsn/Generated_Source/PSoC5/isr_timer.h : 
+
+C:/Users/zakis/Desktop/RG/RG.cydsn/Generated_Source/PSoC5/led_green.h : 
+
+C:/Users/zakis/Desktop/RG/RG.cydsn/Generated_Source/PSoC5/led_green_aliases.h : 
+
+C:/Users/zakis/Desktop/RG/RG.cydsn/Generated_Source/PSoC5/led_red.h : 
+
+C:/Users/zakis/Desktop/RG/RG.cydsn/Generated_Source/PSoC5/led_red_aliases.h : 
+
+C:/Users/zakis/Desktop/RG/RG.cydsn/Generated_Source/PSoC5/led_yellow.h : 
+
+C:/Users/zakis/Desktop/RG/RG.cydsn/Generated_Source/PSoC5/led_yellow_aliases.h : 
+
+C:/Users/zakis/Desktop/RG/RG.cydsn/Generated_Source/PSoC5/project.h : 
+
+C:/Users/zakis/Desktop/RG/RG.cydsn/source/bsw/PWM.h : 
+
+C:/Users/zakis/Desktop/RG/RG.cydsn/source/bsw/derivate.h : 
+
+C:/Users/zakis/Desktop/RG/RG.cydsn/source/bsw/global.h : 
+
+C:/Users/zakis/Desktop/RG/RG.cydsn/source/asw/arcadian.h : 
+
+C:/Users/zakis/Desktop/RG/RG.cydsn/source/asw/main.c : 
+
+C:/Users/zakis/Desktop/RG/RG.cydsn/source/asw/reactionGame.h : 
+

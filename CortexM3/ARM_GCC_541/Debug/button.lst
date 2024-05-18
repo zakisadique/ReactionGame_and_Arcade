@@ -1,0 +1,999 @@
+ARM GAS  C:\Users\zakis\AppData\Local\Temp\ccH4x3R5.s 			page 1
+
+
+   1              		.syntax unified
+   2              		.cpu cortex-m3
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.thumb
+  14              		.syntax unified
+  15              		.file	"button.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.section	.text.BUTTON_IsPressed,"ax",%progbits
+  20              		.align	2
+  21              		.global	BUTTON_IsPressed
+  22              		.thumb
+  23              		.thumb_func
+  24              		.type	BUTTON_IsPressed, %function
+  25              	BUTTON_IsPressed:
+  26              	.LFB110:
+  27              		.file 1 "source\\bsw\\button.c"
+   1:source\bsw/button.c **** /**
+   2:source\bsw/button.c **** * \file arcadian.h
+   3:source\bsw/button.c **** * \author Z. Sadique
+   4:source\bsw/button.c **** * \date 08.12.2023
+   5:source\bsw/button.c **** *
+   6:source\bsw/button.c **** * \brief Simple button driver
+   7:source\bsw/button.c **** */
+   8:source\bsw/button.c **** 
+   9:source\bsw/button.c **** /*****************************************************************************/
+  10:source\bsw/button.c **** /* Include files                                                             */
+  11:source\bsw/button.c **** /*****************************************************************************/
+  12:source\bsw/button.c **** #include "project.h"
+  13:source\bsw/button.c **** #include "button.h"
+  14:source\bsw/button.c **** 
+  15:source\bsw/button.c **** 
+  16:source\bsw/button.c **** /*****************************************************************************/
+  17:source\bsw/button.c **** /* Local pre-processor symbols/macros ('#define')                            */
+  18:source\bsw/button.c **** /*****************************************************************************/
+  19:source\bsw/button.c **** 
+  20:source\bsw/button.c **** /*****************************************************************************/
+  21:source\bsw/button.c **** /* Global variable definitions (declared in header file with 'extern')       */
+  22:source\bsw/button.c **** /*****************************************************************************/
+  23:source\bsw/button.c **** 
+  24:source\bsw/button.c **** /*****************************************************************************/
+  25:source\bsw/button.c **** /* Local type definitions ('typedef')                                        */
+  26:source\bsw/button.c **** /*****************************************************************************/
+  27:source\bsw/button.c **** 
+  28:source\bsw/button.c **** /*****************************************************************************/
+  29:source\bsw/button.c **** /* Local variable definitions ('static')                                     */
+  30:source\bsw/button.c **** /*****************************************************************************/
+ARM GAS  C:\Users\zakis\AppData\Local\Temp\ccH4x3R5.s 			page 2
+
+
+  31:source\bsw/button.c **** 
+  32:source\bsw/button.c **** 
+  33:source\bsw/button.c **** 
+  34:source\bsw/button.c **** /*****************************************************************************/
+  35:source\bsw/button.c **** /* Local function prototypes ('static')                                      */
+  36:source\bsw/button.c **** /*****************************************************************************/
+  37:source\bsw/button.c **** 
+  38:source\bsw/button.c **** 
+  39:source\bsw/button.c **** /*****************************************************************************/
+  40:source\bsw/button.c **** /* Function implementation - global ('extern') and local ('static')          */
+  41:source\bsw/button.c **** /*****************************************************************************/
+  42:source\bsw/button.c **** 
+  43:source\bsw/button.c **** /**
+  44:source\bsw/button.c ****  * @brief Checks if a specific button is pressed.
+  45:source\bsw/button.c ****  *
+  46:source\bsw/button.c ****  * This function checks the state of the specified button and returns TRUE if the button is pressed
+  47:source\bsw/button.c ****  * or FALSE if it is not pressed.
+  48:source\bsw/button.c ****  *
+  49:source\bsw/button.c ****  * @param button The identifier of the button to check.
+  50:source\bsw/button.c ****  * @return Returns TRUE if the specified button is pressed, FALSE otherwise.
+  51:source\bsw/button.c ****  */
+  52:source\bsw/button.c **** boolean_t BUTTON_IsPressed(BUTTON_id_t button) {
+  28              		.loc 1 52 0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 0
+  31              		@ frame_needed = 0, uses_anonymous_args = 0
+  32              	.LVL0:
+  33 0000 08B5     		push	{r3, lr}
+  34              		.cfi_def_cfa_offset 8
+  35              		.cfi_offset 3, -8
+  36              		.cfi_offset 14, -4
+  37              	.LVL1:
+  53:source\bsw/button.c ****     boolean_t result = FALSE;
+  54:source\bsw/button.c **** 
+  55:source\bsw/button.c ****     switch (button) {
+  38              		.loc 1 55 0
+  39 0002 0328     		cmp	r0, #3
+  40 0004 1BD8     		bhi	.L8
+  41 0006 DFE800F0 		tbb	[pc, r0]
+  42              	.L4:
+  43 000a 02       		.byte	(.L3-.L4)/2
+  44 000b 08       		.byte	(.L5-.L4)/2
+  45 000c 0E       		.byte	(.L6-.L4)/2
+  46 000d 14       		.byte	(.L7-.L4)/2
+  47              		.p2align 1
+  48              	.L3:
+  56:source\bsw/button.c ****         case Button_Right_1:
+  57:source\bsw/button.c ****             if (Button_Right_1_Read() == 1) result = TRUE;
+  49              		.loc 1 57 0
+  50 000e FFF7FEFF 		bl	Button_Right_1_Read
+  51              	.LVL2:
+  52 0012 0128     		cmp	r0, #1
+  53 0014 15D0     		beq	.L9
+  53:source\bsw/button.c ****     boolean_t result = FALSE;
+  54              		.loc 1 53 0
+  55 0016 0020     		movs	r0, #0
+  56 0018 08BD     		pop	{r3, pc}
+ARM GAS  C:\Users\zakis\AppData\Local\Temp\ccH4x3R5.s 			page 3
+
+
+  57              	.LVL3:
+  58              	.L5:
+  58:source\bsw/button.c ****             break;
+  59:source\bsw/button.c ****         case Button_Right_2:
+  60:source\bsw/button.c ****             if (Button_Right_2_Read() == 1) result = TRUE;
+  59              		.loc 1 60 0
+  60 001a FFF7FEFF 		bl	Button_Right_2_Read
+  61              	.LVL4:
+  62 001e 0128     		cmp	r0, #1
+  63 0020 11D0     		beq	.L10
+  53:source\bsw/button.c **** 
+  64              		.loc 1 53 0
+  65 0022 0020     		movs	r0, #0
+  66 0024 08BD     		pop	{r3, pc}
+  67              	.LVL5:
+  68              	.L6:
+  61:source\bsw/button.c ****             break;
+  62:source\bsw/button.c ****         case Button_Left_1:
+  63:source\bsw/button.c ****             if (Button_Left_1_Read() == 1) result = TRUE;
+  69              		.loc 1 63 0
+  70 0026 FFF7FEFF 		bl	Button_Left_1_Read
+  71              	.LVL6:
+  72 002a 0128     		cmp	r0, #1
+  73 002c 0DD0     		beq	.L11
+  53:source\bsw/button.c **** 
+  74              		.loc 1 53 0
+  75 002e 0020     		movs	r0, #0
+  76 0030 08BD     		pop	{r3, pc}
+  77              	.LVL7:
+  78              	.L7:
+  64:source\bsw/button.c ****             break;
+  65:source\bsw/button.c ****         case Button_Left_2:
+  66:source\bsw/button.c ****             if (Button_Left_2_Read() == 1) result = TRUE;
+  79              		.loc 1 66 0
+  80 0032 FFF7FEFF 		bl	Button_Left_2_Read
+  81              	.LVL8:
+  82 0036 0128     		cmp	r0, #1
+  83 0038 09D0     		beq	.L12
+  53:source\bsw/button.c **** 
+  84              		.loc 1 53 0
+  85 003a 0020     		movs	r0, #0
+  86 003c 08BD     		pop	{r3, pc}
+  87              	.LVL9:
+  88              	.L8:
+  89 003e 0020     		movs	r0, #0
+  90              	.LVL10:
+  91 0040 08BD     		pop	{r3, pc}
+  92              	.L9:
+  57:source\bsw/button.c ****             break;
+  93              		.loc 1 57 0
+  94 0042 0120     		movs	r0, #1
+  95 0044 08BD     		pop	{r3, pc}
+  96              	.L10:
+  60:source\bsw/button.c ****             break;
+  97              		.loc 1 60 0
+  98 0046 0120     		movs	r0, #1
+  99 0048 08BD     		pop	{r3, pc}
+ARM GAS  C:\Users\zakis\AppData\Local\Temp\ccH4x3R5.s 			page 4
+
+
+ 100              	.L11:
+  63:source\bsw/button.c ****             break;
+ 101              		.loc 1 63 0
+ 102 004a 0120     		movs	r0, #1
+ 103 004c 08BD     		pop	{r3, pc}
+ 104              	.L12:
+ 105              		.loc 1 66 0
+ 106 004e 0120     		movs	r0, #1
+ 107              	.LVL11:
+  67:source\bsw/button.c ****             break;
+  68:source\bsw/button.c ****     }
+  69:source\bsw/button.c **** 
+  70:source\bsw/button.c ****     return result;
+  71:source\bsw/button.c **** }
+ 108              		.loc 1 71 0
+ 109 0050 08BD     		pop	{r3, pc}
+ 110              		.cfi_endproc
+ 111              	.LFE110:
+ 112              		.size	BUTTON_IsPressed, .-BUTTON_IsPressed
+ 113 0052 00BF     		.text
+ 114              	.Letext0:
+ 115              		.file 2 "c:\\program files (x86)\\cypress\\psoc creator\\4.4\\psoc creator\\import\\gnu\\arm\\5.4.
+ 116              		.file 3 "c:\\program files (x86)\\cypress\\psoc creator\\4.4\\psoc creator\\import\\gnu\\arm\\5.4.
+ 117              		.file 4 "Generated_Source\\PSoC5/ErikaOS_common_ee_types.inc"
+ 118              		.file 5 "Generated_Source\\PSoC5/ErikaOS_cortex_mx_ee_cpu.inc"
+ 119              		.file 6 "source\\bsw\\global.h"
+ 120              		.file 7 "source\\bsw\\button.h"
+ 121              		.file 8 "Generated_Source\\PSoC5/ErikaOS_ee_oo_intfunc.inc"
+ 122              		.file 9 "Generated_Source\\PSoC5/ErikaOS_cortex_mx_ee_context.inc"
+ 123              		.file 10 "Generated_Source\\PSoC5/ErikaOS_common_ee_primitives.inc"
+ 124              		.file 11 "Generated_Source\\PSoC5/core_cm3.h"
+ 125              		.file 12 "Generated_Source\\PSoC5/Button_Right_1.h"
+ 126              		.file 13 "Generated_Source\\PSoC5/Button_Right_2.h"
+ 127              		.file 14 "Generated_Source\\PSoC5/Button_Left_1.h"
+ 128              		.file 15 "Generated_Source\\PSoC5/Button_Left_2.h"
+ 129              		.section	.debug_info,"",%progbits
+ 130              	.Ldebug_info0:
+ 131 0000 E3010000 		.4byte	0x1e3
+ 132 0004 0400     		.2byte	0x4
+ 133 0006 00000000 		.4byte	.Ldebug_abbrev0
+ 134 000a 04       		.byte	0x4
+ 135 000b 01       		.uleb128 0x1
+ 136 000c 80000000 		.4byte	.LASF37
+ 137 0010 0C       		.byte	0xc
+ 138 0011 29010000 		.4byte	.LASF38
+ 139 0015 55010000 		.4byte	.LASF39
+ 140 0019 00000000 		.4byte	.Ldebug_ranges0+0
+ 141 001d 00000000 		.4byte	0
+ 142 0021 00000000 		.4byte	.Ldebug_line0
+ 143 0025 02       		.uleb128 0x2
+ 144 0026 01       		.byte	0x1
+ 145 0027 06       		.byte	0x6
+ 146 0028 8D020000 		.4byte	.LASF0
+ 147 002c 02       		.uleb128 0x2
+ 148 002d 01       		.byte	0x1
+ 149 002e 08       		.byte	0x8
+ 150 002f 72000000 		.4byte	.LASF1
+ARM GAS  C:\Users\zakis\AppData\Local\Temp\ccH4x3R5.s 			page 5
+
+
+ 151 0033 02       		.uleb128 0x2
+ 152 0034 02       		.byte	0x2
+ 153 0035 05       		.byte	0x5
+ 154 0036 4B020000 		.4byte	.LASF2
+ 155 003a 02       		.uleb128 0x2
+ 156 003b 02       		.byte	0x2
+ 157 003c 07       		.byte	0x7
+ 158 003d 14000000 		.4byte	.LASF3
+ 159 0041 03       		.uleb128 0x3
+ 160 0042 0A000000 		.4byte	.LASF9
+ 161 0046 02       		.byte	0x2
+ 162 0047 3F       		.byte	0x3f
+ 163 0048 4C000000 		.4byte	0x4c
+ 164 004c 02       		.uleb128 0x2
+ 165 004d 04       		.byte	0x4
+ 166 004e 05       		.byte	0x5
+ 167 004f 71020000 		.4byte	.LASF4
+ 168 0053 02       		.uleb128 0x2
+ 169 0054 04       		.byte	0x4
+ 170 0055 07       		.byte	0x7
+ 171 0056 17010000 		.4byte	.LASF5
+ 172 005a 02       		.uleb128 0x2
+ 173 005b 08       		.byte	0x8
+ 174 005c 05       		.byte	0x5
+ 175 005d 1B020000 		.4byte	.LASF6
+ 176 0061 02       		.uleb128 0x2
+ 177 0062 08       		.byte	0x8
+ 178 0063 07       		.byte	0x7
+ 179 0064 D9010000 		.4byte	.LASF7
+ 180 0068 04       		.uleb128 0x4
+ 181 0069 04       		.byte	0x4
+ 182 006a 05       		.byte	0x5
+ 183 006b 696E7400 		.ascii	"int\000"
+ 184 006f 02       		.uleb128 0x2
+ 185 0070 04       		.byte	0x4
+ 186 0071 07       		.byte	0x7
+ 187 0072 B1010000 		.4byte	.LASF8
+ 188 0076 03       		.uleb128 0x3
+ 189 0077 0A020000 		.4byte	.LASF10
+ 190 007b 03       		.byte	0x3
+ 191 007c 2C       		.byte	0x2c
+ 192 007d 41000000 		.4byte	0x41
+ 193 0081 02       		.uleb128 0x2
+ 194 0082 04       		.byte	0x4
+ 195 0083 04       		.byte	0x4
+ 196 0084 5B000000 		.4byte	.LASF11
+ 197 0088 02       		.uleb128 0x2
+ 198 0089 08       		.byte	0x8
+ 199 008a 04       		.byte	0x4
+ 200 008b 84010000 		.4byte	.LASF12
+ 201 008f 02       		.uleb128 0x2
+ 202 0090 01       		.byte	0x1
+ 203 0091 08       		.byte	0x8
+ 204 0092 29020000 		.4byte	.LASF13
+ 205 0096 02       		.uleb128 0x2
+ 206 0097 08       		.byte	0x8
+ 207 0098 04       		.byte	0x4
+ARM GAS  C:\Users\zakis\AppData\Local\Temp\ccH4x3R5.s 			page 6
+
+
+ 208 0099 81020000 		.4byte	.LASF14
+ 209 009d 02       		.uleb128 0x2
+ 210 009e 04       		.byte	0x4
+ 211 009f 07       		.byte	0x7
+ 212 00a0 12020000 		.4byte	.LASF15
+ 213 00a4 03       		.uleb128 0x3
+ 214 00a5 0E010000 		.4byte	.LASF16
+ 215 00a9 04       		.byte	0x4
+ 216 00aa 53       		.byte	0x53
+ 217 00ab 68000000 		.4byte	0x68
+ 218 00af 03       		.uleb128 0x3
+ 219 00b0 C0020000 		.4byte	.LASF17
+ 220 00b4 04       		.byte	0x4
+ 221 00b5 54       		.byte	0x54
+ 222 00b6 6F000000 		.4byte	0x6f
+ 223 00ba 03       		.uleb128 0x3
+ 224 00bb 2E020000 		.4byte	.LASF18
+ 225 00bf 05       		.byte	0x5
+ 226 00c0 4D       		.byte	0x4d
+ 227 00c1 AF000000 		.4byte	0xaf
+ 228 00c5 03       		.uleb128 0x3
+ 229 00c6 BE010000 		.4byte	.LASF19
+ 230 00ca 05       		.byte	0x5
+ 231 00cb 4F       		.byte	0x4f
+ 232 00cc AF000000 		.4byte	0xaf
+ 233 00d0 03       		.uleb128 0x3
+ 234 00d1 54000000 		.4byte	.LASF20
+ 235 00d5 05       		.byte	0x5
+ 236 00d6 78       		.byte	0x78
+ 237 00d7 A4000000 		.4byte	0xa4
+ 238 00db 03       		.uleb128 0x3
+ 239 00dc 00000000 		.4byte	.LASF21
+ 240 00e0 06       		.byte	0x6
+ 241 00e1 9C       		.byte	0x9c
+ 242 00e2 2C000000 		.4byte	0x2c
+ 243 00e6 05       		.uleb128 0x5
+ 244 00e7 01       		.byte	0x1
+ 245 00e8 2C000000 		.4byte	0x2c
+ 246 00ec 07       		.byte	0x7
+ 247 00ed 43       		.byte	0x43
+ 248 00ee 0B010000 		.4byte	0x10b
+ 249 00f2 06       		.uleb128 0x6
+ 250 00f3 CA020000 		.4byte	.LASF22
+ 251 00f7 00       		.byte	0
+ 252 00f8 06       		.uleb128 0x6
+ 253 00f9 D9020000 		.4byte	.LASF23
+ 254 00fd 01       		.byte	0x1
+ 255 00fe 06       		.uleb128 0x6
+ 256 00ff 55020000 		.4byte	.LASF24
+ 257 0103 02       		.byte	0x2
+ 258 0104 06       		.uleb128 0x6
+ 259 0105 63020000 		.4byte	.LASF25
+ 260 0109 03       		.byte	0x3
+ 261 010a 00       		.byte	0
+ 262 010b 03       		.uleb128 0x3
+ 263 010c 78010000 		.4byte	.LASF26
+ 264 0110 07       		.byte	0x7
+ARM GAS  C:\Users\zakis\AppData\Local\Temp\ccH4x3R5.s 			page 7
+
+
+ 265 0111 48       		.byte	0x48
+ 266 0112 E6000000 		.4byte	0xe6
+ 267 0116 07       		.uleb128 0x7
+ 268 0117 61000000 		.4byte	.LASF40
+ 269 011b 01       		.byte	0x1
+ 270 011c 34       		.byte	0x34
+ 271 011d DB000000 		.4byte	0xdb
+ 272 0121 00000000 		.4byte	.LFB110
+ 273 0125 52000000 		.4byte	.LFE110-.LFB110
+ 274 0129 01       		.uleb128 0x1
+ 275 012a 9C       		.byte	0x9c
+ 276 012b 72010000 		.4byte	0x172
+ 277 012f 08       		.uleb128 0x8
+ 278 0130 7A020000 		.4byte	.LASF41
+ 279 0134 01       		.byte	0x1
+ 280 0135 34       		.byte	0x34
+ 281 0136 0B010000 		.4byte	0x10b
+ 282 013a 00000000 		.4byte	.LLST0
+ 283 013e 09       		.uleb128 0x9
+ 284 013f F0010000 		.4byte	.LASF42
+ 285 0143 01       		.byte	0x1
+ 286 0144 35       		.byte	0x35
+ 287 0145 DB000000 		.4byte	0xdb
+ 288 0149 85000000 		.4byte	.LLST1
+ 289 014d 0A       		.uleb128 0xa
+ 290 014e 12000000 		.4byte	.LVL2
+ 291 0152 BA010000 		.4byte	0x1ba
+ 292 0156 0A       		.uleb128 0xa
+ 293 0157 1E000000 		.4byte	.LVL4
+ 294 015b C5010000 		.4byte	0x1c5
+ 295 015f 0A       		.uleb128 0xa
+ 296 0160 2A000000 		.4byte	.LVL6
+ 297 0164 D0010000 		.4byte	0x1d0
+ 298 0168 0A       		.uleb128 0xa
+ 299 0169 36000000 		.4byte	.LVL8
+ 300 016d DB010000 		.4byte	0x1db
+ 301 0171 00       		.byte	0
+ 302 0172 0B       		.uleb128 0xb
+ 303 0173 3D010000 		.4byte	.LASF27
+ 304 0177 08       		.byte	0x8
+ 305 0178 40       		.byte	0x40
+ 306 0179 BA000000 		.4byte	0xba
+ 307 017d 0B       		.uleb128 0xb
+ 308 017e 3B000000 		.4byte	.LASF28
+ 309 0182 08       		.byte	0x8
+ 310 0183 47       		.byte	0x47
+ 311 0184 C5000000 		.4byte	0xc5
+ 312 0188 0B       		.uleb128 0xb
+ 313 0189 F7010000 		.4byte	.LASF29
+ 314 018d 08       		.byte	0x8
+ 315 018e 4A       		.byte	0x4a
+ 316 018f BA000000 		.4byte	0xba
+ 317 0193 0B       		.uleb128 0xb
+ 318 0194 98010000 		.4byte	.LASF30
+ 319 0198 09       		.byte	0x9
+ 320 0199 48       		.byte	0x48
+ 321 019a D0000000 		.4byte	0xd0
+ARM GAS  C:\Users\zakis\AppData\Local\Temp\ccH4x3R5.s 			page 8
+
+
+ 322 019e 0B       		.uleb128 0xb
+ 323 019f 36020000 		.4byte	.LASF31
+ 324 01a3 0A       		.byte	0xa
+ 325 01a4 44       		.byte	0x44
+ 326 01a5 BA000000 		.4byte	0xba
+ 327 01a9 0C       		.uleb128 0xc
+ 328 01aa 8B010000 		.4byte	.LASF32
+ 329 01ae 0B       		.byte	0xb
+ 330 01af 1207     		.2byte	0x712
+ 331 01b1 B5010000 		.4byte	0x1b5
+ 332 01b5 0D       		.uleb128 0xd
+ 333 01b6 76000000 		.4byte	0x76
+ 334 01ba 0E       		.uleb128 0xe
+ 335 01bb AC020000 		.4byte	.LASF33
+ 336 01bf AC020000 		.4byte	.LASF33
+ 337 01c3 0C       		.byte	0xc
+ 338 01c4 29       		.byte	0x29
+ 339 01c5 0E       		.uleb128 0xe
+ 340 01c6 27000000 		.4byte	.LASF34
+ 341 01ca 27000000 		.4byte	.LASF34
+ 342 01ce 0D       		.byte	0xd
+ 343 01cf 29       		.byte	0x29
+ 344 01d0 0E       		.uleb128 0xe
+ 345 01d1 99020000 		.4byte	.LASF35
+ 346 01d5 99020000 		.4byte	.LASF35
+ 347 01d9 0E       		.byte	0xe
+ 348 01da 29       		.byte	0x29
+ 349 01db 0E       		.uleb128 0xe
+ 350 01dc C6010000 		.4byte	.LASF36
+ 351 01e0 C6010000 		.4byte	.LASF36
+ 352 01e4 0F       		.byte	0xf
+ 353 01e5 29       		.byte	0x29
+ 354 01e6 00       		.byte	0
+ 355              		.section	.debug_abbrev,"",%progbits
+ 356              	.Ldebug_abbrev0:
+ 357 0000 01       		.uleb128 0x1
+ 358 0001 11       		.uleb128 0x11
+ 359 0002 01       		.byte	0x1
+ 360 0003 25       		.uleb128 0x25
+ 361 0004 0E       		.uleb128 0xe
+ 362 0005 13       		.uleb128 0x13
+ 363 0006 0B       		.uleb128 0xb
+ 364 0007 03       		.uleb128 0x3
+ 365 0008 0E       		.uleb128 0xe
+ 366 0009 1B       		.uleb128 0x1b
+ 367 000a 0E       		.uleb128 0xe
+ 368 000b 55       		.uleb128 0x55
+ 369 000c 17       		.uleb128 0x17
+ 370 000d 11       		.uleb128 0x11
+ 371 000e 01       		.uleb128 0x1
+ 372 000f 10       		.uleb128 0x10
+ 373 0010 17       		.uleb128 0x17
+ 374 0011 00       		.byte	0
+ 375 0012 00       		.byte	0
+ 376 0013 02       		.uleb128 0x2
+ 377 0014 24       		.uleb128 0x24
+ 378 0015 00       		.byte	0
+ARM GAS  C:\Users\zakis\AppData\Local\Temp\ccH4x3R5.s 			page 9
+
+
+ 379 0016 0B       		.uleb128 0xb
+ 380 0017 0B       		.uleb128 0xb
+ 381 0018 3E       		.uleb128 0x3e
+ 382 0019 0B       		.uleb128 0xb
+ 383 001a 03       		.uleb128 0x3
+ 384 001b 0E       		.uleb128 0xe
+ 385 001c 00       		.byte	0
+ 386 001d 00       		.byte	0
+ 387 001e 03       		.uleb128 0x3
+ 388 001f 16       		.uleb128 0x16
+ 389 0020 00       		.byte	0
+ 390 0021 03       		.uleb128 0x3
+ 391 0022 0E       		.uleb128 0xe
+ 392 0023 3A       		.uleb128 0x3a
+ 393 0024 0B       		.uleb128 0xb
+ 394 0025 3B       		.uleb128 0x3b
+ 395 0026 0B       		.uleb128 0xb
+ 396 0027 49       		.uleb128 0x49
+ 397 0028 13       		.uleb128 0x13
+ 398 0029 00       		.byte	0
+ 399 002a 00       		.byte	0
+ 400 002b 04       		.uleb128 0x4
+ 401 002c 24       		.uleb128 0x24
+ 402 002d 00       		.byte	0
+ 403 002e 0B       		.uleb128 0xb
+ 404 002f 0B       		.uleb128 0xb
+ 405 0030 3E       		.uleb128 0x3e
+ 406 0031 0B       		.uleb128 0xb
+ 407 0032 03       		.uleb128 0x3
+ 408 0033 08       		.uleb128 0x8
+ 409 0034 00       		.byte	0
+ 410 0035 00       		.byte	0
+ 411 0036 05       		.uleb128 0x5
+ 412 0037 04       		.uleb128 0x4
+ 413 0038 01       		.byte	0x1
+ 414 0039 0B       		.uleb128 0xb
+ 415 003a 0B       		.uleb128 0xb
+ 416 003b 49       		.uleb128 0x49
+ 417 003c 13       		.uleb128 0x13
+ 418 003d 3A       		.uleb128 0x3a
+ 419 003e 0B       		.uleb128 0xb
+ 420 003f 3B       		.uleb128 0x3b
+ 421 0040 0B       		.uleb128 0xb
+ 422 0041 01       		.uleb128 0x1
+ 423 0042 13       		.uleb128 0x13
+ 424 0043 00       		.byte	0
+ 425 0044 00       		.byte	0
+ 426 0045 06       		.uleb128 0x6
+ 427 0046 28       		.uleb128 0x28
+ 428 0047 00       		.byte	0
+ 429 0048 03       		.uleb128 0x3
+ 430 0049 0E       		.uleb128 0xe
+ 431 004a 1C       		.uleb128 0x1c
+ 432 004b 0B       		.uleb128 0xb
+ 433 004c 00       		.byte	0
+ 434 004d 00       		.byte	0
+ 435 004e 07       		.uleb128 0x7
+ARM GAS  C:\Users\zakis\AppData\Local\Temp\ccH4x3R5.s 			page 10
+
+
+ 436 004f 2E       		.uleb128 0x2e
+ 437 0050 01       		.byte	0x1
+ 438 0051 3F       		.uleb128 0x3f
+ 439 0052 19       		.uleb128 0x19
+ 440 0053 03       		.uleb128 0x3
+ 441 0054 0E       		.uleb128 0xe
+ 442 0055 3A       		.uleb128 0x3a
+ 443 0056 0B       		.uleb128 0xb
+ 444 0057 3B       		.uleb128 0x3b
+ 445 0058 0B       		.uleb128 0xb
+ 446 0059 27       		.uleb128 0x27
+ 447 005a 19       		.uleb128 0x19
+ 448 005b 49       		.uleb128 0x49
+ 449 005c 13       		.uleb128 0x13
+ 450 005d 11       		.uleb128 0x11
+ 451 005e 01       		.uleb128 0x1
+ 452 005f 12       		.uleb128 0x12
+ 453 0060 06       		.uleb128 0x6
+ 454 0061 40       		.uleb128 0x40
+ 455 0062 18       		.uleb128 0x18
+ 456 0063 9742     		.uleb128 0x2117
+ 457 0065 19       		.uleb128 0x19
+ 458 0066 01       		.uleb128 0x1
+ 459 0067 13       		.uleb128 0x13
+ 460 0068 00       		.byte	0
+ 461 0069 00       		.byte	0
+ 462 006a 08       		.uleb128 0x8
+ 463 006b 05       		.uleb128 0x5
+ 464 006c 00       		.byte	0
+ 465 006d 03       		.uleb128 0x3
+ 466 006e 0E       		.uleb128 0xe
+ 467 006f 3A       		.uleb128 0x3a
+ 468 0070 0B       		.uleb128 0xb
+ 469 0071 3B       		.uleb128 0x3b
+ 470 0072 0B       		.uleb128 0xb
+ 471 0073 49       		.uleb128 0x49
+ 472 0074 13       		.uleb128 0x13
+ 473 0075 02       		.uleb128 0x2
+ 474 0076 17       		.uleb128 0x17
+ 475 0077 00       		.byte	0
+ 476 0078 00       		.byte	0
+ 477 0079 09       		.uleb128 0x9
+ 478 007a 34       		.uleb128 0x34
+ 479 007b 00       		.byte	0
+ 480 007c 03       		.uleb128 0x3
+ 481 007d 0E       		.uleb128 0xe
+ 482 007e 3A       		.uleb128 0x3a
+ 483 007f 0B       		.uleb128 0xb
+ 484 0080 3B       		.uleb128 0x3b
+ 485 0081 0B       		.uleb128 0xb
+ 486 0082 49       		.uleb128 0x49
+ 487 0083 13       		.uleb128 0x13
+ 488 0084 02       		.uleb128 0x2
+ 489 0085 17       		.uleb128 0x17
+ 490 0086 00       		.byte	0
+ 491 0087 00       		.byte	0
+ 492 0088 0A       		.uleb128 0xa
+ARM GAS  C:\Users\zakis\AppData\Local\Temp\ccH4x3R5.s 			page 11
+
+
+ 493 0089 898201   		.uleb128 0x4109
+ 494 008c 00       		.byte	0
+ 495 008d 11       		.uleb128 0x11
+ 496 008e 01       		.uleb128 0x1
+ 497 008f 31       		.uleb128 0x31
+ 498 0090 13       		.uleb128 0x13
+ 499 0091 00       		.byte	0
+ 500 0092 00       		.byte	0
+ 501 0093 0B       		.uleb128 0xb
+ 502 0094 34       		.uleb128 0x34
+ 503 0095 00       		.byte	0
+ 504 0096 03       		.uleb128 0x3
+ 505 0097 0E       		.uleb128 0xe
+ 506 0098 3A       		.uleb128 0x3a
+ 507 0099 0B       		.uleb128 0xb
+ 508 009a 3B       		.uleb128 0x3b
+ 509 009b 0B       		.uleb128 0xb
+ 510 009c 49       		.uleb128 0x49
+ 511 009d 13       		.uleb128 0x13
+ 512 009e 3F       		.uleb128 0x3f
+ 513 009f 19       		.uleb128 0x19
+ 514 00a0 3C       		.uleb128 0x3c
+ 515 00a1 19       		.uleb128 0x19
+ 516 00a2 00       		.byte	0
+ 517 00a3 00       		.byte	0
+ 518 00a4 0C       		.uleb128 0xc
+ 519 00a5 34       		.uleb128 0x34
+ 520 00a6 00       		.byte	0
+ 521 00a7 03       		.uleb128 0x3
+ 522 00a8 0E       		.uleb128 0xe
+ 523 00a9 3A       		.uleb128 0x3a
+ 524 00aa 0B       		.uleb128 0xb
+ 525 00ab 3B       		.uleb128 0x3b
+ 526 00ac 05       		.uleb128 0x5
+ 527 00ad 49       		.uleb128 0x49
+ 528 00ae 13       		.uleb128 0x13
+ 529 00af 3F       		.uleb128 0x3f
+ 530 00b0 19       		.uleb128 0x19
+ 531 00b1 3C       		.uleb128 0x3c
+ 532 00b2 19       		.uleb128 0x19
+ 533 00b3 00       		.byte	0
+ 534 00b4 00       		.byte	0
+ 535 00b5 0D       		.uleb128 0xd
+ 536 00b6 35       		.uleb128 0x35
+ 537 00b7 00       		.byte	0
+ 538 00b8 49       		.uleb128 0x49
+ 539 00b9 13       		.uleb128 0x13
+ 540 00ba 00       		.byte	0
+ 541 00bb 00       		.byte	0
+ 542 00bc 0E       		.uleb128 0xe
+ 543 00bd 2E       		.uleb128 0x2e
+ 544 00be 00       		.byte	0
+ 545 00bf 3F       		.uleb128 0x3f
+ 546 00c0 19       		.uleb128 0x19
+ 547 00c1 3C       		.uleb128 0x3c
+ 548 00c2 19       		.uleb128 0x19
+ 549 00c3 6E       		.uleb128 0x6e
+ARM GAS  C:\Users\zakis\AppData\Local\Temp\ccH4x3R5.s 			page 12
+
+
+ 550 00c4 0E       		.uleb128 0xe
+ 551 00c5 03       		.uleb128 0x3
+ 552 00c6 0E       		.uleb128 0xe
+ 553 00c7 3A       		.uleb128 0x3a
+ 554 00c8 0B       		.uleb128 0xb
+ 555 00c9 3B       		.uleb128 0x3b
+ 556 00ca 0B       		.uleb128 0xb
+ 557 00cb 00       		.byte	0
+ 558 00cc 00       		.byte	0
+ 559 00cd 00       		.byte	0
+ 560              		.section	.debug_loc,"",%progbits
+ 561              	.Ldebug_loc0:
+ 562              	.LLST0:
+ 563 0000 00000000 		.4byte	.LVL0
+ 564 0004 11000000 		.4byte	.LVL2-1
+ 565 0008 0100     		.2byte	0x1
+ 566 000a 50       		.byte	0x50
+ 567 000b 11000000 		.4byte	.LVL2-1
+ 568 000f 1A000000 		.4byte	.LVL3
+ 569 0013 0400     		.2byte	0x4
+ 570 0015 F3       		.byte	0xf3
+ 571 0016 01       		.uleb128 0x1
+ 572 0017 50       		.byte	0x50
+ 573 0018 9F       		.byte	0x9f
+ 574 0019 1A000000 		.4byte	.LVL3
+ 575 001d 1D000000 		.4byte	.LVL4-1
+ 576 0021 0100     		.2byte	0x1
+ 577 0023 50       		.byte	0x50
+ 578 0024 1D000000 		.4byte	.LVL4-1
+ 579 0028 26000000 		.4byte	.LVL5
+ 580 002c 0400     		.2byte	0x4
+ 581 002e F3       		.byte	0xf3
+ 582 002f 01       		.uleb128 0x1
+ 583 0030 50       		.byte	0x50
+ 584 0031 9F       		.byte	0x9f
+ 585 0032 26000000 		.4byte	.LVL5
+ 586 0036 29000000 		.4byte	.LVL6-1
+ 587 003a 0100     		.2byte	0x1
+ 588 003c 50       		.byte	0x50
+ 589 003d 29000000 		.4byte	.LVL6-1
+ 590 0041 32000000 		.4byte	.LVL7
+ 591 0045 0400     		.2byte	0x4
+ 592 0047 F3       		.byte	0xf3
+ 593 0048 01       		.uleb128 0x1
+ 594 0049 50       		.byte	0x50
+ 595 004a 9F       		.byte	0x9f
+ 596 004b 32000000 		.4byte	.LVL7
+ 597 004f 35000000 		.4byte	.LVL8-1
+ 598 0053 0100     		.2byte	0x1
+ 599 0055 50       		.byte	0x50
+ 600 0056 35000000 		.4byte	.LVL8-1
+ 601 005a 3E000000 		.4byte	.LVL9
+ 602 005e 0400     		.2byte	0x4
+ 603 0060 F3       		.byte	0xf3
+ 604 0061 01       		.uleb128 0x1
+ 605 0062 50       		.byte	0x50
+ 606 0063 9F       		.byte	0x9f
+ARM GAS  C:\Users\zakis\AppData\Local\Temp\ccH4x3R5.s 			page 13
+
+
+ 607 0064 3E000000 		.4byte	.LVL9
+ 608 0068 40000000 		.4byte	.LVL10
+ 609 006c 0100     		.2byte	0x1
+ 610 006e 50       		.byte	0x50
+ 611 006f 40000000 		.4byte	.LVL10
+ 612 0073 52000000 		.4byte	.LFE110
+ 613 0077 0400     		.2byte	0x4
+ 614 0079 F3       		.byte	0xf3
+ 615 007a 01       		.uleb128 0x1
+ 616 007b 50       		.byte	0x50
+ 617 007c 9F       		.byte	0x9f
+ 618 007d 00000000 		.4byte	0
+ 619 0081 00000000 		.4byte	0
+ 620              	.LLST1:
+ 621 0085 02000000 		.4byte	.LVL1
+ 622 0089 50000000 		.4byte	.LVL11
+ 623 008d 0200     		.2byte	0x2
+ 624 008f 30       		.byte	0x30
+ 625 0090 9F       		.byte	0x9f
+ 626 0091 50000000 		.4byte	.LVL11
+ 627 0095 52000000 		.4byte	.LFE110
+ 628 0099 0100     		.2byte	0x1
+ 629 009b 50       		.byte	0x50
+ 630 009c 00000000 		.4byte	0
+ 631 00a0 00000000 		.4byte	0
+ 632              		.section	.debug_aranges,"",%progbits
+ 633 0000 1C000000 		.4byte	0x1c
+ 634 0004 0200     		.2byte	0x2
+ 635 0006 00000000 		.4byte	.Ldebug_info0
+ 636 000a 04       		.byte	0x4
+ 637 000b 00       		.byte	0
+ 638 000c 0000     		.2byte	0
+ 639 000e 0000     		.2byte	0
+ 640 0010 00000000 		.4byte	.LFB110
+ 641 0014 52000000 		.4byte	.LFE110-.LFB110
+ 642 0018 00000000 		.4byte	0
+ 643 001c 00000000 		.4byte	0
+ 644              		.section	.debug_ranges,"",%progbits
+ 645              	.Ldebug_ranges0:
+ 646 0000 00000000 		.4byte	.LFB110
+ 647 0004 52000000 		.4byte	.LFE110
+ 648 0008 00000000 		.4byte	0
+ 649 000c 00000000 		.4byte	0
+ 650              		.section	.debug_line,"",%progbits
+ 651              	.Ldebug_line0:
+ 652 0000 83020000 		.section	.debug_str,"MS",%progbits,1
+ 652      02005602 
+ 652      00000201 
+ 652      FB0E0D00 
+ 652      01010101 
+ 653              	.LASF21:
+ 654 0000 626F6F6C 		.ascii	"boolean_t\000"
+ 654      65616E5F 
+ 654      7400
+ 655              	.LASF9:
+ 656 000a 5F5F696E 		.ascii	"__int32_t\000"
+ 656      7433325F 
+ARM GAS  C:\Users\zakis\AppData\Local\Temp\ccH4x3R5.s 			page 14
+
+
+ 656      7400
+ 657              	.LASF3:
+ 658 0014 73686F72 		.ascii	"short unsigned int\000"
+ 658      7420756E 
+ 658      7369676E 
+ 658      65642069 
+ 658      6E7400
+ 659              	.LASF34:
+ 660 0027 42757474 		.ascii	"Button_Right_2_Read\000"
+ 660      6F6E5F52 
+ 660      69676874 
+ 660      5F325F52 
+ 660      65616400 
+ 661              	.LASF28:
+ 662 003b 45455F6F 		.ascii	"EE_oo_IRQ_suspend_status\000"
+ 662      6F5F4952 
+ 662      515F7375 
+ 662      7370656E 
+ 662      645F7374 
+ 663              	.LASF20:
+ 664 0054 45455F54 		.ascii	"EE_TID\000"
+ 664      494400
+ 665              	.LASF11:
+ 666 005b 666C6F61 		.ascii	"float\000"
+ 666      7400
+ 667              	.LASF40:
+ 668 0061 42555454 		.ascii	"BUTTON_IsPressed\000"
+ 668      4F4E5F49 
+ 668      73507265 
+ 668      73736564 
+ 668      00
+ 669              	.LASF1:
+ 670 0072 756E7369 		.ascii	"unsigned char\000"
+ 670      676E6564 
+ 670      20636861 
+ 670      7200
+ 671              	.LASF37:
+ 672 0080 474E5520 		.ascii	"GNU C11 5.4.1 20160609 (release) [ARM/embedded-5-br"
+ 672      43313120 
+ 672      352E342E 
+ 672      31203230 
+ 672      31363036 
+ 673 00b3 616E6368 		.ascii	"anch revision 237715] -mcpu=cortex-m3 -mthumb -g -O"
+ 673      20726576 
+ 673      6973696F 
+ 673      6E203233 
+ 673      37373135 
+ 674 00e6 67202D66 		.ascii	"g -ffunction-sections -ffat-lto-objects\000"
+ 674      66756E63 
+ 674      74696F6E 
+ 674      2D736563 
+ 674      74696F6E 
+ 675              	.LASF16:
+ 676 010e 45455F49 		.ascii	"EE_INT32\000"
+ 676      4E543332 
+ 676      00
+ 677              	.LASF5:
+ARM GAS  C:\Users\zakis\AppData\Local\Temp\ccH4x3R5.s 			page 15
+
+
+ 678 0117 6C6F6E67 		.ascii	"long unsigned int\000"
+ 678      20756E73 
+ 678      69676E65 
+ 678      6420696E 
+ 678      7400
+ 679              	.LASF38:
+ 680 0129 736F7572 		.ascii	"source\\bsw\\button.c\000"
+ 680      63655C62 
+ 680      73775C62 
+ 680      7574746F 
+ 680      6E2E6300 
+ 681              	.LASF27:
+ 682 013d 45455F6F 		.ascii	"EE_oo_IRQ_disable_count\000"
+ 682      6F5F4952 
+ 682      515F6469 
+ 682      7361626C 
+ 682      655F636F 
+ 683              	.LASF39:
+ 684 0155 433A5C55 		.ascii	"C:\\Users\\zakis\\Desktop\\RG\\RG.cydsn\000"
+ 684      73657273 
+ 684      5C7A616B 
+ 684      69735C44 
+ 684      65736B74 
+ 685              	.LASF26:
+ 686 0178 42555454 		.ascii	"BUTTON_id_t\000"
+ 686      4F4E5F69 
+ 686      645F7400 
+ 687              	.LASF12:
+ 688 0184 646F7562 		.ascii	"double\000"
+ 688      6C6500
+ 689              	.LASF32:
+ 690 018b 49544D5F 		.ascii	"ITM_RxBuffer\000"
+ 690      52784275 
+ 690      66666572 
+ 690      00
+ 691              	.LASF30:
+ 692 0198 45455F73 		.ascii	"EE_std_endcycle_next_tid\000"
+ 692      74645F65 
+ 692      6E646379 
+ 692      636C655F 
+ 692      6E657874 
+ 693              	.LASF8:
+ 694 01b1 756E7369 		.ascii	"unsigned int\000"
+ 694      676E6564 
+ 694      20696E74 
+ 694      00
+ 695              	.LASF19:
+ 696 01be 45455F46 		.ascii	"EE_FREG\000"
+ 696      52454700 
+ 697              	.LASF36:
+ 698 01c6 42757474 		.ascii	"Button_Left_2_Read\000"
+ 698      6F6E5F4C 
+ 698      6566745F 
+ 698      325F5265 
+ 698      616400
+ 699              	.LASF7:
+ 700 01d9 6C6F6E67 		.ascii	"long long unsigned int\000"
+ARM GAS  C:\Users\zakis\AppData\Local\Temp\ccH4x3R5.s 			page 16
+
+
+ 700      206C6F6E 
+ 700      6720756E 
+ 700      7369676E 
+ 700      65642069 
+ 701              	.LASF42:
+ 702 01f0 72657375 		.ascii	"result\000"
+ 702      6C7400
+ 703              	.LASF29:
+ 704 01f7 45455F41 		.ascii	"EE_ApplicationMode\000"
+ 704      70706C69 
+ 704      63617469 
+ 704      6F6E4D6F 
+ 704      646500
+ 705              	.LASF10:
+ 706 020a 696E7433 		.ascii	"int32_t\000"
+ 706      325F7400 
+ 707              	.LASF15:
+ 708 0212 73697A65 		.ascii	"sizetype\000"
+ 708      74797065 
+ 708      00
+ 709              	.LASF6:
+ 710 021b 6C6F6E67 		.ascii	"long long int\000"
+ 710      206C6F6E 
+ 710      6720696E 
+ 710      7400
+ 711              	.LASF13:
+ 712 0229 63686172 		.ascii	"char\000"
+ 712      00
+ 713              	.LASF18:
+ 714 022e 45455F55 		.ascii	"EE_UREG\000"
+ 714      52454700 
+ 715              	.LASF31:
+ 716 0236 45455F49 		.ascii	"EE_IRQ_nesting_level\000"
+ 716      52515F6E 
+ 716      65737469 
+ 716      6E675F6C 
+ 716      6576656C 
+ 717              	.LASF2:
+ 718 024b 73686F72 		.ascii	"short int\000"
+ 718      7420696E 
+ 718      7400
+ 719              	.LASF24:
+ 720 0255 42757474 		.ascii	"Button_Left_1\000"
+ 720      6F6E5F4C 
+ 720      6566745F 
+ 720      3100
+ 721              	.LASF25:
+ 722 0263 42757474 		.ascii	"Button_Left_2\000"
+ 722      6F6E5F4C 
+ 722      6566745F 
+ 722      3200
+ 723              	.LASF4:
+ 724 0271 6C6F6E67 		.ascii	"long int\000"
+ 724      20696E74 
+ 724      00
+ 725              	.LASF41:
+ 726 027a 62757474 		.ascii	"button\000"
+ARM GAS  C:\Users\zakis\AppData\Local\Temp\ccH4x3R5.s 			page 17
+
+
+ 726      6F6E00
+ 727              	.LASF14:
+ 728 0281 6C6F6E67 		.ascii	"long double\000"
+ 728      20646F75 
+ 728      626C6500 
+ 729              	.LASF0:
+ 730 028d 7369676E 		.ascii	"signed char\000"
+ 730      65642063 
+ 730      68617200 
+ 731              	.LASF35:
+ 732 0299 42757474 		.ascii	"Button_Left_1_Read\000"
+ 732      6F6E5F4C 
+ 732      6566745F 
+ 732      315F5265 
+ 732      616400
+ 733              	.LASF33:
+ 734 02ac 42757474 		.ascii	"Button_Right_1_Read\000"
+ 734      6F6E5F52 
+ 734      69676874 
+ 734      5F315F52 
+ 734      65616400 
+ 735              	.LASF17:
+ 736 02c0 45455F55 		.ascii	"EE_UINT32\000"
+ 736      494E5433 
+ 736      3200
+ 737              	.LASF22:
+ 738 02ca 42757474 		.ascii	"Button_Right_1\000"
+ 738      6F6E5F52 
+ 738      69676874 
+ 738      5F3100
+ 739              	.LASF23:
+ 740 02d9 42757474 		.ascii	"Button_Right_2\000"
+ 740      6F6E5F52 
+ 740      69676874 
+ 740      5F3200
+ 741              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 5.4.1 20160609 (release) [ARM/embedded-5-bran
